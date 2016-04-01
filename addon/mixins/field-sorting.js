@@ -11,10 +11,10 @@ export default Ember.Mixin.create({
   
   actions: {
     changeSort(field) {
-      if (this.get('sort') === field || this.get('sort') === this._inverseSort(field)) {
-        return this.set('sort', this._inverseSort(this.get('sort')));
+      if (this.get('current') === field || this.get('current') === this._inverseSort(field)) {
+        return this.set('current', this._inverseSort(this.get('current')));
       } else {
-        return this.set('sort', field);
+        return this.set('current', field);
       }
     }
   }
