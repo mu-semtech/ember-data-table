@@ -23,6 +23,9 @@ export default Ember.Component.extend({
     clearSelection() {
       this.get('selection').setEach('isSelected', false);
     },
+    apply(action) {
+      this.sendAction(action);
+    },
     applyOnSelection(action, selection) {
       selection.setEach('isSelected', false);
       this.sendAction(action, selection);

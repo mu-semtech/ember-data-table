@@ -2,7 +2,7 @@
   <div class="data-table-header">
     {{#each headerMenu as |item|}}
       {{#if item.action}}
-	<a class="waves-effect waves-light btn-flat" {{action 'applyAction' item.action}}>{{item.label}}</a>
+	<a class="waves-effect waves-light btn-flat" {{action 'apply' item.action}}>{{item.label}}</a>
       {{else if item.link}}
 	{{#link-to item.link class="waves-effect waves-light btn-flat"}}{{item.label}}{{/link-to}}
       {{/if}}
