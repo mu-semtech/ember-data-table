@@ -1,1 +1,1 @@
-export { default } from 'ember-mu-datatable/components/th-sortable';
+export { default } from 'ember-data-table/components/th-sortable';

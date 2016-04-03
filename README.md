@@ -1,4 +1,4 @@
-# Ember-mu-datatable
+# Ember Data Table
 
 This README outlines the details of collaborating on this Ember addon.
 

@@ -1,1 +1,1 @@
-export { default } from 'ember-mu-datatable/components/data-table';
+export { default } from 'ember-data-table/components/data-table';

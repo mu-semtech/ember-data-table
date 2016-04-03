@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import FieldSortingMixin from 'ember-mu-datatable/mixins/field-sorting';
+import FieldSortingMixin from 'ember-data-table/mixins/field-sorting';
 import { module, test } from 'qunit';
 
 module('Unit | Mixin | field sorting');

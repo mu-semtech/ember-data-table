@@ -1,1 +1,1 @@
-export { default } from 'ember-mu-datatable/components/page-pagination';
+export { default } from 'ember-data-table/components/page-pagination';

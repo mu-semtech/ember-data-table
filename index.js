@@ -2,7 +2,7 @@
 'use strict';
 
 module.exports = {
-  name: 'ember-mu-datatable',
+  name: 'ember-data-table',
   included: function(app) {
     this._super.included(app);
 

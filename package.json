@@ -1,7 +1,7 @@
 {
-  "name": "ember-mu-datatable",
+  "name": "ember-data-table",
   "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "Data tables for Ember following Google Design specs",
   "directories": {
     "doc": "doc",
     "test": "tests"

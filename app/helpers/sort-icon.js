@@ -1,1 +1,1 @@
-export { default, sortIcon } from 'ember-mu-datatable/helpers/sort-icon';
+export { default, sortIcon } from 'ember-data-table/helpers/sort-icon';
