@@ -9,6 +9,8 @@ module.exports = {
     if (app.import) {
       this.importDependencies(app);
     }
+
+    app.import('app/styles/app.css');
   },
   importDependencies: function(app) {
     app.import('vendor/tether/tether.js');
