@@ -14,9 +14,6 @@ module.exports = {
   },
   importDependencies: function(app) {
     app.import('vendor/tether/tether.js');
-  },
-  isDevelopingAddon: function() {
-    return true;
   }
 };
 
