@@ -16,7 +16,7 @@ export default Ember.Component.extend({
   actions: {
     changePage(link) {
       this.set('page', link['number'] || 0);
-      this.set('size', link['size'] || 0);
+      if (link['size']) { this.set('size', link['size']); }
     }
   }
 });
