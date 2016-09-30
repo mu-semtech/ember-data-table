@@ -1,3 +1,9 @@
+// Fix for Roboto font path
+$roboto-font-path: '../assets/';
+
+// Materialize styles
+@import "materialize";
+
 .data-table-header {
     border-bottom: 1px solid;
     padding: 10px 5px;
