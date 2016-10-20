@@ -29,7 +29,7 @@
 	<th><!-- Checkbox --></th>
 	{{#each columns as |c|}}
 	  {{#if c.sortable}}
-	    {{th-sortable field=c.field current=sort label=c.label}}
+	    {{th-sortable field=c.field currentSorting=sort label=c.label}}
 	  {{else}}
 	    <th>{{c.label}}</th>
 	  {{/if}}

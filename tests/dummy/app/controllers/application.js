@@ -43,7 +43,7 @@ var ApplicationController = Ember.Controller.extend({
   contextMenu: [
     { action: 'print', label: 'Detail' }
   ],
-  sort: 'firstName',
+  sort: 'first-name',
   actions:
     {print() {
       console.log("I'm in the print action");
