@@ -1,3 +1,11 @@
 <h2 id="title">Ember Data Table test</h2>
 
 {{data-table rows=rows columns=columns headerMenu=headerMenu selectionMenu=selectionMenu contextMenu=contextMenu sort=sort print='print'}}
+
+{{page-pagination links=links page=page size=size}}
+
+<h4>Variables</h4>
+<ul>
+    <li>Page: {{page}}</li>
+    <li>Size: {{size}}</li>
+</ul>

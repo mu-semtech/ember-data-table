@@ -1,6 +1,26 @@
 import Ember from 'ember';
 
 var ApplicationController = Ember.Controller.extend({
+  page: 2,
+  size: 5,
+  links: {
+    first: {
+      number: 0,
+      size: 3
+    },
+    prev: {
+      number: 1,
+      size: 5
+    },
+    next: {
+      number: 3,
+      size: 5
+    },
+    last: {
+      number: 4,
+      size: 3
+    }
+  },
   rows: Ember.ArrayProxy.create({
     content: [
       Ember.Object.create({ firstName: 'John', lastname: 'Doe', age: 20, created: Date.now(), modified: Date.now() }),
