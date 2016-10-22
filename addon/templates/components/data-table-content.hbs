@@ -1,0 +1,10 @@
+{{#if rows}}
+  <table class="data-table responsive-table">
+    {{yield (hash
+      header=(component 'data-table-content-header')
+      body=(component 'data-table-content-body' rows=rows)
+      )}}
+  </table>
+{{else}}
+  <p>{{noDataMessage}}</p>
+{{/if}}

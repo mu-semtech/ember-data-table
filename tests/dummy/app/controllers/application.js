@@ -27,28 +27,20 @@ var ApplicationController = Ember.Controller.extend({
       Ember.Object.create({ firstName: 'Jane', lastname: 'Doe', age: 25, created: Date.now(), modified: Date.now() })
     ]
   }),
-  columns: [
-    { field: 'firstName', label: 'First name', sortable: true },
-    { field: 'lastName', label: 'Last name', sortable: true },
-    { field: 'age', label: 'Age' },
-    { field: 'created', label: 'Created', sortable: true, isDate: true },
-    { field: 'modified', label: 'Modified', sortable: true, isDate: true }
-  ],
-  headerMenu: [
-    { action: 'print', label: 'Print' }
-  ],
-  selectionMenu: [
-    { action: 'print', label: 'Print selection' }
-  ],
-  contextMenu: [
-    { action: 'print', label: 'Detail' }
-  ],
   sort: 'first-name',
-  actions:
-    {print() {
-      console.log("I'm in the print action");
-    }
-    }
+  dateFormat: 'DD/MM/YYYY hh:mm:ss',
+  actions: {
+    test(row) {
+      console.log("Hi, you reached the test action for row: " + JSON.stringify(row));
+    },
+    menuTest() {
+      console.log("Hi, you reached the menu test action");
+    },
+    selectionTest(selection) {
+      selection.setEach('isSelected', false);
+      console.log("Hi, you reached the selection test action for selection: " + JSON.stringify(selection));
+    }    
+  }
 });
 
 export default ApplicationController;

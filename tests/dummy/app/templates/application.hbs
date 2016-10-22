@@ -1,6 +1,39 @@
 <h2 id="title">Ember Data Table test</h2>
 
-{{data-table rows=rows columns=columns headerMenu=headerMenu selectionMenu=selectionMenu contextMenu=contextMenu sort=sort print='print'}}
+{{#data-table rows=rows sort=sort as |t|}}
+  {{#t.menu as |menu|}}
+    {{#menu.general}}
+      <a class="waves-effect waves-light btn-flat" {{action 'menuTest'}}>Export</a>
+      <a class="waves-effect waves-light btn-flat">Print</a>
+    {{/menu.general}}
+    {{#menu.selected as |selection|}}
+      <a class="waves-effect waves-light btn-flat" {{action 'selectionTest' selection}}>Delete</a>
+    {{/menu.selected}}
+  {{/t.menu}}
+  {{#t.content as |c|}}
+    {{#c.header}}
+      {{th-sortable field='firstName' currentSorting=sort label='Firstname'}}
+      {{th-sortable field='lastName' currentSorting=sort label='Lastname'}}
+      <th>Age</th>
+      {{th-sortable field='created' currentSorting=sort label='Created'}}
+      <th>Modified</th>
+      <th><!-- More menu --></th>
+    {{/c.header}}
+    {{#c.body as |row|}}
+      <td>{{row.firstName}}</td>
+      <td>{{row.lastName}}</td>
+      <td>{{row.age}}</td>
+      <td>{{moment-format row.created dateFormat}}</td>
+      <td>{{moment-format row.modified dateFormat}}</td>
+      <td>
+        {{#more-menu}}
+          <a class="collection-item" {{action 'test' row}}>Details</a>
+          <a class="collection-item">Edit</a>
+        {{/more-menu}}
+      </td>
+    {{/c.body}}
+  {{/t.content}}
+{{/data-table}}
 
 {{page-pagination links=links page=page size=size}}
 
