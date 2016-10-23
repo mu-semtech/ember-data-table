@@ -59,9 +59,7 @@
     "ember-cli-htmlbars": "^1.0.1",
     "ember-cli-sass": "^5.5.2",
     "ember-click-outside": "0.0.3",
-    "ember-moment": "6.1.0",
-    "liquid-fire": "0.26.1",
-    "liquid-tether": "1.0.0"
+    "ember-moment": "6.1.0"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
