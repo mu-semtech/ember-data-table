@@ -8,7 +8,10 @@ $roboto-font-path: '../assets/';
     border-bottom: 1px solid;
     padding: 10px 5px;
 }
-.data-table-header .btn-flat {
+.data-table-header a {
+    @extend .waves-effect;
+    @extend .waves-light;
+    @extend .btn-flat;
     padding: 0 1rem;
 }
 .data-table-header .item-count {
@@ -39,4 +42,7 @@ table.data-table input[type="checkbox"] + label:before {
 table.data-table input[type="checkbox"]:checked + label:before {
     height: 18px;
     width: 10px;
+}
+table.data-table .more-menu li a {
+    @extend .collection-item;
 }

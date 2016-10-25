@@ -3,11 +3,11 @@
 {{#data-table rows=rows sort=sort as |t|}}
   {{#t.menu as |menu|}}
     {{#menu.general}}
-      <a class="waves-effect waves-light btn-flat" {{action 'menuTest'}}>Export</a>
-      <a class="waves-effect waves-light btn-flat">Print</a>
+      <a {{action 'menuTest'}}>Export</a>
+      <a>Print</a>
     {{/menu.general}}
     {{#menu.selected as |selection|}}
-      <a class="waves-effect waves-light btn-flat" {{action 'selectionTest' selection}}>Delete</a>
+      <a {{action 'selectionTest' selection}}>Delete</a>
     {{/menu.selected}}
   {{/t.menu}}
   {{#t.content as |c|}}
