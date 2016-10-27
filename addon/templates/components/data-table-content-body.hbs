@@ -1,6 +1,8 @@
 {{#each rows as |row|}}
   <tr class="{{if row.isSelected 'selected'}}">
-    <td class="center">{{md-check checked=row.isSelected}}</td>
+    {{#if enableSelection}}
+      <td class="center">{{md-check checked=row.isSelected}}</td>
+    {{/if}}
     {{yield row}}
   </tr>
 {{/each}}
