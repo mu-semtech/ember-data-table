@@ -1,10 +1,10 @@
 import Ember from 'ember';
 
 export function sortIcon(params/*, hash*/) {
-  var [field,sort] = params;
-  if (sort === field) {
+  var order = params[0];
+  if (order === 'asc') {
     return "arrow_downward";
-  } else if (sort === `-${field}`) {
+  } else if (order === 'desc') {
     return "arrow_upward";
   } else {
     return "";
