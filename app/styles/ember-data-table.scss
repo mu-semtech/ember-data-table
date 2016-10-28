@@ -5,44 +5,78 @@ $roboto-font-path: '../assets/';
 @import "materialize";
 
 .data-table-header {
-    border-bottom: 1px solid;
+    border-bottom: 1px solid $table-border-color;
     padding: 10px 5px;
-}
-.data-table-header a {
-    @extend .waves-effect;
-    @extend .waves-light;
-    @extend .btn-flat;
-    padding: 0 1rem;
-}
-.data-table-header .item-count {
-    padding-left: 10px;
-    padding-right: 15px;
-}
-.data-table-header.selected {
-    background-color: #f5f5f5;
+    color: $secondary-color;
+
+    .btn-flat {
+        color: $secondary-color;
+    }
+
+    a {
+        @extend .waves-effect;
+        @extend .waves-light;
+        @extend .btn-flat;
+        padding: 0 1rem;        
+    }
+
+    .item-count {
+        padding-left: 10px;
+        padding-right: 15px;
+    }
+
+    &.selected {
+        background-color: lighten($secondary-color, 50%);
+    }
 }
 
 table.data-table {
     font-size: 80%;
-}
-table.data-table tbody tr:hover {
-    background-color: #eeeeee;
-}
-table.data-table tbody tr.selected {
-    background-color: #f5f5f5;
-}
-table.data-table input[type="checkbox"] + label {
-    padding-left: 5px;
-    height: 15px;
-}
-table.data-table input[type="checkbox"] + label:before {
-    height: 14px;
-    width: 14px;
-}
-table.data-table input[type="checkbox"]:checked + label:before {
-    height: 18px;
-    width: 10px;
-}
-table.data-table .more-menu li a {
-    @extend .collection-item;
+    color: rgb(13%,13%,13%);
+
+    thead {
+        color: rgb(46%,46%,46%);
+        .sorted {
+            color: rgb(13%,13%,13%);
+        }
+        .sortable {
+            i {
+                position: relative;
+                top: 2px;
+            }
+            
+            &:not(.sorted):hover {
+                i::before {
+                    color: rgb(62%,62%,62%);
+                    content: 'arrow_downward';
+                }
+            }
+        }
+    }
+
+    tbody {
+        tr {
+            &:hover {
+                background-color: #eeeeee;
+            }
+            &.selected {
+                background-color: #f5f5f5;
+            }
+        }
+    }
+
+    input[type="checkbox"] + label {
+        padding-left: 5px;
+        height: 15px;
+    }
+    
+    input[type="checkbox"] + label:before {
+        height: 14px;
+        width: 14px;
+    }
+
+    input[type="checkbox"]:checked + label:before {
+        height: 18px;
+        width: 10px;
+    }    
 }
