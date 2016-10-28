@@ -2,7 +2,7 @@
   <table class="data-table responsive-table">
     {{yield (hash
       header=(component 'data-table-content-header' enableSelection=enableSelection fields=fields)
-      body=(component 'data-table-content-body' rows=rows enableSelection=enableSelection)
+      body=(component 'data-table-content-body' rows=rows enableSelection=enableSelection data-table=data-table)
       )}}
   </table>
 {{else}}

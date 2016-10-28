@@ -3,6 +3,10 @@
     {{#if enableSelection}}
       <td class="center">{{md-check checked=row.isSelected}}</td>
     {{/if}}
-    {{yield row}}
+    {{#if hasBlock}}
+      {{yield row}}
+    {{else}}
+      {{default-data-table-content-body item=row data-table=data-table}}
+    {{/if}}
   </tr>
 {{/each}}
