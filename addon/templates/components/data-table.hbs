@@ -7,3 +7,7 @@
 {{else}}
   {{component 'data-table-content' content=content noDataMessage=noDataMessage enableSelection=enableSelection fields=parsedFields data-table=this}}
 {{/if}}
+
+{{#if pagination}}
+  {{page-pagination page=page links=content.meta.pagination}}
+{{/if}}
