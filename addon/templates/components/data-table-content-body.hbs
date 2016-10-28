@@ -1,12 +1,12 @@
-{{#each rows as |row|}}
-  <tr class="{{if row.isSelected 'selected'}}">
+{{#each content as |item|}}
+  <tr class="{{if item.isSelected 'selected'}}">
     {{#if enableSelection}}
-      <td class="center">{{md-check checked=row.isSelected}}</td>
+      <td class="center">{{md-check checked=item.isSelected}}</td>
     {{/if}}
     {{#if hasBlock}}
-      {{yield row}}
+      {{yield item}}
     {{else}}
-      {{default-data-table-content-body item=row data-table=data-table}}
+      {{default-data-table-content-body item=item data-table=data-table}}
     {{/if}}
   </tr>
 {{/each}}
