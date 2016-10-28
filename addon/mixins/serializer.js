@@ -1,6 +1,6 @@
-import DS from 'ember-data';
+import Ember from 'ember';
 
-export default DS.JSONAPISerializer.extend({
+export default Ember.Mixin.create({
 
   /** 
       Parse the links in the JSONAPI response and convert to a meta-object 
@@ -56,6 +56,5 @@ export default DS.JSONAPISerializer.extend({
 
     return meta;
   }
-  
-});
 
+});
