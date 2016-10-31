@@ -7,5 +7,5 @@ export default Ember.Component.extend({
   classNameBindings: ['selectionIsEmpty::selected'],
   selectionIsEmpty: Ember.computed('selection', function() {
     return this.get('selection.length') === 0;
-  })
+  }),
 });

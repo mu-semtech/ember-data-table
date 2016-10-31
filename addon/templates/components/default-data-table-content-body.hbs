@@ -1,0 +1,15 @@
+{{#if firstColumn}}
+  {{#if linkedRoute}}
+    {{#link-to linkedRoute item tagName="td"}}{{get item firstColumn}}{{/link-to}}
+  {{else}}
+    <td>{{get item field}}</td>
+  {{/if}}
+{{/if}}
+{{#each allFields as |field|}}
+  <td>
+    {{!-- This should be based on the type of the field --}}
+    {{get item field}}
+  </td>
+{{/each}}
+{{yield}}
+
