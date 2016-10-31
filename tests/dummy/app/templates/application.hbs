@@ -1,45 +1,72 @@
-<h2 id="title">Ember Data Table test</h2>
+<div class="container">
+  <h2 id="title">Ember Data Table demo</h2>
 
-{{#data-table rows=rows sort=sort as |t|}}
-  {{#t.menu as |menu|}}
-    {{#menu.general}}
-      <a {{action 'menuTest'}}>Export</a>
-      <a>Print</a>
-    {{/menu.general}}
-    {{#menu.selected as |selection|}}
-      <a {{action 'selectionTest' selection}}>Delete</a>
-    {{/menu.selected}}
-  {{/t.menu}}
-  {{#t.content as |c|}}
-    {{#c.header}}
-      {{th-sortable field='firstName' currentSorting=sort label='Firstname'}}
-      {{th-sortable field='lastName' currentSorting=sort label='Lastname'}}
-      <th>Age</th>
-      {{th-sortable field='created' currentSorting=sort label='Created'}}
-      <th>Modified</th>
-      <th><!-- More menu --></th>
-    {{/c.header}}
-    {{#c.body as |row|}}
-      <td>{{row.firstName}}</td>
-      <td>{{row.lastName}}</td>
-      <td>{{row.age}}</td>
-      <td>{{moment-format row.created dateFormat}}</td>
-      <td>{{moment-format row.modified dateFormat}}</td>
-      <td>
-        {{#more-menu}}
-          <a class="collection-item" {{action 'test' row}}>Details</a>
-          <a class="collection-item">Edit</a>
-        {{/more-menu}}
-      </td>
-    {{/c.body}}
-  {{/t.content}}
-{{/data-table}}
+  <h3>Simple table</h3>
+  <blockquote>Generated table header and body based on given <code>fields</code></blockquote>
+  {{data-table content=model fields="firstName lastName age created modified" sort=sort page=page}}
 
-{{page-pagination links=links page=page size=size}}
+  <h3>Semi-complex table</h3>
+  <blockquote>Customized table header and body</blockquote>
+  {{#data-table content=model sort=sort page=page as |t|}}
+    {{#t.content as |c|}}
+      {{#c.header}}
+        {{th-sortable field='firstName' currentSorting=sort label='First name'}}
+        {{th-sortable field='lastName' currentSorting=sort label='Last name'}}
+        <th>Age</th>
+        {{th-sortable field='created' currentSorting=sort label='Created'}}
+        <th>Modified</th>
+      {{/c.header}}
+      {{#c.body as |row|}}
+        <td>{{row.firstName}}</td>
+        <td>{{row.lastName}}</td>
+        <td>{{row.age}}</td>
+        <td>{{moment-format row.created dateFormat}}</td>
+        <td>{{moment-format row.modified dateFormat}}</td>
+      {{/c.body}}
+    {{/t.content}}
+  {{/data-table}}
 
-<h4>Variables</h4>
-<ul>
+  <h3>Complex table</h3>
+  <blockquote>Customized table including an action menu on top</blockquote>
+  {{#data-table content=model sort=sort page=page as |t|}}
+    {{#t.menu as |menu|}}
+      {{#menu.general}}
+        <a {{action 'menuTest'}}>Export</a>
+        <a>Print</a>
+      {{/menu.general}}
+      {{#menu.selected as |selection|}}
+        <a {{action 'selectionTest' selection}}>Delete</a>
+      {{/menu.selected}}
+    {{/t.menu}}
+    {{#t.content as |c|}}
+      {{#c.header}}
+        {{th-sortable field='firstName' currentSorting=sort label='First name'}}
+        {{th-sortable field='lastName' currentSorting=sort label='Last name'}}
+        <th>Age</th>
+        {{th-sortable field='created' currentSorting=sort label='Created'}}
+        <th>Modified</th>
+        <th><!-- More menu --></th>
+      {{/c.header}}
+      {{#c.body as |row|}}
+        <td>{{row.firstName}}</td>
+        <td>{{row.lastName}}</td>
+        <td>{{row.age}}</td>
+        <td>{{moment-format row.created dateFormat}}</td>
+        <td>{{moment-format row.modified dateFormat}}</td>
+        <td>
+          {{#more-menu}}
+            <a class="collection-item" {{action 'test' row}}>Details</a>
+            <a class="collection-item">Edit</a>
+          {{/more-menu}}
+        </td>
+      {{/c.body}}
+    {{/t.content}}
+  {{/data-table}}
+
+  <h3>Internal variables</h3>
+  <ul>
     <li>Sort: {{sort}}</li>
     <li>Page: {{page}}</li>
     <li>Size: {{size}}</li>
-</ul>
+  </ul>
+</div>
