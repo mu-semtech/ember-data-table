@@ -3,6 +3,7 @@ import layout from '../templates/components/page-pagination';
 
 export default Ember.Component.extend({
   layout: layout,
+  classNames: ['page-pagination'],
   keys: ['first', 'prev', 'next', 'last'],
   sortedLinks: Ember.computed('keys', 'links', function() {
     var result = {};

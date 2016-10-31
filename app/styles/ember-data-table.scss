@@ -80,3 +80,8 @@ table.data-table {
         width: 10px;
     }    
 }
+
+/** Icons */
+.page-pagination i.disabled {
+    color: color("grey", "lighten-2");
+}
