@@ -1,4 +1,13 @@
-{{yield (hash
-  menu=(component 'data-table-menu' selection=selection)
-  content=(component 'data-table-content' rows=rows noDataMessage=noDataMessage)
-  )}}
+{{#if hasBlock}}
+  {{yield (hash
+    menu=(component 'data-table-menu' selection=selection data-table=this)
+    content=(component 'data-table-content' content=content noDataMessage=noDataMessage enableSelection=enableSelection fields=parsedFields data-table=this)
+    )
+    this}}
+{{else}}
+  {{component 'data-table-content' content=content noDataMessage=noDataMessage enableSelection=enableSelection fields=parsedFields data-table=this}}
+{{/if}}
+
+{{#if pagination}}
+  {{page-pagination page=page links=content.meta.pagination}}
+{{/if}}

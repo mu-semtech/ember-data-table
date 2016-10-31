@@ -1,5 +1,13 @@
 <tr>
-  <th><!-- Checkbox --></th>
-  {{yield}}
+  {{#if enableSelection}}
+    <th><!-- Checkbox --></th>
+  {{/if}}
+  {{#if hasBlock}}
+    {{yield}}
+  {{else}}
+    {{#each fields as |field|}}
+      {{th-sortable field=field label=field currentSorting=sort}}
+    {{/each}}
+  {{/if}}
 </tr>
 
