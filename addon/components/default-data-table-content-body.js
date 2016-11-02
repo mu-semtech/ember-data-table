@@ -9,8 +9,8 @@ export default Ember.Component.extend({
     return this.get('data-table.parsedFields.firstObject');
   }),
   otherColumns: Ember.computed( 'data-table.parsedFields', function(){
-    var first, fields;
-    [first, ...fields] = this.get('data-table.parsedFields');
+    var fields;
+    [, ...fields] = this.get('data-table.parsedFields');
     return fields;
   }),
   linkedRoute: Ember.computed.oneWay( 'data-table.link' ),
