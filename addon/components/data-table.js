@@ -10,10 +10,10 @@ export default Ember.Component.extend({
   enableSelection: Ember.computed.oneWay('hasMenu'),
   parsedFields: Ember.computed('fields', function() {
     const fields = this.get('fields');
-    if( Ember.typeOf( fields ) == 'string' ) {
+    if( Ember.typeOf( fields ) === 'string' ) {
       return fields.split(' ');
     } else {
-      return fields || []
+      return fields || [];
     }
   }),
 });
