@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import $ from 'jquery';
 
 export default Ember.Mixin.create({
   queryParams: {
@@ -6,6 +7,7 @@ export default Ember.Mixin.create({
     sort: { refreshModel: true },
     size: { refreshModel: true }
   },
+  mergedQueryOptions: {},
   model( params ) {
     const options = {
       sort: params.sort,
@@ -13,6 +15,7 @@ export default Ember.Mixin.create({
         number: params.page,
         size: params.size
       } };
+    $.extend( options, this.get('mergedQueryOptions') );
     return this.store.query( this.get('modelName'), options );
   }
 });

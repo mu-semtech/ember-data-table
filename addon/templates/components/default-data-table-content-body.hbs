@@ -2,10 +2,10 @@
   {{#if linkedRoute}}
     {{#link-to linkedRoute item tagName="td"}}{{get item firstColumn}}{{/link-to}}
   {{else}}
-    <td>{{get item field}}</td>
+    <td>{{get item firstColumn}}</td>
   {{/if}}
 {{/if}}
-{{#each allFields as |field|}}
+{{#each otherColumns as |field|}}
   <td>
     {{!-- This should be based on the type of the field --}}
     {{get item field}}
