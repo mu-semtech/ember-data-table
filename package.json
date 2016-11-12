@@ -11,7 +11,10 @@
     "start": "ember server",
     "test": "ember try:testall"
   },
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mu-semtech/data-table-ember-addon"
+  },
   "engines": {
     "node": ">= 0.10.0"
   },
@@ -50,7 +53,8 @@
     "node-sass": "3.4.2"
   },
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "mu-semtech"
   ],
   "dependencies": {
     "ember-cli-babel": "^5.1.5",
