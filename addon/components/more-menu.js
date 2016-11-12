@@ -16,11 +16,10 @@ export default Ember.Component.extend({
     this.$().dropdown({
       belowOrigin: false,
       alignment: 'right',
-      constrain_width: false,
-      gutter: 100
+      constrain_width: false
     });
   },
-  
+
   _dropdownContentId: Ember.computed(function() {
     return `${this.get('elementId')}-dropdown-content`;
   })
