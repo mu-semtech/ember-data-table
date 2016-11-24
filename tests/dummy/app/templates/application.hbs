@@ -63,10 +63,14 @@
     {{/t.content}}
   {{/data-table}}
 
+  <h3>Search field</h3>
+  {{text-search value=value wait=1000}}
+
   <h3>Internal variables</h3>
   <ul>
     <li>Sort: {{sort}}</li>
     <li>Page: {{page}}</li>
     <li>Size: {{size}}</li>
+    <li>Text search: {{value}}</li>
   </ul>
 </div>

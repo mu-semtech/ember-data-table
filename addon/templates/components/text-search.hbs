@@ -1,0 +1,7 @@
+{{#if isExpanded}}
+  {{#debounced-value val=value wait=wait immediate=false sync=true as |value|}}
+    {{input class="data-table-text-search" value=value placeholder=placeholder}}
+  {{/debounced-value}}
+{{else}}
+  <i class="material-icons">search</i>
+{{/if}}
