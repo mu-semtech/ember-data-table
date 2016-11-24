@@ -9,7 +9,7 @@ export default Ember.Component.extend({
   dasherizedField: Ember.computed('field', function() {
     return this.get('field').replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
   }),
-  /** 
+  /**
       Inverses the sorting parameter
       E.g. inverseSorting('title') returns '-title'
            inverseSorting('-title') returns 'title'
@@ -30,19 +30,22 @@ export default Ember.Component.extend({
     else if (this.get('currentSorting') === `-${this.get('dasherizedField')}`) { return 'desc'; }
     else { return ''; }
   }),
-  
+
   actions: {
     /**
        Sets the current sorting parameter.
        Note: the current sorting parameter may contain another field than the given field.
-       In case the given field is currently used for sorting, inverse the sorting.
+       In case the given field is currently sorted ascending, change to descending.
+       In case the given field is currently sorted descending, clean the sorting.
        Else, set the sorting to ascending on the given field.
      */
     inverseSorting() {
-      if (this.get('isSorted')) {
-        return this.set('currentSorting', this._inverseSorting(this.get('currentSorting')));
+      if (this.get('order') === 'asc') {
+        this.set('currentSorting', this._inverseSorting(this.get('currentSorting')));
+      } else if (this.get('order') === 'desc') {
+        this.set('currentSorting', '');
       } else { // if currentSorting is not set to this field
-        return this.set('currentSorting', this.get('dasherizedField'));
+        this.set('currentSorting', this.get('dasherizedField'));
       }
     }
   }
