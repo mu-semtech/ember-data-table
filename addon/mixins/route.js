@@ -3,19 +3,22 @@ import $ from 'jquery';
 
 export default Ember.Mixin.create({
   queryParams: {
+    filter: { refreshModel: true },
     page: { refreshModel: true },
-    sort: { refreshModel: true },
-    size: { refreshModel: true }
+    size: { refreshModel: true },
+    sort: { refreshModel: true }
   },
   mergedQueryOptions: {},
-  model( params ) {
+  model(params) {
     const options = {
+      filter: params.filter,
       sort: params.sort,
       page: {
         number: params.page,
         size: params.size
-      } };
-    $.extend( options, this.get('mergedQueryOptions') );
-    return this.store.query( this.get('modelName'), options );
+      }
+    };
+    $.extend(options, this.get('mergedQueryOptions'));
+    return this.store.query(this.get('modelName'), options);
   }
 });
