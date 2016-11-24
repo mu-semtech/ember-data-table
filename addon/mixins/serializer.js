@@ -2,8 +2,8 @@ import Ember from 'ember';
 
 export default Ember.Mixin.create({
 
-  /** 
-      Parse the links in the JSONAPI response and convert to a meta-object 
+  /**
+      Parse the links in the JSONAPI response and convert to a meta-object
   */
   normalizeQueryResponse(store, clazz, payload) {
     const result = this._super(...arguments);
@@ -18,17 +18,18 @@ export default Ember.Mixin.create({
 
   /**
      Transforms link URLs to objects containing metadata
-     E.g. 
-     links: { 
-         previous: '/streets?page[number]=1&page[size]=10 
-         next: '/streets?page[number]=3&page[size]=10 
+     E.g.
+     links: {
+         previous: '/streets?page[number]=1&page[size]=10&sort=name
+         next: '/streets?page[number]=3&page[size]=10&sort=name
      }
 
-     will be converted to 
+     will be converted to
 
-     meta: { 
+     meta: {
          previous: { number: 1, size: 10 },
-         next: { number: 3, size: 10 } 
+         next: { number: 3, size: 10 },
+         sort: 'name'
      }
    */
   createPageMeta(data) {
@@ -45,9 +46,10 @@ export default Ember.Mixin.create({
 
         if (param === 'page[number]') {
           meta[type].number = parseInt(value);
-        }
-        if (param === 'page[size]') {
+        } else if (param === 'page[size]') {
           meta[type].size = parseInt(value);
+        } else {
+          meta[param] = value;
         }
 
       });
