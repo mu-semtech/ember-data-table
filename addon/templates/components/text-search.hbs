@@ -1,7 +1,8 @@
-{{#if isExpanded}}
-  {{#debounced-value val=value wait=wait immediate=false sync=true as |value|}}
+{{#debounced-value val=value wait=wait immediate=false sync=true as |value|}}
+  <i class="material-icons prefix" {{action 'toggleExpansion'}}>
+    {{#if isExpanded}}close{{else}}search{{/if}}
+  </i>
+  {{#if isExpanded}}
     {{input class="data-table-text-search" value=value placeholder=placeholder}}
-  {{/debounced-value}}
-{{else}}
-  <i class="material-icons">search</i>
-{{/if}}
+  {{/if}}
+{{/debounced-value}}
