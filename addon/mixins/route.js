@@ -11,13 +11,14 @@ export default Ember.Mixin.create({
   mergedQueryOptions: {},
   model(params) {
     const options = {
-      filter: params.filter,
       sort: params.sort,
       page: {
         number: params.page,
         size: params.size
       }
     };
+    // TODO: sending an empty filter param to backend returns []
+    if (params.filter) { options['filter'] = params.filter; }
     $.extend(options, this.get('mergedQueryOptions'));
     return this.store.query(this.get('modelName'), options);
   }
