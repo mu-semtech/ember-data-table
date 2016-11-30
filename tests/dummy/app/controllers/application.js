@@ -1,9 +1,7 @@
 import Ember from 'ember';
+import DefaultQueryParams from 'ember-data-table/mixins/default-query-params';
 
-var ApplicationController = Ember.Controller.extend({
-  page: 2,
-  size: 5,
-  filter: '',
+var ApplicationController = Ember.Controller.extend(DefaultQueryParams, {
   model: Ember.ArrayProxy.create({
     content: [
       Ember.Object.create({ firstName: 'John', lastName: 'Doe', age: 20, created: Date.now(), modified: Date.now() }),
