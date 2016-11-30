@@ -3,6 +3,7 @@ import Ember from 'ember';
 var ApplicationController = Ember.Controller.extend({
   page: 2,
   size: 5,
+  filter: '',
   model: Ember.ArrayProxy.create({
     content: [
       Ember.Object.create({ firstName: 'John', lastName: 'Doe', age: 20, created: Date.now(), modified: Date.now() }),
@@ -41,7 +42,7 @@ var ApplicationController = Ember.Controller.extend({
     selectionTest(selection) {
       selection.setEach('isSelected', false);
       console.log("Hi, you reached the selection test action for selection: " + JSON.stringify(selection));
-    }    
+    }
   }
 });
 

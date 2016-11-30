@@ -3,11 +3,11 @@
 
   <h3>Simple table</h3>
   <blockquote>Generated table header and body based on given <code>fields</code></blockquote>
-  {{data-table content=model fields="firstName lastName age created modified" sort=sort page=page}}
+  {{data-table content=model fields="firstName lastName age created modified" sort=sort page=page filter=filter}}
 
   <h3>Semi-complex table</h3>
   <blockquote>Customized table header and body</blockquote>
-  {{#data-table content=model sort=sort page=page as |t|}}
+  {{#data-table content=model sort=sort page=page filter=filter as |t|}}
     {{#t.content as |c|}}
       {{#c.header}}
         {{th-sortable field='firstName' currentSorting=sort label='First name'}}
@@ -28,7 +28,7 @@
 
   <h3>Complex table</h3>
   <blockquote>Customized table including an action menu on top</blockquote>
-  {{#data-table content=model sort=sort page=page as |t|}}
+  {{#data-table content=model sort=sort page=page filter=filter as |t|}}
     {{#t.menu as |menu|}}
       {{#menu.general}}
         <a {{action 'menuTest'}}>Export</a>
@@ -63,14 +63,11 @@
     {{/t.content}}
   {{/data-table}}
 
-  <h3>Search field</h3>
-  {{text-search value=value wait=1000}}
-
   <h3>Internal variables</h3>
   <ul>
     <li>Sort: {{sort}}</li>
     <li>Page: {{page}}</li>
     <li>Size: {{size}}</li>
-    <li>Text search: {{value}}</li>
+    <li>Filter: {{filter}}</li>
   </ul>
 </div>
