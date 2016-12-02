@@ -7,7 +7,7 @@
 
   <h3>Semi-complex table</h3>
   <blockquote>Customized table header and body</blockquote>
-  {{#data-table content=model sort=sort page=page filter=filter as |t|}}
+  {{#data-table content=model sort=sort page=page filter=filter range=5 as |t|}}
     {{#t.content as |c|}}
       {{#c.header}}
         {{th-sortable field='firstName' currentSorting=sort label='First name'}}
@@ -28,7 +28,7 @@
 
   <h3>Complex table</h3>
   <blockquote>Customized table including an action menu on top</blockquote>
-  {{#data-table content=model sort=sort page=page filter=filter as |t|}}
+  {{#data-table content=model sort=sort page=page filter=filter pagination='page' as |t|}}
     {{#t.menu as |menu|}}
       {{#menu.general}}
         <a {{action 'menuTest'}}>Export</a>

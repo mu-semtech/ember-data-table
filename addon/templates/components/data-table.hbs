@@ -13,5 +13,9 @@
 {{/if}}
 
 {{#if hasPagination}}
-  {{page-pagination page=page links=content.meta.pagination}}
+  {{#if isNumberPagination}}
+    {{number-pagination page=page range=range links=content.meta.pagination}}
+  {{else}}
+    {{page-pagination page=page links=content.meta.pagination}}
+  {{/if}}
 {{/if}}

@@ -22,7 +22,7 @@ var ApplicationController = Ember.Controller.extend(DefaultQueryParams, {
           size: 5
         },
         last: {
-          number: 4,
+          number: 12,
           size: 3
         }
       }

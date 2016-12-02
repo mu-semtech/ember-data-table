@@ -44,6 +44,8 @@ The following parameters are passed to the data-table:
 * `field`: names of the model fields to show as columns
 * `sort` (optional): field by which the data is currently sorted
 * `page` (optional): number of the page that is currently displayed
+* `pagination` (optional): type of pagination. Must be 'page' (only next/previous arrows) or 'number' (default: 'number').
+* `range` (optional): number of pages to show in pagination bar (default: 10). Only applicable if `pagination=number`.
 * `link` (optional): name of the route the first column will link to. The selected row will be passed as a parameter.
 * `noDataMessage` (optional): message to be shown when there is no content (default: No data)
 
