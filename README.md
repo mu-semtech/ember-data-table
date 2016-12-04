@@ -34,6 +34,7 @@ In its simplest form the data table looks like:
 {{data-table
   content=model
   fields="firstName lastName age created modified"
+  filter=filter
   sort=sort
   page=page
 }}
@@ -42,6 +43,7 @@ In its simplest form the data table looks like:
 The following parameters are passed to the data-table:
 * `content`: a list of resources to be displayed in the table
 * `field`: names of the model fields to show as columns
+* `filter` (optional): current value of the text search
 * `sort` (optional): field by which the data is currently sorted
 * `page` (optional): number of the page that is currently displayed
 * `pagination` (optional): type of pagination. Must be 'page' (only next/previous arrows) or 'number' (default: 'number').
@@ -49,15 +51,15 @@ The following parameters are passed to the data-table:
 * `link` (optional): name of the route the first column will link to. The selected row will be passed as a parameter.
 * `noDataMessage` (optional): message to be shown when there is no content (default: No data)
 
-By default the data table will make each column sortable. Pagination is only shown if the pagination metadata is set on the model (see the [Ember Data Table Serializer mixin](https://github.com/erikap/ember-data-table#serializer)).
+By default the data table will make each column sortable. The search text box is only shown if the `filter` parameter is bound. Pagination is only shown if the pagination metadata is set on the model (see the [Ember Data Table Serializer mixin](https://github.com/erikap/ember-data-table#serializer)).
 
-Note: the data table will update the `sort` and `page` variables, but the user needs to handle the reloading of the data. The [Ember Data Table Route mixin](https://github.com/erikap/ember-data-table#route) may be of use.
+Note: the data table will update the `filter`, `sort` and `page` variables, but the user needs to handle the reloading of the data. The [Ember Data Table Route mixin](https://github.com/erikap/ember-data-table#route) may be of use.
 
 ### Customizing the data table
 The way the data is shown in the table can be customized by defining a `content` block instead of a `fields` parameter.
 
 ```htmlbars
-{{#data-table content=model sort=sort page=page as |t|}}
+{{#data-table content=model filter=filter sort=sort page=page as |t|}}
   {{#t.content as |c|}}
     {{#c.header}}
       {{th-sortable field='firstName' currentSorting=sort label='First name'}}
@@ -88,7 +90,7 @@ Have a look at the [helper components](https://github.com/erikap/ember-data-tabl
 ### Adding actions to the data table
 The user can add actions on top of the data table by providing a `menu` block.
 ```htmlbars
-{{#data-table content=model sort=sort page=page as |t|}}
+{{#data-table content=model filter=filter sort=sort page=page as |t|}}
   {{#t.menu as |menu|}}
     {{#menu.general}}
       <a {{action 'export'}}>Export</a>
@@ -146,7 +148,7 @@ Note: the data table will update the `currentSorting` variable, but the user nee
 
 ## Mixins
 ### Serializer
-Include the `DataTableSerializerMixin` in your application serializer to add parsing of the pagination meta data from the links in the [JSONAPI](http://jsonapi.org) responses. The data is stored in [Ember's model metadata](https://guides.emberjs.com/v2.9.0/models/handling-metadata/).
+Include the `DataTableSerializerMixin` in your application serializer to add parsing of the filter, sortig and pagination meta data from the links in the [JSONAPI](http://jsonapi.org) responses. The data is stored in [Ember's model metadata](https://guides.emberjs.com/v2.9.0/models/handling-metadata/).
 
 To include the `DataTableSerializerMixin` in your application, add the mixin to your application serializer:
 ```javascript
@@ -185,7 +187,7 @@ export default Ember.Route.extend(DataTableRouteMixin, {
 });
 ```
 
-The `DataTableRouteMixin` specifies the `page`, `sort` and `size` variables as `queryParams` of the route with the `refreshModel` flag set to `true`. As such the data is reloaded when one of the variables changes. A user can add custom options to be passed in the query to the server by defining a `mergedQueryOptions` object in the route. 
+The `DataTableRouteMixin` specifies the `filter`, `page`, `sort` and `size` variables as `queryParams` of the route with the `refreshModel` flag set to `true`. As such the data is reloaded when one of the variables changes. A user can add custom options to be passed in the query to the server by defining a `mergedQueryOptions` object in the route. 
 
 ```javascript
 import Ember from 'ember';
@@ -194,7 +196,31 @@ import DataTableRouteMixin from 'ember-data-table/mixins/route';
 export default Ember.Route.extend(DataTableRouteMixin, {
   modelName: 'post',
   mergedQueryOptions: {
-    included: 'author'
+    included: 'author'
   }
 });
 ```
+
+Note: if the `mergedQueryOptions` contains a filter on a specific field (e.g. `title`), the nested key needs to be provided as a string. Otherwise the `filter` option on all fields will be overwritten.
+
+E.g.
+```
+mergedQueryOptions: {
+    included: 'author',
+    'filter[title]': params.title
+}
+```
+
+### Default Query Params
+The `DefaultQueryParams` mixin provides sensible defaults for the `page` (default: 0) and `filter` (default: '') query parameters. The mixin can be mixed in a controller that uses the `page` and `filter` query params.
+
+```javascript
+import Ember from 'ember';
+import DefaultQueryParamsMixin from 'ember-data-table/mixins/default-query-params';
+
+export default Ember.Controller.extend(DefaultQueryParamsMixin, {
+  ...
+});
+```
+
+Note: if you want the search text field to be enabled on a data table, the filter parameter may not be `undefined`. Therefore you must initialize it on an empty query string (as done by the `DefaultQueryParams` mixin.
