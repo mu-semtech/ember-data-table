@@ -34,8 +34,8 @@
         <a {{action 'menuTest'}}>Export</a>
         <a>Print</a>
       {{/menu.general}}
-      {{#menu.selected as |selection|}}
-        <a {{action 'selectionTest' selection}}>Delete</a>
+      {{#menu.selected as |selection table|}}
+        <a {{action 'selectionTest' selection table}}>Delete</a>
       {{/menu.selected}}
     {{/t.menu}}
     {{#t.content as |c|}}

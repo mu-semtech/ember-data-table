@@ -37,9 +37,9 @@ var ApplicationController = Ember.Controller.extend(DefaultQueryParams, {
     menuTest() {
       console.log("Hi, you reached the general menu test action");
     },
-    selectionTest(selection) {
-      selection.setEach('isSelected', false);
+    selectionTest(selection, datatable) {
       console.log("Hi, you reached the selection test action for selection: " + JSON.stringify(selection));
+      datatable.clearSelection();
     }
   }
 });

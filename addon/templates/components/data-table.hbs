@@ -4,7 +4,7 @@
 
 {{#if hasBlock}}
   {{yield (hash
-    menu=(component 'data-table-menu' selection=selection data-table=this)
+    menu=(component 'data-table-menu' data-table=this)
     content=(component 'data-table-content' content=content noDataMessage=noDataMessage enableSelection=enableSelection fields=parsedFields data-table=this)
     )
     this}}

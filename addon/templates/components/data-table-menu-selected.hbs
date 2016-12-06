@@ -1,5 +1,5 @@
 {{#unless selectionIsEmpty}}
   <span class="item-count">{{selectionCount}} item(s) selected</span>
   <a class="waves-effect waves-light btn-flat" {{action 'clearSelection'}}>Cancel</a>
-  {{yield selection}}
+  {{yield data-table.selection data-table}}
 {{/unless}}

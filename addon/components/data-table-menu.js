@@ -5,7 +5,7 @@ export default Ember.Component.extend({
   layout,
   classNames: ['data-table-header'],
   classNameBindings: ['selectionIsEmpty::selected'],
-  selectionIsEmpty: Ember.computed('selection', function() {
-    return this.get('selection.length') === 0;
+  selectionIsEmpty: Ember.computed('data-table.selection.[]', function() {
+    return this.get('data-table.selection.length') === 0;
   }),
 });

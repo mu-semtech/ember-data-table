@@ -8,7 +8,7 @@ export default Ember.Component.extend({
   isNumberPagination: Ember.computed.equal('pagination', 'number'),
   range: 10,
   hasPagination: Ember.computed.bool('content.meta.pagination'),
-  selection: Ember.computed.filterBy('content', 'isSelected', true),
+  selection: [],
   hasMenu: false, // set from inner component, migth fail with nested if
   hasSearch: Ember.computed('filter', function() {
     return this.get('filter') || this.get('filter') === '';
@@ -22,4 +22,13 @@ export default Ember.Component.extend({
       return fields || [];
     }
   }),
+  addItemToSelection(item) {
+    this.get('selection').addObject(item);
+  },
+  removeItemFromSelection(item) {
+    this.get('selection').removeObject(item);
+  },
+  clearSelection() {
+    this.get('selection').clear();
+  }
 });

@@ -1,12 +1,12 @@
-{{#each content as |item|}}
-  <tr class="{{if item.isSelected 'selected'}}">
+{{#each wrappedItems as |wrapper|}}
+  <tr class="{{if (contains wrapper.item data-table.selection) 'selected'}}">
     {{#if enableSelection}}
-      <td class="center">{{md-check checked=item.isSelected}}</td>
+      <td class="center">{{md-check action="updateSelection" checked=wrapper.isSelected}}</td>
     {{/if}}
     {{#if hasBlock}}
-      {{yield item}}
+      {{yield wrapper.item}}
     {{else}}
-      {{default-data-table-content-body item=item data-table=data-table}}
+      {{default-data-table-content-body item=wrapper.item data-table=data-table}}
     {{/if}}
   </tr>
 {{/each}}

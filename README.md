@@ -96,8 +96,8 @@ The user can add actions on top of the data table by providing a `menu` block.
       <a {{action 'export'}}>Export</a>
       <a>Print</a>
     {{/menu.general}}
-    {{#menu.selected as |selection|}}
-      <a {{action 'delete' selection}}>Delete</a>
+    {{#menu.selected as |selection datatable|}}
+      <a {{action 'delete' selection datatable}}>Delete</a>
     {{/menu.selected}}
   {{/t.menu}}
   {{#t.content as |c|}}
@@ -107,13 +107,13 @@ The user can add actions on top of the data table by providing a `menu` block.
 ```
 The menu block consists of a `general` and a `selected` block. The `menu.general` is shown by default. The `menu.selected` is shown when one or more rows in the data table are selected.
 
-When applying an action on a selection, the currently selected rows can be provided to the action by the `selection` parameter. The user must reset the `selected` flags of the rows by himself.
+When applying an action on a selection, the currently selected rows can be provided to the action by the `selection` parameter. The user must reset the selection by calling `clearSelection()` on the data table.
 E.g.
 ```javascript
 actions:
-  myAction(selection) {
-    selection.setEach('isSelected', false);
+  myAction(selection, datatable) {
     console.log("Hi, you reached my action for selection: " + JSON.stringify(selection));
+    datatable.clearSelection();
   }    
 ```
 

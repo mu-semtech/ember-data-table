@@ -7,12 +7,12 @@ export default Ember.Component.extend({
     this._super( ...arguments );
     this.set('data-table.enableSelection', true);
   },
-  selectionCount: Ember.computed('selection', function() {
-    return this.get('selection.length');
+  selectionCount: Ember.computed('data-table.selection.[]', function() {
+    return this.get('data-table.selection.length');
   }),
   actions: {
     clearSelection() {
-      this.get('selection').setEach('isSelected', false);
+      this.get('data-table').clearSelection();
     }
   }
 
