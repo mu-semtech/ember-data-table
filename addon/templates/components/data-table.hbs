@@ -5,11 +5,11 @@
 {{#if hasBlock}}
   {{yield (hash
     menu=(component 'data-table-menu' data-table=this)
-    content=(component 'data-table-content' content=content noDataMessage=noDataMessage enableSelection=enableSelection fields=parsedFields data-table=this)
+    content=(component 'data-table-content' content=content noDataMessage=noDataMessage enableSelection=enableSelection data-table=this)
     )
     this}}
 {{else}}
-  {{component 'data-table-content' content=content noDataMessage=noDataMessage enableSelection=enableSelection fields=parsedFields data-table=this}}
+  {{component 'data-table-content' content=content noDataMessage=noDataMessage enableSelection=enableSelection data-table=this}}
 {{/if}}
 
 {{#if hasPagination}}
