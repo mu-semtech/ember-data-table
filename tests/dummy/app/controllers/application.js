@@ -38,8 +38,11 @@ var ApplicationController = Ember.Controller.extend(DefaultQueryParams, {
       console.log("Hi, you reached the general menu test action");
     },
     selectionTest(selection, datatable) {
-      console.log("Hi, you reached the selection test action for selection: " + JSON.stringify(selection));
       datatable.clearSelection();
+      console.log("Hi, you reached the selection test action for selection: " + JSON.stringify(selection));
+      selection.forEach(function(item) {
+        item.set('age', item.get('age') + 1);
+      });
     }
   }
 });
