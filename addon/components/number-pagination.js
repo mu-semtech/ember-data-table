@@ -12,7 +12,7 @@ export default Ember.Component.extend({
     return max ? max + 1 : max;
   }),
   current: Ember.computed('page', {
-    get(key) {
+    get() {
       return this.get('page') ? this.get('page') + 1 : 1;
     },
     set(key, value) {
