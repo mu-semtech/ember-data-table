@@ -49,6 +49,7 @@ The following parameters are passed to the data-table:
 * `pagination` (optional): type of pagination. Must be 'page' (only next/previous arrows) or 'number' (default: 'number').
 * `range` (optional): number of pages to show in pagination bar (default: 10). Only applicable if `pagination=number`.
 * `link` (optional): name of the route the first column will link to. The selected row will be passed as a parameter.
+* `autoSearch` (optional): whether filter value is updated automatically while typing (with a debounce) or user must click a search button explicitely to set the filter value (default: true).
 * `noDataMessage` (optional): message to be shown when there is no content (default: No data)
 
 By default the data table will make each column sortable. The search text box is only shown if the `filter` parameter is bound. Pagination is only shown if the pagination metadata is set on the model (see the [Ember Data Table Serializer mixin](https://github.com/erikap/ember-data-table#serializer)).

@@ -1,8 +1,24 @@
-{{#debounced-value val=filter wait=wait immediate=false sync=true as |value|}}
-  <i class="material-icons prefix" {{action 'toggleExpansion'}}>
-    {{#if isExpanded}}close{{else}}search{{/if}}
-  </i>
-  {{#if isExpanded}}
-    {{input class="data-table-text-search" value=value placeholder=placeholder}}
-  {{/if}}
-{{/debounced-value}}
+{{#if auto}}
+  {{#debounced-value val=filter wait=wait immediate=false sync=true as |value|}}
+    <i class="material-icons prefix" {{action 'toggleExpansion'}}>
+      {{#if isExpanded}}close{{else}}search{{/if}}
+    </i>
+    {{#if isExpanded}}
+      {{input class="data-table-text-search" value=value placeholder=placeholder}}
+    {{/if}}
+  {{/debounced-value}}
+{{else}}
+  {{#unless isExpanded}}
+    <i class="material-icons prefix" {{action 'toggleExpansion'}}>search</i>
+  {{else}}
+    <div class="row">
+      <div class="col s10">
+        {{input class="data-table-text-search" value=value placeholder=placeholder enter='search'}}
+      </div>
+      <div class="col s2">
+        <i class="material-icons postfix" {{action 'search'}}>search</i>
+        <i class="material-icons postfix" {{action 'toggleExpansion'}}>close</i>
+      </div>
+    </div>
+  {{/unless}}
+{{/if}}

@@ -28,7 +28,7 @@
 
   <h3>Complex table</h3>
   <blockquote>Customized table including an action menu on top</blockquote>
-  {{#data-table content=model sort=sort page=page filter=filter pagination='page' as |t|}}
+  {{#data-table content=model sort=sort page=page filter=filter autoSearch=false pagination='page' as |t|}}
     {{#t.menu as |menu|}}
       {{#menu.general}}
         <a {{action 'menuTest'}}>Export</a>

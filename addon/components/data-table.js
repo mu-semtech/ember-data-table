@@ -13,6 +13,7 @@ export default Ember.Component.extend({
   hasSearch: Ember.computed('filter', function() {
     return this.get('filter') || this.get('filter') === '';
   }),
+  autoSearch: true,
   enableSelection: Ember.computed.oneWay('hasMenu'),
   parsedFields: Ember.computed('fields', function() {
     const fields = this.get('fields');
