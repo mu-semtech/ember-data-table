@@ -188,7 +188,7 @@ export default Ember.Route.extend(DataTableRouteMixin, {
 });
 ```
 
-The `DataTableRouteMixin` specifies the `filter`, `page`, `sort` and `size` variables as `queryParams` of the route with the `refreshModel` flag set to `true`. As such the data is reloaded when one of the variables changes. A user can add custom options to be passed in the query to the server by defining a `mergedQueryOptions` object in the route. 
+The `DataTableRouteMixin` specifies the `filter`, `page`, `sort` and `size` variables as `queryParams` of the route with the `refreshModel` flag set to `true`. As such the data is reloaded when one of the variables changes. A user can add custom options to be passed in the query to the server by defining a `mergeQueryOptions(parms)` function in the route. The function must return an object with the options to be merged. 
 
 ```javascript
 import Ember from 'ember';
@@ -196,19 +196,21 @@ import DataTableRouteMixin from 'ember-data-table/mixins/route';
 
 export default Ember.Route.extend(DataTableRouteMixin, {
   modelName: 'post',
-  mergedQueryOptions: {
-    included: 'author'
+  mergeQueryOptions(params) {
+    return { included: 'author' };
   }
 });
 ```
 
-Note: if the `mergedQueryOptions` contains a filter on a specific field (e.g. `title`), the nested key needs to be provided as a string. Otherwise the `filter` option on all fields will be overwritten.
+Note: if the `mergeQueryOptions` returns a filter option on a specific field (e.g. `title`), the nested key needs to be provided as a string. Otherwise the `filter` option on all fields will be overwritten.
 
 E.g.
 ```
-mergedQueryOptions: {
-    included: 'author',
-    'filter[title]': params.title
+mergeQueryOptions(params) {
+    return {
+        included: 'author',
+        'filter[title]': params.title
+    };
 }
 ```
 
