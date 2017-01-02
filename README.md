@@ -205,7 +205,7 @@ export default Ember.Route.extend(DataTableRouteMixin, {
 Note: if the `mergeQueryOptions` returns a filter option on a specific field (e.g. `title`), the nested key needs to be provided as a string. Otherwise the `filter` option on all fields will be overwritten.
 
 E.g.
-```
+```javascript
 mergeQueryOptions(params) {
     return {
         included: 'author',
