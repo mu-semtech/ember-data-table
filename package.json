@@ -1,6 +1,6 @@
 {
   "name": "ember-data-table",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Data tables for Ember following Google Design specs",
   "directories": {
     "doc": "doc",
