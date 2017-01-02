@@ -14,6 +14,9 @@ export default Ember.Component.extend({
     return this.get('filter') || this.get('filter') === '';
   }),
   autoSearch: true,
+  filterChanged: Ember.observer('filter', function() {
+    this.set('page', 0);
+  }),
   enableSelection: Ember.computed.oneWay('hasMenu'),
   parsedFields: Ember.computed('fields', function() {
     const fields = this.get('fields');
