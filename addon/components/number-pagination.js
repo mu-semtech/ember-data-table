@@ -13,7 +13,7 @@ export default Ember.Component.extend({
   }),
   current: Ember.computed('page', {
     get() {
-      return this.get('page') ? this.get('page') + 1 : 1;
+      return this.get('page') ? parseInt(this.get('page')) + 1 : 1;
     },
     set(key, value) {
       this.set('page', value - 1);
