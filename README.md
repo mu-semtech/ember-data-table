@@ -49,8 +49,9 @@ The following parameters are passed to the data-table:
 * `pagination` (optional): type of pagination. Must be 'page' (only next/previous arrows) or 'number' (default: 'number').
 * `range` (optional): number of pages to show in pagination bar (default: 10). Only applicable if `pagination=number`.
 * `link` (optional): name of the route the first column will link to. The selected row will be passed as a parameter.
-* `autoSearch` (optional): whether filter value is updated automatically while typing (with a debounce) or user must click a search button explicitely to set the filter value (default: true).
+* `autoSearch` (optional): whether filter value is updated automatically while typing (with a debounce) or user must click a search button explicitly to set the filter value (default: true).
 * `noDataMessage` (optional): message to be shown when there is no content (default: No data)
+* `lineNumbers` (optional): allow line numbers in the table rows (default: true). Must be true or false.
 
 By default the data table will make each column sortable. The search text box is only shown if the `filter` parameter is bound. Pagination is only shown if the pagination metadata is set on the model (see the [Ember Data Table Serializer mixin](https://github.com/erikap/ember-data-table#serializer)).
 
@@ -157,22 +158,22 @@ import DS from 'ember-data';
 import DataTableSerializerMixin from 'ember-data-table/mixins/serializer';
 
 export default DS.JSONAPISerializer.extend(DataTableSerializerMixin, {
-  
+
 });
 ```
 
 E.g.
 ```javascript
-links: { 
+links: {
   previous: '/posts?page[number]=1&page[size]=10'
   next: '/posts?page[number]=3&page[size]=10'
 }
 ```
 will be parsed to
 ```javascript
-meta: { 
+meta: {
   previous: { number: 1, size: 10 },
-  next: { number: 3, size: 10 } 
+  next: { number: 3, size: 10 }
 }
 ```
 
@@ -188,7 +189,7 @@ export default Ember.Route.extend(DataTableRouteMixin, {
 });
 ```
 
-The `DataTableRouteMixin` specifies the `filter`, `page`, `sort` and `size` variables as `queryParams` of the route with the `refreshModel` flag set to `true`. As such the data is reloaded when one of the variables changes. A user can add custom options to be passed in the query to the server by defining a `mergeQueryOptions(parms)` function in the route. The function must return an object with the options to be merged. 
+The `DataTableRouteMixin` specifies the `filter`, `page`, `sort` and `size` variables as `queryParams` of the route with the `refreshModel` flag set to `true`. As such the data is reloaded when one of the variables changes. A user can add custom options to be passed in the query to the server by defining a `mergeQueryOptions(parms)` function in the route. The function must return an object with the options to be merged.
 
 ```javascript
 import Ember from 'ember';
