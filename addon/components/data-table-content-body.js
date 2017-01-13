@@ -6,8 +6,10 @@ export default Ember.Component.extend({
   tagName: 'tbody',
   offset: Ember.computed(function(){
       var offset = 1; //to avoid having 0. row
-      if(this.get('data-table.hasPagination')) { //calculate the offset if we have pagination
-        offset += this.get('data-table.page') * this.get('content.meta.pagination.first.size');
+      var page = this.get('data-table.page');
+      var size = this.get('content.meta.pagination.first.size')
+      if(this.get('data-table.hasPagination') && page && size) { //calculate the offset if we have pagination
+        offset += page * size;
       }
       return offset;
   }),
