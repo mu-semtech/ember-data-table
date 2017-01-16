@@ -2,12 +2,12 @@
   <table class="data-table responsive-table">
     {{#if hasBlock}}
       {{yield (hash
-        header=(component 'data-table-content-header' enableSelection=enableSelection data-table=data-table)
-        body=(component 'data-table-content-body' content=content enableSelection=enableSelection data-table=data-table)
+        header=(component 'data-table-content-header' enableSelection=enableSelection enableLineNumbers=enableLineNumbers data-table=data-table)
+        body=(component 'data-table-content-body' content=content enableSelection=enableSelection enableLineNumbers=enableLineNumbers data-table=data-table)
         )}}
     {{else}}
-      {{component 'data-table-content-header' enableSelection=enableSelection data-table=data-table}}
-      {{component 'data-table-content-body' content=content enableSelection=enableSelection data-table=data-table}}
+      {{component 'data-table-content-header' enableSelection=enableSelection enableLineNumbers=enableLineNumbers data-table=data-table}}
+      {{component 'data-table-content-body' content=content enableSelection=enableSelection enableLineNumbers=enableLineNumbers data-table=data-table}}
     {{/if}}
   </table>
 {{else}}

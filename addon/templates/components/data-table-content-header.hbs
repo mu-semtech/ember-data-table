@@ -2,6 +2,9 @@
   {{#if enableSelection}}
     <th><!-- Checkbox --></th>
   {{/if}}
+  {{#if enableLineNumbers}}
+    <th><!-- Linenumbers --></th>
+  {{/if}}
   {{#if hasBlock}}
     {{yield}}
   {{else}}
@@ -10,4 +13,3 @@
     {{/each}}
   {{/if}}
 </tr>
-

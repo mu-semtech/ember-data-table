@@ -7,7 +7,9 @@ export default Ember.Component.extend({
   pagination: 'number', // page or number
   isNumberPagination: Ember.computed.equal('pagination', 'number'),
   range: 10,
+  lineNumbers: true,
   hasPagination: Ember.computed.bool('content.meta.pagination'),
+  enableLineNumbers: Ember.computed.bool('lineNumbers'),
   selection: [],
   hasMenu: false, // set from inner component, migth fail with nested if
   hasSearch: Ember.computed('filter', function() {
