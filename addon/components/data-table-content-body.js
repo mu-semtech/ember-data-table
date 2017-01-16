@@ -7,7 +7,7 @@ export default Ember.Component.extend({
   offset: Ember.computed(function(){
       var offset = 1; //to avoid having 0. row
       var page = this.get('data-table.page');
-      var size = this.get('content.meta.pagination.first.size')
+      var size = this.get('content.meta.pagination.first.size');
       if(this.get('data-table.hasPagination') && page && size) { //calculate the offset if we have pagination
         offset += page * size;
       }
