@@ -7,7 +7,7 @@ export default Ember.Component.extend({
   pagination: 'number', // page or number
   isNumberPagination: Ember.computed.equal('pagination', 'number'),
   range: 10,
-  lineNumbers: true,
+  lineNumbers: false,
   hasPagination: Ember.computed.bool('content.meta.pagination'),
   enableLineNumbers: Ember.computed.bool('lineNumbers'),
   selection: [],

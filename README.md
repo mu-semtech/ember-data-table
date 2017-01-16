@@ -51,7 +51,7 @@ The following parameters are passed to the data-table:
 * `link` (optional): name of the route the first column will link to. The selected row will be passed as a parameter.
 * `autoSearch` (optional): whether filter value is updated automatically while typing (with a debounce) or user must click a search button explicitly to set the filter value (default: true).
 * `noDataMessage` (optional): message to be shown when there is no content (default: No data)
-* `lineNumbers` (optional): allow line numbers in the table rows (default: true). Must be true or false.
+* `lineNumbers` (optional): display a line number per table row (default: false). Must be true or false.
 
 By default the data table will make each column sortable. The search text box is only shown if the `filter` parameter is bound. Pagination is only shown if the pagination metadata is set on the model (see the [Ember Data Table Serializer mixin](https://github.com/erikap/ember-data-table#serializer)).
 
