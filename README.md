@@ -53,9 +53,9 @@ The following parameters are passed to the data-table:
 * `noDataMessage` (optional): message to be shown when there is no content (default: No data)
 * `lineNumbers` (optional): display a line number per table row (default: false). Must be true or false.
 
-By default the data table will make each column sortable. The search text box is only shown if the `filter` parameter is bound. Pagination is only shown if the pagination metadata is set on the model (see the [Ember Data Table Serializer mixin](https://github.com/erikap/ember-data-table#serializer)).
+By default the data table will make each column sortable. The search text box is only shown if the `filter` parameter is bound. Pagination is only shown if the pagination metadata is set on the model (see the [Ember Data Table Serializer mixin](https://github.com/mu-semtech/ember-data-table#serializer)).
 
-Note: the data table will update the `filter`, `sort` and `page` variables, but the user needs to handle the reloading of the data. The [Ember Data Table Route mixin](https://github.com/erikap/ember-data-table#route) may be of use.
+Note: the data table will update the `filter`, `sort` and `page` variables, but the user needs to handle the reloading of the data. The [Ember Data Table Route mixin](https://github.com/mu-semtech/ember-data-table#route) may be of use.
 
 ### Customizing the data table
 The way the data is shown in the table can be customized by defining a `content` block instead of a `fields` parameter.
@@ -87,7 +87,7 @@ The way the data is shown in the table can be customized by defining a `content`
   {{/t.content}}
 {{/data-table}}
 ```
-Have a look at the [helper components](https://github.com/erikap/ember-data-table#helper-components).
+Have a look at the [helper components](https://github.com/mu-semtech/ember-data-table#helper-components).
 
 ### Adding actions to the data table
 The user can add actions on top of the data table by providing a `menu` block.
@@ -121,8 +121,8 @@ actions:
 
 ## Helper components
 The following components may be helpful when customizing the data table:
-* [More menu](https://github.com/erikap/ember-data-table#more-menu)
-* [Sortable header](https://github.com/erikap/ember-data-table#sortable-header)
+* [More menu](https://github.com/mu-semtech/ember-data-table#more-menu)
+* [Sortable header](https://github.com/mu-semtech/ember-data-table#sortable-header)
 
 ### More menu
 The `more-menu` component displays a [Google's more_vert icon](https://material.io/icons/#ic_more_vert) that opens a dropdown menu when clicked. The menu items are passed as a block. Each item should be decorated with the `collection-item` class.
@@ -146,7 +146,7 @@ The following parameters are passed to the `th-sortable` component:
 * `label`: label to be shown in the column's table header
 * `currentSorting`: current sorting (field and order) of the data according to [the JSONAPI specification](http://jsonapi.org/format/#fetching-sorting)
 
-Note: the data table will update the `currentSorting` variable, but the user needs to handle the reloading of the data. The [Ember Data Table Route mixin](https://github.com/erikap/ember-data-table#route) may be of use.
+Note: the data table will update the `currentSorting` variable, but the user needs to handle the reloading of the data. The [Ember Data Table Route mixin](https://github.com/mu-semtech/ember-data-table#route) may be of use.
 
 ## Mixins
 ### Serializer
