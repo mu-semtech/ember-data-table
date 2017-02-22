@@ -2,16 +2,21 @@
 
 Data table for Ember following Google Design specs.
 
+## Prerequisites
+This addon requires [ember-cli-sass](https://github.com/aexmachina/ember-cli-sass) and [ember-cli-materialize](https://github.com/mike-north/ember-cli-materialize).
+```bash
+ember install ember-cli-sass
+ember install ember-cli-materialize
+```
+
 ## Installation
 ```bash
 ember install ember-data-table
 ```
 
-This addon depends on [ember-cli-materialize](https://github.com/mike-north/ember-cli-materialize). It will be automatically installed as a dependency.
-
 ## Styling
 
-Upon installation, the ember-data-table style will be automatically included in the app.css:
+Upon installation, the ember-data-table style will be automatically included in the app.scss:
 
 ```javascript
 @import 'ember-data-table';
@@ -25,6 +30,7 @@ To see a demo of the data tables, clone the repository and run the dummy app:
 ```bash
 git clone https://github.com/erikap/ember-data-table.git
 cd ember-data-table
+npm install && bower install
 ember server
 ```
 
