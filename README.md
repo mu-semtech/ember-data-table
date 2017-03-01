@@ -5,40 +5,28 @@ Data table for Ember following Google Material Design specification.
 ## Demo
 View a demo here: [https://ember-data-table.semte.ch](https://ember-data-table.semte.ch)
 
-## Prerequisites
+## Installation
 This addon requires [ember-cli-sass](https://github.com/aexmachina/ember-cli-sass) and [ember-cli-materialize](https://github.com/mike-north/ember-cli-materialize).
 ```bash
 ember install ember-cli-sass
 ember install ember-cli-materialize
-```
-
-## Installation
-```bash
 ember install ember-data-table
 ```
 
-## Styling
-
-Upon installation, the ember-data-table style will be automatically included in the app.scss:
+## Getting started
+Include the `DataTableRouteMixin` in the route which model you want to show in the data table. Configure the model name.
 
 ```javascript
-@import 'ember-data-table';
+import Ember from 'ember';
+import DataTableRouteMixin from 'ember-data-table/mixins/route';
+
+export default Ember.Route.extend(DataTableRouteMixin, {
+  modelName: 'blogpost'
+});
 ```
 
-## Data table component
+Next, include the data table in your template:
 
-The data table component displays a data table according to the [Google Design spec](https://material.google.com/components/data-tables.html). The data table can be fully customized as explained in [Customizing the data table](https://github.com/erikap/ember-data-table#customizing-the-data-table).
-
-To see a demo of the data tables, clone the repository and run the dummy app:
-```bash
-git clone https://github.com/erikap/ember-data-table.git
-cd ember-data-table
-npm install && bower install
-ember server
-```
-
-### Simple data table
-In its simplest form the data table looks like:
 ```htmlbars
 {{data-table
   content=model
@@ -49,7 +37,15 @@ In its simplest form the data table looks like:
 }}
 ```
 
-The following parameters are passed to the data-table:
+Note: the filtering, sorting and pagination isn't done at the frontend. By including the `DataTableRouteMixin` each change in the `filter`, `sort` and `page` params will result in a new request to the backend.
+
+Have a look at [Customizing the data table](https://github.com/erikap/ember-data-table#customizing-the-data-table) to learn how you can customize the data table's header and body.
+
+## Data table component
+
+### Specification
+
+The following parameters can be passed to the data-table component:
 * `content`: a list of resources to be displayed in the table
 * `field`: names of the model fields to show as columns
 * `filter` (optional): current value of the text search
@@ -63,8 +59,6 @@ The following parameters are passed to the data-table:
 * `lineNumbers` (optional): display a line number per table row (default: false). Must be true or false.
 
 By default the data table will make each column sortable. The search text box is only shown if the `filter` parameter is bound. Pagination is only shown if the pagination metadata is set on the model (see the [Ember Data Table Serializer mixin](https://github.com/mu-semtech/ember-data-table#serializer)).
-
-Note: the data table will update the `filter`, `sort` and `page` variables, but the user needs to handle the reloading of the data. The [Ember Data Table Route mixin](https://github.com/mu-semtech/ember-data-table#route) may be of use.
 
 ### Customizing the data table
 The way the data is shown in the table can be customized by defining a `content` block instead of a `fields` parameter.
@@ -159,7 +153,7 @@ Note: the data table will update the `currentSorting` variable, but the user nee
 
 ## Mixins
 ### Serializer
-Include the `DataTableSerializerMixin` in your application serializer to add parsing of the filter, sortig and pagination meta data from the links in the [JSONAPI](http://jsonapi.org) responses. The data is stored in [Ember's model metadata](https://guides.emberjs.com/v2.9.0/models/handling-metadata/).
+Upon installation, the `DataTableSerializerMixin` is automatically included in your application serializer to add parsing of the filter, sortig and pagination meta data from the links in the [JSONAPI](http://jsonapi.org) responses. The data is stored in [Ember's model metadata](https://guides.emberjs.com/v2.9.0/models/handling-metadata/).
 
 To include the `DataTableSerializerMixin` in your application, add the mixin to your application serializer:
 ```javascript
