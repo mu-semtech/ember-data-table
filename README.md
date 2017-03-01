@@ -1,6 +1,9 @@
 # Ember Data Table
 
-Data table for Ember following Google Design specs.
+Data table for Ember following Google Material Design specification.
+
+## Demo
+View a demo here: [https://ember-data-table.semte.ch](https://ember-data-table.semte.ch)
 
 ## Prerequisites
 This addon requires [ember-cli-sass](https://github.com/aexmachina/ember-cli-sass) and [ember-cli-materialize](https://github.com/mike-north/ember-cli-materialize).
