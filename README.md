@@ -46,17 +46,20 @@ Have a look at [Customizing the data table](https://github.com/erikap/ember-data
 ### Specification
 
 The following parameters can be passed to the data-table component:
-* `content`: a list of resources to be displayed in the table
-* `field`: names of the model fields to show as columns
-* `filter` (optional): current value of the text search
-* `sort` (optional): field by which the data is currently sorted
-* `page` (optional): number of the page that is currently displayed
-* `pagination` (optional): type of pagination. Must be 'page' (only next/previous arrows) or 'number' (default: 'number').
-* `range` (optional): number of pages to show in pagination bar (default: 10). Only applicable if `pagination=number`.
-* `link` (optional): name of the route the first column will link to. The selected row will be passed as a parameter.
-* `autoSearch` (optional): whether filter value is updated automatically while typing (with a debounce) or user must click a search button explicitly to set the filter value (default: true).
-* `noDataMessage` (optional): message to be shown when there is no content (default: No data)
-* `lineNumbers` (optional): display a line number per table row (default: false). Must be true or false.
+
+| Parameter | Required | Default | Description |
+|-----------|----------|---------|-------------|
+| content | x | | a list of resources to be displayed in the table |
+| fields | | | names of the model fields to show as columns (seperated by whitespace) |
+| filter | | | current value of the text search |
+| sort | | | field by which the data is currently sorted |
+| page | | | number of the page that is currently displayed |
+| pagination | | number | type of pagination. Must be 'page' (only next/previous arrows) or 'number'. |
+| range | | 10 | number of pages to show in pagination bar. Only applicable if `pagination=number`. |
+| link | | | name of the route the first column will link to. The selected row will be passed as a parameter. |
+| autoSearch | | true | whether filter value is updated automatically while typing (with a debounce) or user must click a search button explicitly to set the filter value.
+| noDataMessage | | No data | message to be shown when there is no content |
+| lineNumbers | | false | display a line number per table row (default: false). Must be true or false. |
 
 By default the data table will make each column sortable. The search text box is only shown if the `filter` parameter is bound. Pagination is only shown if the pagination metadata is set on the model (see the [Ember Data Table Serializer mixin](https://github.com/mu-semtech/ember-data-table#serializer)).
 
@@ -145,9 +148,12 @@ The `th-sortable` component makes a column in the data table sortable. It displa
 ```
 
 The following parameters are passed to the `th-sortable` component:
-* `field`: name of the model field in the column
-* `label`: label to be shown in the column's table header
-* `currentSorting`: current sorting (field and order) of the data according to [the JSONAPI specification](http://jsonapi.org/format/#fetching-sorting)
+
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| field | x | name of the model field in the column |
+| label | x | label to be shown in the column's table header |
+| currentSorting | x | current sorting (field and order) of the data according to [the JSONAPI specification](http://jsonapi.org/format/#fetching-sorting) |
 
 Note: the data table will update the `currentSorting` variable, but the user needs to handle the reloading of the data. The [Ember Data Table Route mixin](https://github.com/mu-semtech/ember-data-table#route) may be of use.
 
