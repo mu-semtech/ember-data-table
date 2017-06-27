@@ -1,21 +1,28 @@
-{{#if hasSearch}}
-  {{text-search filter=filter auto=autoSearch}}
-{{/if}}
-
 {{#if hasBlock}}
+  <div class="layout-row flex layout-align-space-between-center data-table-header {{unless selectionIsEmpty "selected"}}{{if enableSearch "row-reverse"}}">
+    {{#if enableSearch}}
+      {{text-search filter=filter auto=autoSearch}}
+    {{/if}}
+    {{yield (hash
+        menu=(component 'data-table-menu' data-table=this)
+        )
+        this}}
+  </div>
   {{yield (hash
-    menu=(component 'data-table-menu' data-table=this)
-    content=(component 'data-table-content' content=content noDataMessage=noDataMessage enableSelection=enableSelection enableLineNumbers=enableLineNumbers data-table=this)
-    )
-    this}}
+      content=(component 'data-table-content' content=content noDataMessage=noDataMessage enableSelection=enableSelection enableLineNumbers=enableLineNumbers data-table=this)
+      )
+      this}}
 {{else}}
+  {{#if enableSearch}}
+    <div class="layout-row flex layout-align-end-center data-table-header">
+      <div class="data-table-menu">
+        {{text-search filter=filter auto=autoSearch}}
+      </div>
+    </div>
+  {{/if}}
   {{component 'data-table-content' content=content noDataMessage=noDataMessage enableSelection=enableSelection enableLineNumbers=enableLineNumbers data-table=this}}
 {{/if}}
 
-{{#if hasPagination}}
-  {{#if isNumberPagination}}
-    {{number-pagination page=page range=range links=content.meta.pagination}}
-  {{else}}
-    {{page-pagination page=page links=content.meta.pagination}}
-  {{/if}}
-{{/if}}
+{{number-pagination
+    page=page size=size nbOfItems=content.length sizeOptions=sizeOptions
+    total=content.meta.count links=content.meta.pagination}}

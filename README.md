@@ -6,11 +6,15 @@ Data table for Ember following Google Material Design specification.
 View a demo here: [https://ember-data-table.semte.ch](https://ember-data-table.semte.ch)
 
 ## Installation
-This addon requires [ember-cli-sass](https://github.com/aexmachina/ember-cli-sass) and [ember-cli-materialize](https://github.com/mike-north/ember-cli-materialize).
 ```bash
-ember install ember-cli-sass
-ember install ember-cli-materialize
+ember install ember-paper
 ember install ember-data-table
+```
+
+Import the styles in `app.scss`:
+```scss
+@import ember-paper;
+@import ember-data-table;
 ```
 
 ## Getting started
@@ -34,10 +38,11 @@ Next, include the data table in your template:
   filter=filter
   sort=sort
   page=page
+  size=size
 }}
 ```
 
-Note: the filtering, sorting and pagination isn't done at the frontend. By including the `DataTableRouteMixin` each change in the `filter`, `sort` and `page` params will result in a new request to the backend.
+Note: the filtering, sorting and pagination isn't done at the frontend. By including the `DataTableRouteMixin` each change in the `filter`, `sort`, `page` and `size` params will result in a new request to the backend.
 
 Have a look at [Customizing the data table](https://github.com/erikap/ember-data-table#customizing-the-data-table) to learn how you can customize the data table's header and body.
 
@@ -54,8 +59,9 @@ The following parameters can be passed to the data-table component:
 | filter | | | current value of the text search |
 | sort | | | field by which the data is currently sorted |
 | page | | | number of the page that is currently displayed |
-| pagination | | number | type of pagination. Must be 'page' (only next/previous arrows) or 'number'. |
-| range | | 10 | number of pages to show in pagination bar. Only applicable if `pagination=number`. |
+| size | | | number of items shown on one page |
+| enableSizes | | true | flag to enable page size options dropdown |
+| sizes | | [5, 10, 25, 50, 100] | array of page size options (numbers) |
 | link | | | name of the route the first column will link to. The selected row will be passed as a parameter. |
 | autoSearch | | true | whether filter value is updated automatically while typing (with a debounce) or user must click a search button explicitly to set the filter value.
 | noDataMessage | | No data | message to be shown when there is no content |
@@ -67,7 +73,7 @@ By default the data table will make each column sortable. The search text box is
 The way the data is shown in the table can be customized by defining a `content` block instead of a `fields` parameter.
 
 ```htmlbars
-{{#data-table content=model filter=filter sort=sort page=page as |t|}}
+{{#data-table content=model filter=filter sort=sort page=page size=size as |t|}}
   {{#t.content as |c|}}
     {{#c.header}}
       {{th-sortable field='firstName' currentSorting=sort label='First name'}}
@@ -75,7 +81,6 @@ The way the data is shown in the table can be customized by defining a `content`
       <th>Age</th>
       {{th-sortable field='created' currentSorting=sort label='Created'}}
       <th>Modified</th>
-      <th><!-- More menu --></th>
     {{/c.header}}
     {{#c.body as |row|}}
       <td>{{row.firstName}}</td>
@@ -83,12 +88,6 @@ The way the data is shown in the table can be customized by defining a `content`
       <td>{{row.age}}</td>
       <td>{{moment-format row.created}}</td>
       <td>{{moment-format row.modified}}</td>
-      <td>
-        {{#more-menu}}
-          <a class="collection-item" {{action 'showDetails' row}}>Details</a>
-          <a class="collection-item" {{action 'edit' row}}>Edit</a>
-        {{/more-menu}}
-      </td>
     {{/c.body}}
   {{/t.content}}
 {{/data-table}}
@@ -98,14 +97,14 @@ Have a look at the [helper components](https://github.com/mu-semtech/ember-data-
 ### Adding actions to the data table
 The user can add actions on top of the data table by providing a `menu` block.
 ```htmlbars
-{{#data-table content=model filter=filter sort=sort page=page as |t|}}
+{{#data-table content=model filter=filter sort=sort page=page size=size as |t|}}
   {{#t.menu as |menu|}}
     {{#menu.general}}
-      <a {{action 'export'}}>Export</a>
-      <a>Print</a>
+      {{#paper-button onClick=(action "export") accent=true noInk=true}}Export{{/paper-button}}
+      {{#paper-button onClick=(action "print") accent=true noInk=true}}Print{{/paper-button}}          
     {{/menu.general}}
     {{#menu.selected as |selection datatable|}}
-      <a {{action 'delete' selection datatable}}>Delete</a>
+      {{#paper-button onClick=(action "delete" selection table) accent=true noInk=true}}Delete{{/paper-button}}
     {{/menu.selected}}
   {{/t.menu}}
   {{#t.content as |c|}}
@@ -127,18 +126,7 @@ actions:
 
 ## Helper components
 The following components may be helpful when customizing the data table:
-* [More menu](https://github.com/mu-semtech/ember-data-table#more-menu)
 * [Sortable header](https://github.com/mu-semtech/ember-data-table#sortable-header)
-
-### More menu
-The `more-menu` component displays a [Google's more_vert icon](https://material.io/icons/#ic_more_vert) that opens a dropdown menu when clicked. The menu items are passed as a block. Each item should be decorated with the `collection-item` class.
-
-```htmlbars
-{{#more-menu}}
-  {{link-to 'posts.edit' row class="collection-item"}}Edit{{/link-to}}
-  <a class="collection-item" {{action 'delete' row}}>Delete</a>
-{{/more-menu}}
-```
 
 ### Sortable header
 The `th-sortable` component makes a column in the data table sortable. It displays a table header `<th>` element including an ascending/descending sorting icon in case the table is currently sorted by the given column.
@@ -173,6 +161,9 @@ export default DS.JSONAPISerializer.extend(DataTableSerializerMixin, {
 
 E.g.
 ```javascript
+meta: {
+  count: 42
+},
 links: {
   previous: '/posts?page[number]=1&page[size]=10'
   next: '/posts?page[number]=3&page[size]=10'
@@ -181,8 +172,11 @@ links: {
 will be parsed to
 ```javascript
 meta: {
-  previous: { number: 1, size: 10 },
-  next: { number: 3, size: 10 }
+  count: 42,
+  pagination: {
+    previous: { number: 1, size: 10 },
+    next: { number: 3, size: 10 }
+  }
 }
 ```
 
@@ -212,7 +206,7 @@ export default Ember.Route.extend(DataTableRouteMixin, {
 });
 ```
 
-Note: if the `mergeQueryOptions` returns a filter option on a specific field (e.g. `title`), the nested key needs to be provided as a string. Otherwise the `filter` option on all fields will be overwritten.
+Note: if the `mergeQueryOptions` returns a filter option on a specific field (e.g. `title`), the nested key needs to be provided as a string. Otherwise the general `filter` option across all fields will be overwritten.
 
 E.g.
 ```javascript
@@ -225,7 +219,7 @@ mergeQueryOptions(params) {
 ```
 
 ### Default Query Params
-The `DefaultQueryParams` mixin provides sensible defaults for the `page` (default: 0) and `filter` (default: '') query parameters. The mixin can be mixed in a controller that uses the `page` and `filter` query params.
+The `DefaultQueryParams` mixin provides sensible defaults for the `page` (default: 0), `size` (default: 25) and `filter` (default: '') query parameters. The mixin can be mixed in a controller that uses the `page` and `filter` query params.
 
 ```javascript
 import Ember from 'ember';

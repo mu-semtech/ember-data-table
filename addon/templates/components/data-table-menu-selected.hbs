@@ -1,5 +1,5 @@
-{{#unless selectionIsEmpty}}
+{{#unless data-table.selectionIsEmpty}}
   <span class="item-count">{{selectionCount}} item(s) selected</span>
-  <a class="waves-effect waves-light btn-flat" {{action 'clearSelection'}}>Cancel</a>
+  {{#paper-button onClick=(action "clearSelection") accent=true noInk=true}}Cancel{{/paper-button}}
   {{yield (slice 0 selectionCount data-table.selection) data-table}}
 {{/unless}}

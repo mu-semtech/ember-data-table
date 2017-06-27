@@ -1,15 +1,21 @@
-{{#if content}}
-  <table class="data-table responsive-table">
-    {{#if hasBlock}}
+<table class="data-table">
+  {{#if hasBlock}}
+    {{#if content}}
       {{yield (hash
         header=(component 'data-table-content-header' enableSelection=enableSelection enableLineNumbers=enableLineNumbers data-table=data-table)
         body=(component 'data-table-content-body' content=content enableSelection=enableSelection enableLineNumbers=enableLineNumbers data-table=data-table)
-        )}}
+          )}}
     {{else}}
-      {{component 'data-table-content-header' enableSelection=enableSelection enableLineNumbers=enableLineNumbers data-table=data-table}}
-      {{component 'data-table-content-body' content=content enableSelection=enableSelection enableLineNumbers=enableLineNumbers data-table=data-table}}
+      {{yield (hash
+          header=(component 'data-table-content-header' enableSelection=enableSelection enableLineNumbers=enableLineNumbers data-table=data-table) )}}
+      <p class="no-data-message">{{noDataMessage}}</p>
     {{/if}}
-  </table>
-{{else}}
-  <p>{{noDataMessage}}</p>
-{{/if}}
+  {{else}}
+      {{component 'data-table-content-header' enableSelection=enableSelection enableLineNumbers=enableLineNumbers data-table=data-table}}
+    {{#if content}}
+      {{component 'data-table-content-body' content=content enableSelection=enableSelection enableLineNumbers=enableLineNumbers data-table=data-table}}
+    {{else}}
+      <p class="no-data-message">{{noDataMessage}}</p>
+    {{/if}}
+  {{/if}}
+</table>

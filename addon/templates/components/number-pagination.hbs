@@ -1,5 +1,30 @@
-<div class="row center">
-  {{#if hasPagination}}
-    <!-- {{md-pagination min=min max=max current=current range=range}} -->
+<div class="layout-row layout-align-space-between-center">
+  <div class="data-table-pagination-left">
+    Displaying {{startItem}}-{{endItem}}
+    {{#if total}} of {{total}}{{/if}}
+    {{#if sizeOptions}} |
+      {{#paper-select options=sizeOptions selected=size onChange=(action (mut size)) as |size|}}
+        {{size}}
+      {{/paper-select}} per page
+    {{/if}}
+  </div>
+  {{#if hasMultiplePages}}
+    <div class="data-table-pagination-right">
+      {{#paper-button disabled=isFirstPage onClick=(action "changePage" links.first) iconButton=true}}
+        {{paper-icon "first page"}}
+      {{/paper-button}}
+      {{#paper-button disabled=isFirstPage onClick=(action "changePage" links.prev) iconButton=true}}
+        {{paper-icon "chevron left"}}
+      {{/paper-button}}
+      {{#paper-select options=pageOptions selected=currentPage onChange=(action (mut currentPage)) as |page|}}
+        {{page}}
+      {{/paper-select}}
+      {{#paper-button disabled=isLastPage onClick=(action "changePage" links.next) iconButton=true}}
+        {{paper-icon "chevron right"}}
+      {{/paper-button}}
+      {{#paper-button disabled=isLastPage onClick=(action "changePage" links.last) iconButton=true}}
+        {{paper-icon "last page"}}
+      {{/paper-button}}
+    </div>
   {{/if}}
 </div>

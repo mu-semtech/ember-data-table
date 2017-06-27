@@ -1,9 +1,0 @@
-<div class="row center">
-{{#each-in sortedLinks as |key value|}}
-  {{#if value}}
-    <i class="small material-icons" {{action 'changePage' value}}>{{pagination-icon key}}</i>
-  {{else}}
-    <i class="small material-icons disabled">{{pagination-icon key}}</i>
-  {{/if}}
-{{/each-in}}
-</div>

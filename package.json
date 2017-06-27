@@ -23,7 +23,11 @@
   },
   "dependencies": {
     "ember-cli-babel": "^6.3.0",
-    "ember-cli-htmlbars": "^1.1.1"
+    "ember-cli-htmlbars": "^1.1.1",
+    "ember-composable-helpers": "^2.0.2",
+    "ember-debounced-input-helpers": "0.0.2",
+    "ember-math-helpers": "^2.1.0",
+    "ember-moment": "^7.3.1"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
@@ -35,15 +39,14 @@
     "ember-cli-inject-live-reload": "^1.4.1",
     "ember-cli-moment-shim": "^3.3.3",
     "ember-cli-qunit": "^4.0.0",
+    "ember-cli-sass": "^6.2.0",
     "ember-cli-shims": "^1.1.0",
     "ember-cli-sri": "^2.1.0",
     "ember-cli-uglify": "^1.2.0",
-    "ember-composable-helpers": "^2.0.2",
-    "ember-debounced-input-helpers": "0.0.2",
     "ember-disable-prototype-extensions": "^1.1.2",
     "ember-export-application-global": "^2.0.0",
     "ember-load-initializers": "^1.0.0",
-    "ember-moment": "^7.3.1",
+    "ember-paper": "^1.0.0-alpha.20",
     "ember-resolver": "^4.0.0",
     "ember-source": "~2.13.3",
     "ember-welcome-page": "^3.0.0",

@@ -12,6 +12,9 @@ export default Ember.Mixin.create({
     if (payload.links) {
       result.meta.pagination = this.createPageMeta(payload.links);
     }
+    if (payload.meta) {
+      result.meta.count = payload.meta.count;
+    }
 
     return result;
   },

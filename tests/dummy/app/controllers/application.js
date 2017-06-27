@@ -8,14 +8,19 @@ var ApplicationController = Ember.Controller.extend(DefaultQueryParams, {
       Ember.Object.create({ firstName: 'Jane', lastName: 'Doe', age: 25, created: Date.now(), modified: Date.now() })
     ],
     meta: {
+      count: 63,
       pagination: {
         first: {
           number: 0,
-          size: 3
+          size: 5
         },
         prev: {
           number: 1,
-      size: 5
+          size: 5
+        },
+        self: {
+          number: 2,
+          size: 5
         },
         next: {
           number: 3,
@@ -23,11 +28,13 @@ var ApplicationController = Ember.Controller.extend(DefaultQueryParams, {
         },
         last: {
           number: 12,
-          size: 3
+          size: 5
         }
       }
     }
   }),
+  page: 2,
+  size: 5,
   sort: 'first-name',
   dateFormat: 'DD/MM/YYYY hh:mm:ss',
   actions: {

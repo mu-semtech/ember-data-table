@@ -12,6 +12,6 @@ module.exports = {
   // }
 
   afterInstall: function(options) {
-    return this.addPackageToProject('ember-cli-materialize', '~0.21');
+
   }
 };

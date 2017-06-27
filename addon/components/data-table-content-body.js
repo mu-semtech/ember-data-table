@@ -4,11 +4,11 @@ import layout from '../templates/components/data-table-content-body';
 export default Ember.Component.extend({
   layout,
   tagName: 'tbody',
-  offset: Ember.computed(function(){
+  offset: Ember.computed('data-table.page', 'data-table.size', function(){
       var offset = 1; //to avoid having 0. row
       var page = this.get('data-table.page');
-      var size = this.get('content.meta.pagination.first.size');
-      if(this.get('data-table.hasPagination') && page && size) { //calculate the offset if we have pagination
+      var size = this.get('data-table.size');
+      if (page && size) {
         offset += page * size;
       }
       return offset;
@@ -20,7 +20,8 @@ export default Ember.Component.extend({
     });
   }),
   actions: {
-    updateSelection() {
+    updateSelection(selectedWrapper, isSelected) {
+      Ember.set(selectedWrapper, 'isSelected', isSelected);
       this.get('wrappedItems').forEach((wrapper) => {
         if (wrapper.isSelected) {
           this.get('data-table').addItemToSelection(wrapper.item);

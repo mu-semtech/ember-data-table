@@ -4,22 +4,37 @@ import layout from '../templates/components/data-table';
 export default Ember.Component.extend({
   layout: layout,
   noDataMessage: 'No data',
-  pagination: 'number', // page or number
-  isNumberPagination: Ember.computed.equal('pagination', 'number'),
-  range: 10,
   lineNumbers: false,
-  hasPagination: Ember.computed.bool('content.meta.pagination'),
   enableLineNumbers: Ember.computed.bool('lineNumbers'),
+  enableSelection: Ember.computed.oneWay('hasMenu'),
   selection: [],
+  selectionIsEmpty: Ember.computed('selection.[]', function() {
+    return this.get('selection.length') === 0;
+  }),
+  enableSizes: true,
+  sizeOptions: Ember.computed('size', 'sizes', 'enableSizes', function() {
+    if (!this.get('enableSizes')) {
+      return null;
+    } else {
+      const sizeOptions = this.get('sizes') || [5, 10, 25, 50, 100];
+      if (!sizeOptions.includes(this.get('size'))) {
+        sizeOptions.push(this.get('size'));
+      }
+      sizeOptions.sort((a, b) => a - b);
+      return sizeOptions;
+    }
+  }),
   hasMenu: false, // set from inner component, migth fail with nested if
-  hasSearch: Ember.computed('filter', function() {
+  enableSearch: Ember.computed('filter', function() {
     return this.get('filter') || this.get('filter') === '';
   }),
   autoSearch: true,
   filterChanged: Ember.observer('filter', function() {
     this.set('page', 0);
   }),
-  enableSelection: Ember.computed.oneWay('hasMenu'),
+  sizeChanged: Ember.observer('size', function() {
+    this.set('page', 0);
+  }),
   parsedFields: Ember.computed('fields', function() {
     const fields = this.get('fields');
     if( Ember.typeOf( fields ) === 'string' ) {
