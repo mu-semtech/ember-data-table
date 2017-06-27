@@ -1,7 +1,7 @@
 {{#each wrappedItems as |wrapper index|}}
   <tr class="{{if (contains wrapper.item data-table.selection) 'selected'}}">
     {{#if enableSelection}}
-      <td class="center">{{md-check action="updateSelection" checked=wrapper.isSelected}}</td>
+      <!-- <td class="center">{{md-check action="updateSelection" checked=wrapper.isSelected}}</td> -->
     {{/if}}
     {{#if enableLineNumbers}}
       <td>{{add index offset}}</td>

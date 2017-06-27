@@ -1,100 +1,94 @@
-// Fix for Roboto font path
-$roboto-font-path: '../assets/';
+/* .data-table-header { */
+/*     border-bottom: 1px solid $table-border-color; */
+/*     padding: 10px 5px; */
+/*     color: $secondary-color; */
 
-// Materialize styles
-@import "materialize";
+/*     .btn-flat { */
+/*         color: $secondary-color; */
+/*     } */
 
-.data-table-header {
-    border-bottom: 1px solid $table-border-color;
-    padding: 10px 5px;
-    color: $secondary-color;
+/*     a { */
+/*         @extend .waves-effect; */
+/*         @extend .waves-light; */
+/*         @extend .btn-flat; */
+/*         padding: 0 1rem; */
+/*     } */
 
-    .btn-flat {
-        color: $secondary-color;
-    }
+/*     .item-count { */
+/*         padding-left: 10px; */
+/*         padding-right: 15px; */
+/*     } */
 
-    a {
-        @extend .waves-effect;
-        @extend .waves-light;
-        @extend .btn-flat;
-        padding: 0 1rem;
-    }
+/*     &.selected { */
+/*         background-color: lighten($secondary-color, 50%); */
+/*     } */
+/* } */
 
-    .item-count {
-        padding-left: 10px;
-        padding-right: 15px;
-    }
+/* table.data-table { */
+/*     font-size: 80%; */
+/*     color: rgb(13%,13%,13%); */
 
-    &.selected {
-        background-color: lighten($secondary-color, 50%);
-    }
-}
+/*     thead { */
+/*         color: rgb(46%,46%,46%); */
+/*         .sorted { */
+/*             color: rgb(13%,13%,13%); */
+/*         } */
+/*         .sortable { */
+/*             i { */
+/*                 position: relative; */
+/*                 top: 2px; */
+/*             } */
 
-table.data-table {
-    font-size: 80%;
-    color: rgb(13%,13%,13%);
+/*             &:not(.sorted):hover { */
+/*                 i::before { */
+/*                     color: rgb(62%,62%,62%); */
+/*                     content: 'arrow_downward'; */
+/*                 } */
+/*             } */
+/*         } */
+/*     } */
 
-    thead {
-        color: rgb(46%,46%,46%);
-        .sorted {
-            color: rgb(13%,13%,13%);
-        }
-        .sortable {
-            i {
-                position: relative;
-                top: 2px;
-            }
+/*     tbody { */
+/*         tr { */
+/*             &:hover { */
+/*                 background-color: #eeeeee; */
+/*             } */
+/*             &.selected { */
+/*                 background-color: #f5f5f5; */
+/*             } */
+/*         } */
+/*     } */
 
-            &:not(.sorted):hover {
-                i::before {
-                    color: rgb(62%,62%,62%);
-                    content: 'arrow_downward';
-                }
-            }
-        }
-    }
+/*     input[type="checkbox"] + label { */
+/*         padding-left: 5px; */
+/*         height: 15px; */
+/*     } */
 
-    tbody {
-        tr {
-            &:hover {
-                background-color: #eeeeee;
-            }
-            &.selected {
-                background-color: #f5f5f5;
-            }
-        }
-    }
+/*     input[type="checkbox"] + label:before { */
+/*         height: 14px; */
+/*         width: 14px; */
+/*     } */
 
-    input[type="checkbox"] + label {
-        padding-left: 5px;
-        height: 15px;
-    }
+/*     input[type="checkbox"]:checked + label:before { */
+/*         height: 18px; */
+/*         width: 10px; */
+/*     } */
+/* } */
 
-    input[type="checkbox"] + label:before {
-        height: 14px;
-        width: 14px;
-    }
+/* /\** Icons *\/ */
+/* .page-pagination i.disabled { */
+/*     color: color("grey", "lighten-2"); */
+/* } */
 
-    input[type="checkbox"]:checked + label:before {
-        height: 18px;
-        width: 10px;
-    }
-}
+/* /\** Text search *\/ */
+/* .data-table-text-search { */
+/*   min-height: 3rem; */
 
-/** Icons */
-.page-pagination i.disabled {
-    color: color("grey", "lighten-2");
-}
+/*   i.prefix.active { */
+/*     color: #000; */
+/*   } */
 
-/** Text search */
-.data-table-text-search {
-  min-height: 3rem;
-
-  i.prefix.active {
-    color: #000;
-  }
-
-  i.postfix {
-    font-size: 2rem;
-  }
-}
+/*   i.postfix { */
+/*     font-size: 2rem; */
+/*   } */
+/* } */
