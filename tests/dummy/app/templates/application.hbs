@@ -53,12 +53,7 @@
         <td>{{row.age}}</td>
         <td>{{moment-format row.created dateFormat}}</td>
         <td>{{moment-format row.modified dateFormat}}</td>
-        <td>
-          {{#more-menu}}
-            <a class="collection-item" {{action 'test' row}}>Details</a>
-            <a class="collection-item">Edit</a>
-          {{/more-menu}}
-        </td>
+        <td><a class="collection-item" {{action 'test' row}}>Details</a></td>
       {{/c.body}}
     {{/t.content}}
   {{/data-table}}
