@@ -1,6 +1,6 @@
 {
   "name": "ember-data-table",
-  "version": "0.6.0",
+  "version": "1.0.0-alpha.0",
   "description": "Data tables for Ember following Google Design specs",
   "license": "MIT",
   "author": "",
@@ -39,6 +39,7 @@
     "ember-cli-inject-live-reload": "^1.4.1",
     "ember-cli-moment-shim": "^3.3.3",
     "ember-cli-qunit": "^4.0.0",
+    "ember-cli-release": "^1.0.0-beta.2",
     "ember-cli-sass": "^6.2.0",
     "ember-cli-shims": "^1.1.0",
     "ember-cli-sri": "^2.1.0",
