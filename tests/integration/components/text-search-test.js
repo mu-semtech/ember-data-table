@@ -11,14 +11,5 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{text-search}}`);
 
-  assert.equal(this.$().text().trim(), '');
-
-  // Template block usage:
-  this.render(hbs`
-    {{#text-search}}
-      template block text
-    {{/text-search}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.equal(this.$('.data-table-search').length, 1);
 });

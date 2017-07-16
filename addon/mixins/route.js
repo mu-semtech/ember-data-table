@@ -9,7 +9,7 @@ export default Ember.Mixin.create({
     size: { refreshModel: true },
     sort: { refreshModel: true }
   },
-  mergeQueryOptions(params) {
+  mergeQueryOptions() {
     return {};
   },
   model(params) {

@@ -9,16 +9,12 @@ test('it renders', function(assert) {
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
 
-  this.render(hbs`{{number-pagination}}`);
+  this.set('page', 0);
+  this.set('links', {
+    first: { number: 1 },
+    last: { number: 10 }
+  });
+  this.render(hbs`{{number-pagination page=page links=links}}`);
 
-  assert.equal(this.$().text().trim(), '');
-
-  // Template block usage:
-  this.render(hbs`
-    {{#number-pagination}}
-      template block text
-    {{/number-pagination}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.equal(this.$('.data-table-pagination').length, 1);
 });

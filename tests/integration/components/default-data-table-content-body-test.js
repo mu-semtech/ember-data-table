@@ -9,13 +9,15 @@ test('it renders', function(assert) {
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
 
-  this.render(hbs`{{default-data-table-content-body}}`);
+  this.set('data-table', { parsedFields: ['firstName', 'lastName', 'age'] });
+
+  this.render(hbs`{{default-data-table-content-body data-table=data-table}}`);
 
   assert.equal(this.$().text().trim(), '');
 
   // Template block usage:
   this.render(hbs`
-    {{#default-data-table-content-body}}
+    {{#default-data-table-content-body data-table=data-table}}
       template block text
     {{/default-data-table-content-body}}
   `);

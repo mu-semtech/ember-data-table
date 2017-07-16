@@ -9,16 +9,16 @@ test('it renders', function(assert) {
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
 
-  this.render(hbs`{{data-table}}`);
+  this.set('content', []);
+  this.set('content.meta', {
+    pagination: {
+      first: { number: 1 },
+      last: { number: 10 }
+    }
+  });
 
-  assert.equal(this.$().text().trim(), '');
+  this.render(hbs`{{data-table content=content enableSizes=false}}`);
 
-  // Template block usage:
-  this.render(hbs`
-    {{#data-table}}
-      template block text
-    {{/data-table}}
-  `);
+  assert.equal(this.$('.data-table-content').length, 1);
 
-  assert.equal(this.$().text().trim(), 'template block text');
 });

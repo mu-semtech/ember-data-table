@@ -39,14 +39,14 @@ var ApplicationController = Ember.Controller.extend(DefaultQueryParams, {
   dateFormat: 'DD/MM/YYYY hh:mm:ss',
   actions: {
     test(row) {
-      console.log("Hi, you reached the test action for row: " + JSON.stringify(row));
+      Ember.Logger.info("Hi, you reached the test action for row: " + JSON.stringify(row));
     },
     menuTest() {
-      console.log("Hi, you reached the general menu test action");
+      Ember.Logger.info("Hi, you reached the general menu test action");
     },
     selectionTest(selection, datatable) {
       datatable.clearSelection();
-      console.log("Hi, you reached the selection test action for selection: " + JSON.stringify(selection));
+      Ember.Logger.info("Hi, you reached the selection test action for selection: " + JSON.stringify(selection));
       selection.forEach(function(item) {
         item.set('age', item.get('age') + 1);
       });

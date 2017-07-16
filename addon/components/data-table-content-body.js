@@ -4,6 +4,8 @@ import layout from '../templates/components/data-table-content-body';
 export default Ember.Component.extend({
   layout,
   tagName: 'tbody',
+  content: [],
+  'data-table': {},
   offset: Ember.computed('data-table.page', 'data-table.size', function(){
       var offset = 1; //to avoid having 0. row
       var page = this.get('data-table.page');
