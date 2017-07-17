@@ -1,5 +1,6 @@
 # Ember Data Table
 [![Build Status](https://travis-ci.org/mu-semtech/ember-data-table.svg?branch=master)](https://travis-ci.org/mu-semtech/ember-data-table)
+[![npm version](https://badge.fury.io/js/ember-data-table.svg)](https://badge.fury.io/js/ember-data-table)
 
 Data table for Ember following Google Material Design specification.
 
