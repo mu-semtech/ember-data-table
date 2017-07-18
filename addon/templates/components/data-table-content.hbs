@@ -8,14 +8,14 @@
     {{else}}
       {{yield (hash
           header=(component 'data-table-content-header' enableSelection=enableSelection enableLineNumbers=enableLineNumbers data-table=data-table) )}}
-      <p class="no-data-message">{{noDataMessage}}</p>
+      <tr><td colspan="100%" class="no-data-message">{{noDataMessage}}</td></tr>
     {{/if}}
   {{else}}
       {{component 'data-table-content-header' enableSelection=enableSelection enableLineNumbers=enableLineNumbers data-table=data-table}}
     {{#if content}}
       {{component 'data-table-content-body' content=content enableSelection=enableSelection enableLineNumbers=enableLineNumbers data-table=data-table}}
     {{else}}
-      <p class="no-data-message">{{noDataMessage}}</p>
+      <tr><td colspan="100%" class="no-data-message">{{noDataMessage}}</td></tr>
     {{/if}}
   {{/if}}
 </table>
