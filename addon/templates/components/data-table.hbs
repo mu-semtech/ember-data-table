@@ -23,6 +23,8 @@
   {{component 'data-table-content' content=content noDataMessage=noDataMessage enableSelection=enableSelection enableLineNumbers=enableLineNumbers data-table=this}}
 {{/if}}
 
-{{number-pagination
-    page=page size=size nbOfItems=content.length sizeOptions=sizeOptions
-    total=content.meta.count links=content.meta.pagination}}
+{{#if content}}
+  {{number-pagination
+      page=page size=size nbOfItems=content.length sizeOptions=sizeOptions
+      total=content.meta.count links=content.meta.pagination}}
+{{/if}}
