@@ -24,5 +24,14 @@ export default Ember.Mixin.create({
     if (params.filter) { options['filter'] = params.filter; }
     $.extend(options, this.mergeQueryOptions(params));
     return this.store.query(this.get('modelName'), options);
+  },
+  actions: {
+    loading(transition) {
+      let controller = this.controllerFor(this.routeName);
+      controller.set('isLoadingModel', true);
+      transition.promise.finally(function() {
+        controller.set('isLoadingModel', false);
+      });
+    }
   }
 });

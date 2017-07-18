@@ -4,6 +4,7 @@ import layout from '../templates/components/data-table';
 export default Ember.Component.extend({
   layout: layout,
   noDataMessage: 'No data',
+  isLoading: false,
   lineNumbers: false,
   enableLineNumbers: Ember.computed.bool('lineNumbers'),
   enableSelection: Ember.computed.oneWay('hasMenu'),

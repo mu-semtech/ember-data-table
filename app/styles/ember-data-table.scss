@@ -121,8 +121,8 @@ table.data-table {
     }
   }
 
-  .no-data-message {
-    padding-left: 10px;
+  td.is-loading-data md-progress-circular {
+    margin: auto;
   }
 }
 
