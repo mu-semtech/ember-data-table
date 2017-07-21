@@ -37,6 +37,7 @@ Next, include the data table in your template:
 {{data-table
   content=model
   fields="firstName lastName age created modified"
+  isLoading=isLoadingModel
   filter=filter
   sort=sort
   page=page
@@ -44,7 +45,7 @@ Next, include the data table in your template:
 }}
 ```
 
-Note: the filtering, sorting and pagination isn't done at the frontend. By including the `DataTableRouteMixin` each change in the `filter`, `sort`, `page` and `size` params will result in a new request to the backend.
+Note: the filtering, sorting and pagination isn't done at the frontend. By including the `DataTableRouteMixin` in the route each change to the `filter`, `sort`, `page` and `size` params will result in a new request to the backend. The `DataTableRouteMixin` also sets an isLoadingModel flag while the route's model is being loaded.
 
 Have a look at [Customizing the data table](https://github.com/erikap/ember-data-table#customizing-the-data-table) to learn how you can customize the data table's header and body.
 
@@ -58,6 +59,7 @@ The following parameters can be passed to the data-table component:
 |-----------|----------|---------|-------------|
 | content | x | | a list of resources to be displayed in the table |
 | fields | | | names of the model fields to show as columns (seperated by whitespace) |
+| isLoading | | false | shows a spinner instead of the table content if true |
 | filter | | | current value of the text search |
 | sort | | | field by which the data is currently sorted |
 | page | | | number of the page that is currently displayed |
@@ -99,7 +101,7 @@ Have a look at the [helper components](https://github.com/mu-semtech/ember-data-
 ### Adding actions to the data table
 The user can add actions on top of the data table by providing a `menu` block.
 ```htmlbars
-{{#data-table content=model filter=filter sort=sort page=page size=size as |t|}}
+{{#data-table content=model filter=filter sort=sort page=page size=size isLoading=isLoadingModel as |t|}}
   {{#t.menu as |menu|}}
     {{#menu.general}}
       {{#paper-button onClick=(action "export") accent=true noInk=true}}Export{{/paper-button}}
@@ -148,6 +150,11 @@ The following parameters are passed to the `th-sortable` component:
 Note: the data table will update the `currentSorting` variable, but the user needs to handle the reloading of the data. The [Ember Data Table Route mixin](https://github.com/mu-semtech/ember-data-table#route) may be of use.
 
 ## Mixins
+The following mixins may be helpful to use with the data table:
+* [Serializer mixin](https://github.com/mu-semtech/ember-data-table#serializer)
+* [Route mixin](https://github.com/mu-semtech/ember-data-table#route)
+* [Default Query Params mixin](https://github.com/mu-semtech/ember-data-table#default-query-params)
+
 ### Serializer
 Upon installation, the `DataTableSerializerMixin` is automatically included in your application serializer to add parsing of the filter, sortig and pagination meta data from the links in the [JSONAPI](http://jsonapi.org) responses. The data is stored in [Ember's model metadata](https://guides.emberjs.com/v2.9.0/models/handling-metadata/).
 
@@ -208,7 +215,7 @@ export default Ember.Route.extend(DataTableRouteMixin, {
 });
 ```
 
-Note: if the `mergeQueryOptions` returns a filter option on a specific field (e.g. `title`), the nested key needs to be provided as a string. Otherwise the general `filter` option across all fields will be overwritten.
+Note: if the `mergeQueryOptions` returns a filter option on a specific field (e.g. `title`), the nested key needs to be provided as a string. Otherwise the `filter` param across all fields will be overwritten breaking the general search.
 
 E.g.
 ```javascript
@@ -219,6 +226,8 @@ mergeQueryOptions(params) {
     };
 }
 ```
+
+The `DataTableRouteMixin` also sets the `isLoadingModel` flag on the controller while the route's model is being loaded. Passing this flag to the data table's `isLoading` property will show a spinner while data is loaded.
 
 ### Default Query Params
 The `DefaultQueryParams` mixin provides sensible defaults for the `page` (default: 0), `size` (default: 25) and `filter` (default: '') query parameters. The mixin can be mixed in a controller that uses the `page` and `filter` query params.
