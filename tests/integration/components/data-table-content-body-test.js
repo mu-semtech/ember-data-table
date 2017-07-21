@@ -90,3 +90,26 @@ test('add line numbers if enabled', function(assert) {
   assert.equal(this.$('tr:nth-child(2) td:first').text().trim(), '12', 'displays offset 12 on the second row on page 3');
   assert.equal(this.$('tr:nth-child(3) td:first').text().trim(), '13', 'displays offset 13 on the third row of page 3');
 });
+
+test('displays no data message if there is no data', function(assert) {
+  // Set any properties with this.set('myProperty', 'value');
+  // Handle any actions with this.on('myAction', function(val) { ... });
+  this.set('noDataMessage', 'No data');
+  this.set('data-table', {});
+  this.set('data-table.parsedFields', ['firstName', 'lastName', 'age']);
+  this.set('data-table.selection', []);
+
+  this.render(hbs`{{data-table-content-body noDataMessage=noDataMessage data-table=data-table}}`);
+  assert.equal(this.$('td.no-data-message').length, 1, 'displays a no data message if no content');
+  assert.equal(this.$('td.no-data-message').text().trim(), 'No data', 'displays message "No data" if no content');
+
+  this.set('content', [])
+  this.render(hbs`{{data-table-content-body content=content noDataMessage=noDataMessage data-table=data-table}}`);
+  assert.equal(this.$('td.no-data-message').length, 1, 'displays a no data message if empty content');
+  assert.equal(this.$('td.no-data-message').text().trim(), 'No data', 'displays message "No data" if empty content');
+
+  this.set('content', ['foo', 'bar'])
+  this.render(hbs`{{data-table-content-body content=content noDataMessage=noDataMessage data-table=data-table}}`);
+  assert.equal(this.$('td.no-data-message').length, 0, 'displays no message when there is content');
+
+});

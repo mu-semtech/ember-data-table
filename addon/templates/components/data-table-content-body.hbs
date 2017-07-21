@@ -3,7 +3,7 @@
 {{else}}
   {{#if content}}
     {{#each wrappedItems as |wrapper index|}}
-      <tr class="{{if (contains wrapper.item data-table.selection) 'selected'}}" {{action (action onClickRow) wrapper.item}}>
+      <tr class="{{if (contains wrapper.item data-table.selection) 'selected'}}" {{action (optional onClickRow) wrapper.item}}>
         {{#if enableSelection}}
           <td class="center">{{paper-checkbox onChange=(action "updateSelection" wrapper) value=wrapper.isSelected bubbles=false}}</td>
         {{/if}}

@@ -52,6 +52,5 @@ export default Ember.Component.extend({
   },
   clearSelection() {
     this.get('selection').clear();
-  },
-  onClickRow() { }
+  }
 });
