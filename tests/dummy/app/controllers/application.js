@@ -50,6 +50,9 @@ var ApplicationController = Ember.Controller.extend(DefaultQueryParams, {
       selection.forEach(function(item) {
         item.set('age', item.get('age') + 1);
       });
+    },
+    clickRow(row) {
+      Ember.Logger.info("Custom row click action on item " + JSON.stringify(row));
     }
   }
 });

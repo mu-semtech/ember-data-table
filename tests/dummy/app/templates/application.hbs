@@ -8,7 +8,7 @@
 
   <h2>Semi-complex table</h2>
   <blockquote>Customized table header and body</blockquote>
-  {{#data-table content=model sort=sort page=page size=size filter=filter range=5 as |t|}}
+  {{#data-table content=model sort=sort page=page size=size filter=filter as |t|}}
     {{#t.content as |c|}}
       {{#c.header}}
         {{th-sortable field='firstName' currentSorting=sort label='First name'}}
@@ -29,7 +29,7 @@
 
   <h2>Complex table</h2>
   <blockquote>Customized table including an action menu on top</blockquote>
-  {{#data-table content=model sort=sort page=page size=size filter=filter autoSearch=false as |t|}}
+  {{#data-table content=model sort=sort page=page size=size filter=filter autoSearch=false onClickRow=(action "clickRow") as |t|}}
     {{#t.menu as |menu|}}
       {{#menu.general}}
         {{#paper-button onClick=(action "menuTest") accent=true noInk=true}}Export{{/paper-button}}
@@ -54,7 +54,7 @@
         <td>{{row.age}}</td>
         <td>{{moment-format row.created dateFormat}}</td>
         <td>{{moment-format row.modified dateFormat}}</td>
-        <td>{{#paper-button onClick=(action 'test' row) iconButton=true}}{{paper-icon "info"}}{{/paper-button}}</td>
+        <td>{{#paper-button onClick=(action 'test' row) iconButton=true bubbles=false}}{{paper-icon "info"}}{{/paper-button}}</td>
       {{/c.body}}
     {{/t.content}}
   {{/data-table}}

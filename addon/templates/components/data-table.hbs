@@ -9,7 +9,7 @@
         this}}
   </div>
   {{yield (hash
-      content=(component 'data-table-content' content=content noDataMessage=noDataMessage enableSelection=enableSelection enableLineNumbers=enableLineNumbers data-table=this)
+      content=(component 'data-table-content' content=content noDataMessage=noDataMessage enableSelection=enableSelection enableLineNumbers=enableLineNumbers onClickRow=(action onClickRow) data-table=this)
       )
       this}}
 {{else}}
@@ -20,7 +20,7 @@
       </div>
     </div>
   {{/if}}
-  {{component 'data-table-content' content=content noDataMessage=noDataMessage enableSelection=enableSelection enableLineNumbers=enableLineNumbers data-table=this}}
+  {{component 'data-table-content' content=content noDataMessage=noDataMessage enableSelection=enableSelection enableLineNumbers=enableLineNumbers onClickRow=(action onClickRow) data-table=this}}
 {{/if}}
 
 {{#if content}}

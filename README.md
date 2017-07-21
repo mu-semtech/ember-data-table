@@ -67,6 +67,7 @@ The following parameters can be passed to the data-table component:
 | enableSizes | | true | flag to enable page size options dropdown |
 | sizes | | [5, 10, 25, 50, 100] | array of page size options (numbers) |
 | link | | | name of the route the first column will link to. The selected row will be passed as a parameter. |
+| onClickRow | | | action sent when a row is clicked. Takes the clicked item as a parameter. |
 | autoSearch | | true | whether filter value is updated automatically while typing (with a debounce) or user must click a search button explicitly to set the filter value.
 | noDataMessage | | No data | message to be shown when there is no content |
 | lineNumbers | | false | display a line number per table row (default: false). Must be true or false. |
@@ -77,7 +78,7 @@ By default the data table will make each column sortable. The search text box is
 The way the data is shown in the table can be customized by defining a `content` block instead of a `fields` parameter.
 
 ```htmlbars
-{{#data-table content=model filter=filter sort=sort page=page size=size as |t|}}
+{{#data-table content=model filter=filter sort=sort page=page size=size onClickRow=(action "clickRow") as |t|}}
   {{#t.content as |c|}}
     {{#c.header}}
       {{th-sortable field='firstName' currentSorting=sort label='First name'}}
