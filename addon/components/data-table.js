@@ -13,6 +13,7 @@ export default Ember.Component.extend({
     return this.get('selection.length') === 0;
   }),
   enableSizes: true,
+  size: 5,
   sizeOptions: Ember.computed('size', 'sizes', 'enableSizes', function() {
     if (!this.get('enableSizes')) {
       return null;

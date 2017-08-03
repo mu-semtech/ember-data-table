@@ -14,10 +14,10 @@ export default Ember.Component.extend({
     }
   }),
   firstPage: Ember.computed('links', function() {
-    return this.get('links')['first']['number'] || 1;
+    return this.get('links.first.number') || 1;
   }),
   lastPage: Ember.computed('links', function() {
-    const max = this.get('links')['last']['number'];
+    const max = this.get('links.last.number') || -1;
     return max ? max + 1 : max;
   }),
   isFirstPage: Ember.computed('firstPage', 'currentPage', function() {
@@ -27,7 +27,7 @@ export default Ember.Component.extend({
     return this.get('lastPage') == this.get('currentPage');
   }),
   hasMultiplePages: Ember.computed('lastPage', function() {
-    return this.get('lastPage') !== undefined;
+    return this.get('lastPage') > 0;
   }),
   startItem: Ember.computed('size', 'currentPage', function() {
     return this.get('size') * (this.get('currentPage') - 1) + 1;
