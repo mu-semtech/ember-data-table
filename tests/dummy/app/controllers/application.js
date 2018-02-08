@@ -1,11 +1,14 @@
 import Ember from 'ember';
+import EmberObject from '@ember/object';
+import ArrayProxy from '@ember/array/proxy';
+import Controller from '@ember/controller';
 import DefaultQueryParams from 'ember-data-table/mixins/default-query-params';
 
-var ApplicationController = Ember.Controller.extend(DefaultQueryParams, {
-  model: Ember.ArrayProxy.create({
+var ApplicationController = Controller.extend(DefaultQueryParams, {
+  model: ArrayProxy.create({
     content: [
-      Ember.Object.create({ firstName: 'John', lastName: 'Doe', age: 20, created: Date.now(), modified: Date.now() }),
-      Ember.Object.create({ firstName: 'Jane', lastName: 'Doe', age: 25, created: Date.now(), modified: Date.now() })
+      EmberObject.create({ firstName: 'John', lastName: 'Doe', age: 20, created: Date.now(), modified: Date.now() }),
+      EmberObject.create({ firstName: 'Jane', lastName: 'Doe', age: 25, created: Date.now(), modified: Date.now() })
     ],
     meta: {
       count: 63,

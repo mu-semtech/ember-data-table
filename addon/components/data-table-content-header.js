@@ -1,9 +1,11 @@
-import Ember from 'ember';
+import { oneWay } from '@ember/object/computed';
+import { alias } from '@ember/object/computed';
+import Component from '@ember/component';
 import layout from '../templates/components/data-table-content-header';
 
-export default Ember.Component.extend({
+export default Component.extend({
   layout,
   tagName: 'thead',
-  sort: Ember.computed.alias("data-table.sort"),
-  fields: Ember.computed.oneWay("data-table.parsedFields")
+  sort: alias("data-table.sort"),
+  fields: oneWay("data-table.parsedFields")
 });

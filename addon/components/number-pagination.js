@@ -1,10 +1,11 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import Component from '@ember/component';
 import layout from '../templates/components/number-pagination';
 
-export default Ember.Component.extend({
+export default Component.extend({
   layout,
   classNames: ['data-table-pagination'],
-  currentPage: Ember.computed('page', {
+  currentPage: computed('page', {
     get() {
       return this.get('page') ? parseInt(this.get('page')) + 1 : 1;
     },
@@ -13,29 +14,29 @@ export default Ember.Component.extend({
       return value;
     }
   }),
-  firstPage: Ember.computed('links', function() {
+  firstPage: computed('links', function() {
     return this.get('links.first.number') || 1;
   }),
-  lastPage: Ember.computed('links', function() {
+  lastPage: computed('links', function() {
     const max = this.get('links.last.number') || -1;
     return max ? max + 1 : max;
   }),
-  isFirstPage: Ember.computed('firstPage', 'currentPage', function() {
+  isFirstPage: computed('firstPage', 'currentPage', function() {
     return this.get('firstPage') == this.get('currentPage');
   }),
-  isLastPage: Ember.computed('lastPage', 'currentPage', function() {
+  isLastPage: computed('lastPage', 'currentPage', function() {
     return this.get('lastPage') == this.get('currentPage');
   }),
-  hasMultiplePages: Ember.computed('lastPage', function() {
+  hasMultiplePages: computed('lastPage', function() {
     return this.get('lastPage') > 0;
   }),
-  startItem: Ember.computed('size', 'currentPage', function() {
+  startItem: computed('size', 'currentPage', function() {
     return this.get('size') * (this.get('currentPage') - 1) + 1;
   }),
-  endItem: Ember.computed('startItem', 'nbOfItems', function() {
+  endItem: computed('startItem', 'nbOfItems', function() {
     return this.get('startItem') + this.get('nbOfItems') - 1;
   }),
-  pageOptions: Ember.computed('firstPage', 'lastPage', function() {
+  pageOptions: computed('firstPage', 'lastPage', function() {
     const nbOfPages = this.get('lastPage') - this.get('firstPage') + 1;
     return Array.from(new Array(nbOfPages), (val, index) => this.get('firstPage') + index);
   }),

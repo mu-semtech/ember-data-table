@@ -17,11 +17,11 @@ test('display rows', function(assert) {
     { firstName: 'John', lastName: 'Doe', age: 20 },
     { firstName: 'Jane', lastName: 'Doe', age: 21 }
   ]);
-  this.set('data-table', {});
-  this.set('data-table.parsedFields', ['firstName', 'lastName', 'age']);
-  this.set('data-table.selection', []);
+  this.set('dataTable', {});
+  this.set('dataTable.parsedFields', ['firstName', 'lastName', 'age']);
+  this.set('dataTable.selection', []);
 
-  this.render(hbs`{{data-table-content-body content=content data-table=data-table}}`);
+  this.render(hbs`{{data-table-content-body content=content data-table=dataTable}}`);
 
   assert.equal(this.$('tr').length, 2, 'displays 2 rows');
   assert.equal(this.$('tr:first td').length, 3, 'displays 3 columns');

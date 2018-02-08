@@ -1,20 +1,22 @@
-import Ember from 'ember';
+import { scheduleOnce } from '@ember/runloop';
+import { oneWay } from '@ember/object/computed';
+import Component from '@ember/component';
 import layout from '../templates/components/text-search';
 
-export default Ember.Component.extend({
+export default Component.extend({
   layout,
   filter: '',
   classNames: ["data-table-search"],
-  value: Ember.computed.oneWay('filter'),
+  value: oneWay('filter'),
   wait: 2000,
   auto: true,
   placeholder: 'Search',
-  isExpanded: Ember.computed.oneWay('filter', function() {
+  isExpanded: oneWay('filter', function() {
     return this.get('filter').length > 0;
   }),
   _openSearch() {
     this.set('isExpanded', true);
-    Ember.run.scheduleOnce('afterRender', this, function() {
+    scheduleOnce('afterRender', this, function() {
       this.$('input').focus();
     });
   },
@@ -22,7 +24,7 @@ export default Ember.Component.extend({
     this.set('isExpanded', false);
     this.set('filter', '');
     this.set('value', '');
-    Ember.run.scheduleOnce('afterRender', this, function() {
+    scheduleOnce('afterRender', this, function() {
       this.$('input').focusout();
     });
   },

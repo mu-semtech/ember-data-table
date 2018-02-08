@@ -1,8 +1,8 @@
 /*jshint unused:false */
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
 import $ from 'jquery';
 
-export default Ember.Mixin.create({
+export default Mixin.create({
   queryParams: {
     filter: { refreshModel: true },
     page: { refreshModel: true },
