@@ -9,14 +9,7 @@ View a demo here: [https://ember-data-table.semte.ch](https://ember-data-table.s
 
 ## Installation
 ```bash
-ember install ember-paper
-ember install ember-data-table
-```
-
-Import the styles in `app.scss`:
-```scss
-@import ember-paper;
-@import ember-data-table;
+ember install ember-data-table-raw
 ```
 
 ## Getting started

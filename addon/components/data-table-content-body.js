@@ -1,12 +1,19 @@
-import Ember from 'ember';
+import { set } from '@ember/object';
+import { computed } from '@ember/object';
+import Component from '@ember/component';
 import layout from '../templates/components/data-table-content-body';
 
-export default Ember.Component.extend({
-  layout,
+export default Component.extend({
   tagName: 'tbody',
-  content: [],
-  'data-table': {},
-  offset: Ember.computed('data-table.page', 'data-table.size', function(){
+  init() {
+    this._super(...arguments);
+    if( ! this['data-table'] )
+      this.set('data-table', {});
+    if( ! this['content'] )
+      this.set('content', []);
+  },
+  layout,
+  offset: computed('data-table.{page,size}', function(){
       var offset = 1; //to avoid having 0. row
       var page = this.get('data-table.page');
       var size = this.get('data-table.size');
@@ -15,15 +22,16 @@ export default Ember.Component.extend({
       }
       return offset;
   }),
-  wrappedItems: Ember.computed('content', 'content.[]', 'data-table.selection.[]', function() {
-    const selection = this.get('data-table.selection');
-    return this.get('content').map(function(item) {
+  wrappedItems: computed('content', 'content.[]', 'data-table.selection.[]', function() {
+    const selection = this.get('data-table.selection') || [];
+    const content = this.get('content') || [];
+    return content.map(function(item) {
       return { item: item, isSelected: selection.includes(item) };
     });
   }),
   actions: {
     updateSelection(selectedWrapper, isSelected) {
-      Ember.set(selectedWrapper, 'isSelected', isSelected);
+      set(selectedWrapper, 'isSelected', isSelected);
       this.get('wrappedItems').forEach((wrapper) => {
         if (wrapper.isSelected) {
           this.get('data-table').addItemToSelection(wrapper.item);

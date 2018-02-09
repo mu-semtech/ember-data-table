@@ -1,17 +1,21 @@
-import Ember from 'ember';
+import { A } from '@ember/array';
+import { computed } from '@ember/object';
+import { oneWay } from '@ember/object/computed';
+import Component from '@ember/component';
 import layout from '../templates/components/default-data-table-content-body';
 
-export default Ember.Component.extend({
+export default Component.extend({
   layout,
   tagName: '',
-  allFields: Ember.computed.oneWay('data-table.parsedFields'),
-  firstColumn: Ember.computed( 'data-table.parsedFields', function(){
-    return this.get('data-table.parsedFields')[0];
+  allFields: oneWay('data-table.parsedFields'),
+  firstColumn: computed( 'data-table.parsedFields', function(){
+    const parsedFields = A(this.get('data-table.parsedFields'));
+    return parsedFields.get('firstObject');
   }),
-  otherColumns: Ember.computed( 'data-table.parsedFields', function(){
-    var fields;
+  otherColumns: computed( 'data-table.parsedFields', function(){
+    let fields;
     [, ...fields] = this.get('data-table.parsedFields');
     return fields;
   }),
-  linkedRoute: Ember.computed.oneWay( 'data-table.link' ),
+  linkedRoute: oneWay( 'data-table.link' )
 });

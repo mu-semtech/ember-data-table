@@ -1,20 +1,29 @@
-import Ember from 'ember';
+import { typeOf } from '@ember/utils';
+import { observer } from '@ember/object';
+import { computed } from '@ember/object';
+import { oneWay } from '@ember/object/computed';
+import { bool } from '@ember/object/computed';
+import Component from '@ember/component';
 import layout from '../templates/components/data-table';
 
-export default Ember.Component.extend({
-  layout: layout,
+export default Component.extend({
+  init() {
+    this._super(...arguments);
+    if( this.get('selection') === undefined )
+      this.set('selection', []);
+  },
+  layout,
   noDataMessage: 'No data',
   isLoading: false,
   lineNumbers: false,
-  enableLineNumbers: Ember.computed.bool('lineNumbers'),
-  enableSelection: Ember.computed.oneWay('hasMenu'),
-  selection: [],
-  selectionIsEmpty: Ember.computed('selection.[]', function() {
+  enableLineNumbers: bool('lineNumbers'),
+  enableSelection: oneWay('hasMenu'),
+  selectionIsEmpty: computed('selection.[]', function() {
     return this.get('selection.length') === 0;
   }),
   enableSizes: true,
   size: 5,
-  sizeOptions: Ember.computed('size', 'sizes', 'enableSizes', function() {
+  sizeOptions: computed('size', 'sizes', 'enableSizes', function() {
     if (!this.get('enableSizes')) {
       return null;
     } else {
@@ -27,19 +36,19 @@ export default Ember.Component.extend({
     }
   }),
   hasMenu: false, // set from inner component, migth fail with nested if
-  enableSearch: Ember.computed('filter', function() {
+  enableSearch: computed('filter', function() {
     return this.get('filter') || this.get('filter') === '';
   }),
   autoSearch: true,
-  filterChanged: Ember.observer('filter', function() {
+  filterChanged: observer('filter', function() {
     this.set('page', 0);
   }),
-  sizeChanged: Ember.observer('size', function() {
+  sizeChanged: observer('size', function() {
     this.set('page', 0);
   }),
-  parsedFields: Ember.computed('fields', function() {
+  parsedFields: computed('fields', function() {
     const fields = this.get('fields');
-    if( Ember.typeOf( fields ) === 'string' ) {
+    if( typeOf( fields ) === 'string' ) {
       return fields.split(' ');
     } else {
       return fields || [];

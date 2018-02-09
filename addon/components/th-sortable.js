@@ -1,12 +1,13 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import Component from '@ember/component';
 import layout from '../templates/components/th-sortable';
 
-export default Ember.Component.extend({
+export default Component.extend({
   layout: layout,
   tagName: 'th',
   classNames: ['sortable'],
   classNameBindings: ['isSorted:sorted'],
-  dasherizedField: Ember.computed('field', function() {
+  dasherizedField: computed('field', function() {
     return this.get('field').replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
   }),
   /**
@@ -21,11 +22,11 @@ export default Ember.Component.extend({
       return "-" + sorting;
     }
   },
-  isSorted: Ember.computed('dasherizedField', 'currentSorting', function() {
+  isSorted: computed('dasherizedField', 'currentSorting', function() {
     return this.get('currentSorting') === this.get('dasherizedField') ||
       this.get('currentSorting') === this._inverseSorting(this.get('dasherizedField'));
   }),
-  order: Ember.computed('dasherizedField', 'currentSorting', function() {
+  order: computed('dasherizedField', 'currentSorting', function() {
     if (this.get('currentSorting') === this.get('dasherizedField')) { return 'asc'; }
     else if (this.get('currentSorting') === `-${this.get('dasherizedField')}`) { return 'desc'; }
     else { return ''; }
