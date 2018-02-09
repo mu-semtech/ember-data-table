@@ -5,8 +5,13 @@ import layout from '../templates/components/data-table-content-body';
 
 export default Component.extend({
   tagName: 'tbody',
-  content: [],
-  'data-table': {},
+  init() {
+    this._super(...arguments);
+    if( ! this['data-table'] )
+      this.set('data-table', {});
+    if( ! this['content'] )
+      this.set('content', []);
+  },
   layout,
   offset: computed('data-table.{page,size}', function(){
       var offset = 1; //to avoid having 0. row
@@ -19,7 +24,8 @@ export default Component.extend({
   }),
   wrappedItems: computed('content', 'content.[]', 'data-table.selection.[]', function() {
     const selection = this.get('data-table.selection') || [];
-    return this.get('content').map(function(item) {
+    const content = this.get('content') || [];
+    return content.map(function(item) {
       return { item: item, isSelected: selection.includes(item) };
     });
   }),

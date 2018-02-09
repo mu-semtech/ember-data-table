@@ -7,11 +7,15 @@ import Component from '@ember/component';
 import layout from '../templates/components/data-table';
 
 export default Component.extend({
+  init() {
+    this._super(...arguments);
+    if( this.get('selection') === undefined )
+      this.set('selection', []);
+  },
   layout,
   noDataMessage: 'No data',
   isLoading: false,
   lineNumbers: false,
-  selection: [],
   enableLineNumbers: bool('lineNumbers'),
   enableSelection: oneWay('hasMenu'),
   selectionIsEmpty: computed('selection.[]', function() {
