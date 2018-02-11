@@ -39,7 +39,6 @@ var ApplicationController = Controller.extend(DefaultQueryParams, {
   page: 2,
   size: 5,
   sort: 'first-name',
-  dateFormat: 'DD/MM/YYYY hh:mm:ss',
   actions: {
     test(row) {
       Ember.Logger.info("Hi, you reached the test action for row: " + JSON.stringify(row));

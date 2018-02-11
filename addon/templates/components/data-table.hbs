@@ -1,5 +1,5 @@
 {{#if hasBlock}}
-  <div class="layout-row flex layout-align-space-between-center data-table-header {{unless selectionIsEmpty " selected"}}{{if enableSearch " row-reverse"}}">
+  <div class="data-table-header {{unless selectionIsEmpty " selected"}}">
     {{#if enableSearch}}
       {{text-search filter=filter auto=autoSearch}}
     {{/if}}
@@ -14,7 +14,7 @@
       this}}
 {{else}}
   {{#if enableSearch}}
-    <div class="layout-row flex layout-align-end-center data-table-header">
+    <div class="data-table-header">
       <div class="data-table-menu">
         {{text-search filter=filter auto=autoSearch}}
       </div>

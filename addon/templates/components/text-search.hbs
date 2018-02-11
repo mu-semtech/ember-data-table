@@ -1,10 +1,8 @@
-<div class="layout-row flex">
-  {{#if auto}}
-    {{#debounced-value val=filter wait=wait immediate=false sync=true as |value|}}
-      {{paper-input placeholder=placeholder type="text" value=value onChange=(action (mut filter)) icon="search" class=(if isExpanded "expanded")}}
-    {{/debounced-value}}
-  {{else}}
-    {{paper-input placeholder=placeholder type="text" value=filter onChange=(action (mut filter)) icon="search" class=(if isExpanded "expanded")}}
-  {{/if}}
-  {{#if isExpanded}}{{paper-icon "close" size=18}}{{/if}}
-</div>
+{{#if auto}}
+  {{#debounced-value val=filter wait=wait immediate=false sync=true as |value|}}
+    {{input value=value placeholder=placeholder}}
+  {{/debounced-value}}
+{{else}}
+  <input value={{internalValue}} placeholder={{placeholder}} oninput={{action (mut internalValue) value="target.value"}}>
+  <button {{action (mut filter) internalValue}}>Search</button>
+{{/if}}

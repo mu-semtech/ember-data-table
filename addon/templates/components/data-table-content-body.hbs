@@ -1,11 +1,13 @@
 {{#if data-table.isLoading}}
-  <tr><td colspan="100%" class="is-loading-data">{{paper-progress-circular diameter=40}}</td></tr>
+  <tr><td colspan="100%" class="is-loading-data">Loading...</td></tr>
 {{else}}
   {{#if content}}
     {{#each wrappedItems as |wrapper index|}}
       <tr class="{{if (contains wrapper.item data-table.selection) 'selected'}}" {{action (optional onClickRow) wrapper.item}}>
         {{#if enableSelection}}
-          <td class="center">{{paper-checkbox onChange=(action "updateSelection" wrapper) value=wrapper.isSelected bubbles=false}}</td>
+          <td class="center">
+            {{input type="checkbox" checked=wrapper.isSelected click=(action "updateSelection" wrapper)}}
+          </td>
         {{/if}}
         {{#if enableLineNumbers}}
           <td>{{add index offset}}</td>

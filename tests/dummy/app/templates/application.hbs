@@ -21,8 +21,8 @@
         <td>{{row.firstName}}</td>
         <td>{{row.lastName}}</td>
         <td>{{row.age}}</td>
-        <td>{{moment-format row.created dateFormat}}</td>
-        <td>{{moment-format row.modified dateFormat}}</td>
+        <td>{{row.created}}</td>
+        <td>{{row.modified}}</td>
       {{/c.body}}
     {{/t.content}}
   {{/data-table}}
@@ -32,11 +32,11 @@
   {{#data-table content=model sort=sort page=page size=size filter=filter autoSearch=false onClickRow=(action "clickRow") as |t|}}
     {{#t.menu as |menu|}}
       {{#menu.general}}
-        {{#paper-button onClick=(action "menuTest") accent=true noInk=true}}Export{{/paper-button}}
-        {{#paper-button onClick=null accent=true noInk=true}}Print{{/paper-button}}
+        <button {{action "menuTest"}}>Export</button>
+        <button>Print</button>
       {{/menu.general}}
       {{#menu.selected as |selection table|}}
-        {{#paper-button onClick=(action "selectionTest" selection table) accent=true noInk=true}}Export{{/paper-button}}
+        <button {{action "selectionTest" selection table}}>Export</button>
       {{/menu.selected}}
     {{/t.menu}}
     {{#t.content as |c|}}
@@ -52,9 +52,9 @@
         <td>{{row.firstName}}</td>
         <td>{{row.lastName}}</td>
         <td>{{row.age}}</td>
-        <td>{{moment-format row.created dateFormat}}</td>
-        <td>{{moment-format row.modified dateFormat}}</td>
-        <td>{{#paper-button onClick=(action 'test' row) iconButton=true bubbles=false}}{{paper-icon "info"}}{{/paper-button}}</td>
+        <td>{{row.created}}</td>
+        <td>{{row.modified}}</td>
+        <td><button {{action "test" row}}>Info</button></td>
       {{/c.body}}
     {{/t.content}}
   {{/data-table}}

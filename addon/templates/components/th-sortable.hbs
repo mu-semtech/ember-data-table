@@ -1,3 +1,4 @@
 <span {{action 'inverseSorting'}}>
-  {{paper-icon (if order "arrow upward" "") size=18 class=order}}{{label}}
+  {{#if order}}[{{order}}]{{/if}}
+  {{label}}
 </span>

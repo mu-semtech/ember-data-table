@@ -9,7 +9,7 @@ View a demo here: [https://ember-data-table.semte.ch](https://ember-data-table.s
 
 ## Installation
 ```bash
-ember install ember-data-table-raw
+ember install ember-data-table
 ```
 
 ## Getting started

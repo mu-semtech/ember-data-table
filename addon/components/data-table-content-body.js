@@ -30,8 +30,8 @@ export default Component.extend({
     });
   }),
   actions: {
-    updateSelection(selectedWrapper, isSelected) {
-      set(selectedWrapper, 'isSelected', isSelected);
+    updateSelection(selectedWrapper, event) {
+      set(selectedWrapper, 'isSelected', event.target.checked);
       this.get('wrappedItems').forEach((wrapper) => {
         if (wrapper.isSelected) {
           this.get('data-table').addItemToSelection(wrapper.item);
