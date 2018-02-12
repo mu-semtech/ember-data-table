@@ -55,7 +55,7 @@ test('toggles selection if checkbox is clicked', function(assert) {
   this.set('data-table', {});
   this.set('data-table.parsedFields', ['firstName', 'lastName', 'age']);
   this.set('data-table.selection', [jane]);
-  this.set('data-table.addItemToSelection', (item) => this.set('data-table.selection', [john, jane])); // mock function
+  this.set('data-table.addItemToSelection', () => this.set('data-table.selection', [john, jane])); // mock function
   this.set('data-table.removeItemFromSelection', function() {}); // mock function
 
   this.render(hbs`{{data-table-content-body content=content data-table=data-table enableSelection=true}}`);
