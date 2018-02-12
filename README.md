@@ -2,10 +2,9 @@
 [![Build Status](https://travis-ci.org/mu-semtech/ember-data-table.svg?branch=master)](https://travis-ci.org/mu-semtech/ember-data-table)
 [![npm version](https://badge.fury.io/js/ember-data-table.svg)](https://badge.fury.io/js/ember-data-table)
 
-Data table for Ember following Google Material Design specification.
+Data table for Ember based on a JSONAPI compliant backend.
 
-## Demo
-View a demo here: [https://ember-data-table.semte.ch](https://ember-data-table.semte.ch)
+Have a look at [ember-paper-data-table](https://github.com/mu-semtech/emper-paper-data-table) to get a data table styled with [ember-paper](https://github.com/miguelcobain/ember-paper).
 
 ## Installation
 ```bash
