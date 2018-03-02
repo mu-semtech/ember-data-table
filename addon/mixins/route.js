@@ -32,6 +32,8 @@ export default Mixin.create({
       transition.promise.finally(function() {
         controller.set('isLoadingModel', false);
       });
+
+      return true; // bubble the loading event
     }
   }
 });
