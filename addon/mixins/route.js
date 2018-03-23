@@ -23,7 +23,7 @@ export default Mixin.create({
     // TODO: sending an empty filter param to backend returns []
     if (params.filter) { options['filter'] = params.filter; }
     $.extend(options, this.mergeQueryOptions(params));
-    return this.store.query(this.get('modelName'), options);
+    return this.get('store').query(this.get('modelName'), options);
   },
   actions: {
     loading(transition) {
