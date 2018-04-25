@@ -1,7 +1,5 @@
 {{#if auto}}
-  {{#debounced-value val=filter wait=wait immediate=false sync=true as |value|}}
-    {{input value=value placeholder=placeholder}}
-  {{/debounced-value}}
+  {{input value=value placeholder=placeholder}}
 {{else}}
   <input value={{internalValue}} placeholder={{placeholder}} oninput={{action (mut internalValue) value="target.value"}}>
   <button {{action (mut filter) internalValue}}>Search</button>
