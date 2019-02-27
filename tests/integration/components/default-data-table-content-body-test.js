@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | default data table content body', function(hooks) {
@@ -14,7 +14,7 @@ module('Integration | Component | default data table content body', function(hoo
 
     await render(hbs`{{default-data-table-content-body data-table=data-table}}`);
 
-    assert.equal(find('*').textContent.trim(), '');
+    assert.dom('*').hasText('');
 
     // Template block usage:
     await render(hbs`
@@ -23,6 +23,6 @@ module('Integration | Component | default data table content body', function(hoo
       {{/default-data-table-content-body}}
     `);
 
-    assert.equal(find('*').textContent.trim(), 'template block text');
+    assert.dom('*').hasText('template block text');
   });
 });

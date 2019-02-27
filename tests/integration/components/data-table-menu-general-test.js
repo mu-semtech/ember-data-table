@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | data table menu general', function(hooks) {
@@ -12,7 +12,7 @@ module('Integration | Component | data table menu general', function(hooks) {
 
     await render(hbs`{{data-table-menu-general}}`);
 
-    assert.equal(find('*').textContent.trim(), '');
+    assert.dom('*').hasText('');
   });
 
   test('it renders block only if data table selection is empty', async function(assert) {
@@ -26,7 +26,7 @@ module('Integration | Component | data table menu general', function(hooks) {
         template block text
       {{/data-table-menu-general}}
     `);
-    assert.equal(find('*').textContent.trim(), 'template block text');
+    assert.dom('*').hasText('template block text');
 
     this.set('data-table', { selectionIsEmpty: false });
     // Template block usage:
@@ -36,6 +36,6 @@ module('Integration | Component | data table menu general', function(hooks) {
       {{/data-table-menu-general}}
     `);
 
-    assert.equal(find('*').textContent.trim(), '');
+    assert.dom('*').hasText('');
   });
 });

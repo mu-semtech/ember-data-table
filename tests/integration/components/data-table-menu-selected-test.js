@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, find } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | data table menu selected', function(hooks) {
@@ -14,7 +14,7 @@ module('Integration | Component | data table menu selected', function(hooks) {
         template block text
       {{/data-table-menu-selected}}
     `);
-    assert.equal(find('*').textContent.trim(), '');
+    assert.dom('*').hasText('');
   });
 
   test('it renders selection count', async function(assert) {
@@ -26,7 +26,7 @@ module('Integration | Component | data table menu selected', function(hooks) {
       {{/data-table-menu-selected}}
     `);
 
-    assert.equal(find('span.item-count').textContent.trim(), '1 item(s) selected', 'item count 1');
+    assert.dom('span.item-count').hasText('1 item(s) selected', 'item count 1');
 
     this.set('data-table', { selectionIsEmpty: false, selection: ['foo', 'bar'] });
     // Template block usage:
@@ -36,7 +36,7 @@ module('Integration | Component | data table menu selected', function(hooks) {
       {{/data-table-menu-selected}}
     `);
 
-    assert.equal(find('span.item-count').textContent.trim(), '2 item(s) selected', 'item count 2');
+    assert.dom('span.item-count').hasText('2 item(s) selected', 'item count 2');
   });
 
   test('calls clearSelection on cancel button click', async function(assert) {
@@ -53,7 +53,7 @@ module('Integration | Component | data table menu selected', function(hooks) {
       {{/data-table-menu-selected}}
     `);
 
-    assert.equal(find('button').textContent.trim(), 'Cancel', 'renders a cancel button');
+    assert.dom('button').hasText('Cancel', 'renders a cancel button');
     await click('button');
   });
 });

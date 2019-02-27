@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | th sortable', function(hooks) {
@@ -12,6 +12,6 @@ module('Integration | Component | th sortable', function(hooks) {
 
     await render(hbs`{{th-sortable field='title'}}`);
 
-    assert.equal(findAll('.sortable').length, 1);
+    assert.dom('.sortable').exists({ count: 1 });
   });
 });

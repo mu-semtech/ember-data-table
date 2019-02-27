@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll, find } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | data table content header', function(hooks) {
@@ -11,9 +11,9 @@ module('Integration | Component | data table content header', function(hooks) {
     // Handle any actions with this.on('myAction', function(val) { ... });
 
     await render(hbs`{{data-table-content-header}}`);
-    assert.equal(findAll('thead').length, 1);
+    assert.dom('thead').exists({ count: 1 });
 
-    assert.equal(find('*').textContent.trim(), '');
+    assert.dom('*').hasText('');
 
     // Template block usage:
     await render(hbs`
@@ -22,7 +22,7 @@ module('Integration | Component | data table content header', function(hooks) {
       {{/data-table-content-header}}
     `);
 
-    assert.equal(find('*').textContent.trim(), 'template block text');
+    assert.dom('*').hasText('template block text');
   });
 
   test('display column headers', async function(assert) {
@@ -31,7 +31,7 @@ module('Integration | Component | data table content header', function(hooks) {
 
     await render(hbs`{{data-table-content-header data-table=data-table}}`);
 
-    assert.equal(findAll('tr').length, 1, 'displays 1 header row');
+    assert.dom('tr').exists({ count: 1 }, 'displays 1 header row');
     assert.equal(this.$('tr:first th').length, 3, 'displays 3 column headers');
     assert.equal(this.$('tr:first th:first').text().trim(), 'firstName', 'displays firstName as first header');
     assert.equal(this.$('tr:first th:nth-child(2)').text().trim(), 'lastName', 'displays lastName as second column header');
@@ -44,7 +44,7 @@ module('Integration | Component | data table content header', function(hooks) {
 
     await render(hbs`{{data-table-content-header data-table=data-table enableSelection=true}}`);
 
-    assert.equal(findAll('tr').length, 1, 'displays 1 header row');
+    assert.dom('tr').exists({ count: 1 }, 'displays 1 header row');
     assert.equal(this.$('tr:first th').length, 4, 'displays 4 column headers');
     assert.equal(this.$('tr:first th:first').text().trim(), '', 'displays selection as first header');
   });
@@ -55,7 +55,7 @@ module('Integration | Component | data table content header', function(hooks) {
 
     await render(hbs`{{data-table-content-header data-table=data-table enableLineNumbers=true}}`);
 
-    assert.equal(findAll('tr').length, 1, 'displays 1 header row');
+    assert.dom('tr').exists({ count: 1 }, 'displays 1 header row');
     assert.equal(this.$('tr:first th').length, 4, 'displays 4 column headers');
     assert.equal(this.$('tr:first th:first').text().trim(), '', 'displays line number as first header');
   });

@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll, find } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | data table content body', function(hooks) {
@@ -10,7 +10,7 @@ module('Integration | Component | data table content body', function(hooks) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.on('myAction', function(val) { ... });
     await render(hbs`{{data-table-content-body}}`);
-    assert.equal(findAll('tbody').length, 1);
+    assert.dom('tbody').exists({ count: 1 });
   });
 
   test('display rows', async function(assert) {
@@ -24,7 +24,7 @@ module('Integration | Component | data table content body', function(hooks) {
 
     await render(hbs`{{data-table-content-body content=content data-table=dataTable}}`);
 
-    assert.equal(findAll('tr').length, 2, 'displays 2 rows');
+    assert.dom('tr').exists({ count: 2 }, 'displays 2 rows');
     assert.equal(this.$('tr:first td').length, 3, 'displays 3 columns');
     assert.equal(this.$('tr:first td:first').text().trim(), 'John', 'displays firstName is first column');
     assert.equal(this.$('tr:first td:nth-child(2)').text().trim(), 'Doe', 'displays lastName in second column');
@@ -43,9 +43,9 @@ module('Integration | Component | data table content body', function(hooks) {
     await render(hbs`{{data-table-content-body content=content data-table=data-table enableSelection=true}}`);
 
     assert.equal(this.$('tr:first td').length, 4, 'displays 4 columns');
-    assert.equal(findAll('tr.selected').length, 1, 'displays 1 selected row');
-    assert.equal(findAll('tr input[type="checkbox"]').length, 3, 'displays a checkbox on each row');
-    assert.equal(findAll('tr input[type="checkbox"]:checked').length, 1, 'displays 1 checked checkbox');
+    assert.dom('tr.selected').exists({ count: 1 }, 'displays 1 selected row');
+    assert.dom('tr input[type="checkbox"]').exists({ count: 3 }, 'displays a checkbox on each row');
+    assert.dom('tr input[type="checkbox"]').isChecked('displays 1 checked checkbox');
   });
 
   test('toggles selection if checkbox is clicked', async function(assert) {
@@ -61,9 +61,9 @@ module('Integration | Component | data table content body', function(hooks) {
 
     await render(hbs`{{data-table-content-body content=content data-table=data-table enableSelection=true}}`);
 
-    assert.equal(findAll('tr input[type="checkbox"]:checked').length, 1, 'displays 1 checked checkbox before selecting a row');
+    assert.dom('tr input[type="checkbox"]').isChecked('displays 1 checked checkbox before selecting a row');
     this.$('tr:first input[type="checkbox"]').click();
-    assert.equal(findAll('tr input[type="checkbox"]:checked').length, 2, 'displays 2 checked checkboxes after selecting a row');
+    assert.dom('tr input[type="checkbox"]').isChecked('displays 2 checked checkboxes after selecting a row');
   });
 
   test('add line numbers if enabled', async function(assert) {
@@ -101,17 +101,17 @@ module('Integration | Component | data table content body', function(hooks) {
     this.set('data-table.selection', []);
 
     await render(hbs`{{data-table-content-body noDataMessage=noDataMessage data-table=data-table}}`);
-    assert.equal(findAll('td.no-data-message').length, 1, 'displays a no data message if no content');
-    assert.equal(find('td.no-data-message').textContent.trim(), 'No data', 'displays message "No data" if no content');
+    assert.dom('td.no-data-message').exists({ count: 1 }, 'displays a no data message if no content');
+    assert.dom('td.no-data-message').hasText('No data', 'displays message "No data" if no content');
 
     this.set('content', []);
     await render(hbs`{{data-table-content-body content=content noDataMessage=noDataMessage data-table=data-table}}`);
-    assert.equal(findAll('td.no-data-message').length, 1, 'displays a no data message if empty content');
-    assert.equal(find('td.no-data-message').textContent.trim(), 'No data', 'displays message "No data" if empty content');
+    assert.dom('td.no-data-message').exists({ count: 1 }, 'displays a no data message if empty content');
+    assert.dom('td.no-data-message').hasText('No data', 'displays message "No data" if empty content');
 
     this.set('content', ['foo', 'bar'])
     await render(hbs`{{data-table-content-body content=content noDataMessage=noDataMessage data-table=data-table}}`);
-    assert.equal(findAll('td.no-data-message').length, 0, 'displays no message when there is content');
+    assert.dom('td.no-data-message').doesNotExist('displays no message when there is content');
 
   });
 });

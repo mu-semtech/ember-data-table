@@ -48,5 +48,8 @@ module.exports = {
         // add your custom rules and overrides for node files here
       })
     }
-  ]
+  ],
+  rules: {
+    'no-console': 'off',
+  },
 };

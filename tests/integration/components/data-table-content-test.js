@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll, find } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | data table content', function(hooks) {
@@ -11,9 +11,9 @@ module('Integration | Component | data table content', function(hooks) {
     // Handle any actions with this.on('myAction', function(val) { ... });
 
     await render(hbs`{{data-table-content}}`);
-    assert.equal(findAll('table.data-table').length, 1, 'displays 1 data table');
+    assert.dom('table.data-table').exists({ count: 1 }, 'displays 1 data table');
 
-    assert.equal(find('*').textContent.trim(), '');
+    assert.dom('*').hasText('');
 
     // Template block usage:
     await render(hbs`
@@ -22,6 +22,6 @@ module('Integration | Component | data table content', function(hooks) {
       {{/data-table-content}}
     `);
 
-    assert.equal(find('*').textContent.trim(), 'template block text');
+    assert.dom('*').hasText('template block text');
   });
 });
