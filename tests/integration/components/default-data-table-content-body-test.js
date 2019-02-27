@@ -1,26 +1,28 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('default-data-table-content-body', 'Integration | Component | default data table content body', {
-  integration: true
-});
+module('Integration | Component | default data table content body', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('it renders', function(assert) {
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
+  test('it renders', async function(assert) {
+    // Set any properties with this.set('myProperty', 'value');
+    // Handle any actions with this.on('myAction', function(val) { ... });
 
-  this.set('data-table', { parsedFields: ['firstName', 'lastName', 'age'] });
+    this.set('data-table', { parsedFields: ['firstName', 'lastName', 'age'] });
 
-  this.render(hbs`{{default-data-table-content-body data-table=data-table}}`);
+    await render(hbs`{{default-data-table-content-body data-table=data-table}}`);
 
-  assert.equal(this.$().text().trim(), '');
+    assert.equal(find('*').textContent.trim(), '');
 
-  // Template block usage:
-  this.render(hbs`
-    {{#default-data-table-content-body data-table=data-table}}
-      template block text
-    {{/default-data-table-content-body}}
-  `);
+    // Template block usage:
+    await render(hbs`
+      {{#default-data-table-content-body data-table=data-table}}
+        template block text
+      {{/default-data-table-content-body}}
+    `);
 
-  assert.equal(this.$().text().trim(), 'template block text');
+    assert.equal(find('*').textContent.trim(), 'template block text');
+  });
 });
