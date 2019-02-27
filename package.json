@@ -32,7 +32,8 @@
     "ember-truth-helpers": "^2.0.0"
   },
   "devDependencies": {
-    "@ember/optional-features": "^0.6.3",
+    "@ember/jquery": "^0.6.0",
+    "@ember/optional-features": "^0.6.4",
     "broccoli-asset-rev": "^2.7.0",
     "ember-cli": "~3.7.1",
     "ember-cli-dependency-checker": "^3.0.0",
