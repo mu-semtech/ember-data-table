@@ -4,12 +4,12 @@
       {{text-search filter=filter auto=autoSearch}}
     {{/if}}
     {{yield (hash
-        menu=(component 'data-table-menu' data-table=this)
+        menu=(component "data-table-menu" data-table=this)
         )
         this}}
   </div>
   {{yield (hash
-      content=(component 'data-table-content' content=content noDataMessage=noDataMessage enableSelection=enableSelection enableLineNumbers=enableLineNumbers onClickRow=(optional onClickRow) data-table=this)
+      content=(component "data-table-content" content=content noDataMessage=noDataMessage enableSelection=enableSelection enableLineNumbers=enableLineNumbers onClickRow=(optional onClickRow) data-table=this)
       )
       this}}
 {{else}}
@@ -20,7 +20,7 @@
       </div>
     </div>
   {{/if}}
-  {{component 'data-table-content' content=content noDataMessage=noDataMessage enableSelection=enableSelection enableLineNumbers=enableLineNumbers onClickRow=(optional onClickRow) data-table=this}}
+  {{component "data-table-content" content=content noDataMessage=noDataMessage enableSelection=enableSelection enableLineNumbers=enableLineNumbers onClickRow=(optional onClickRow) data-table=this}}
 {{/if}}
 
 {{#if content}}

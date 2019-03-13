@@ -1,4 +1,3 @@
-import Ember from 'ember';
 import EmberObject from '@ember/object';
 import ArrayProxy from '@ember/array/proxy';
 import Controller from '@ember/controller';
@@ -41,20 +40,20 @@ var ApplicationController = Controller.extend(DefaultQueryParams, {
   sort: 'first-name',
   actions: {
     test(row) {
-      Ember.Logger.info("Hi, you reached the test action for row: " + JSON.stringify(row));
+      console.info("Hi, you reached the test action for row: " + JSON.stringify(row));
     },
     menuTest() {
-      Ember.Logger.info("Hi, you reached the general menu test action");
+      console.info("Hi, you reached the general menu test action");
     },
     selectionTest(selection, datatable) {
       datatable.clearSelection();
-      Ember.Logger.info("Hi, you reached the selection test action for selection: " + JSON.stringify(selection));
+      console.info("Hi, you reached the selection test action for selection: " + JSON.stringify(selection));
       selection.forEach(function(item) {
         item.set('age', item.get('age') + 1);
       });
     },
     clickRow(row) {
-      Ember.Logger.info("Custom row click action on item " + JSON.stringify(row));
+      console.info("Custom row click action on item " + JSON.stringify(row));
     }
   }
 });

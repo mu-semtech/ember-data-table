@@ -11,7 +11,6 @@ module.exports = {
   //   };
   // }
 
-  afterInstall: function(options) {
-
+  afterInstall: function() {
   }
 };

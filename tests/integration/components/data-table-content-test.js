@@ -1,25 +1,27 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('data-table-content', 'Integration | Component | data table content', {
-  integration: true
-});
+module('Integration | Component | data table content', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('it renders', function(assert) {
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
+  test('it renders', async function(assert) {
+    // Set any properties with this.set('myProperty', 'value');
+    // Handle any actions with this.on('myAction', function(val) { ... });
 
-  this.render(hbs`{{data-table-content}}`);
-  assert.equal(this.$('table.data-table').length, 1, 'displays 1 data table');
+    await render(hbs`{{data-table-content}}`);
+    assert.dom('table.data-table').exists({ count: 1 }, 'displays 1 data table');
 
-  assert.equal(this.$().text().trim(), '');
+    assert.dom('*').hasText('');
 
-  // Template block usage:
-  this.render(hbs`
-    {{#data-table-content}}
-      template block text
-    {{/data-table-content}}
-  `);
+    // Template block usage:
+    await render(hbs`
+      {{#data-table-content}}
+        template block text
+      {{/data-table-content}}
+    `);
 
-  assert.equal(this.$().text().trim(), 'template block text');
+    assert.dom('*').hasText('template block text');
+  });
 });
