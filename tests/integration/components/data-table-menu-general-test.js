@@ -1,39 +1,41 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('data-table-menu-general', 'Integration | Component | data table menu general', {
-  integration: true
-});
+module('Integration | Component | data table menu general', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('it renders', function(assert) {
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
+  test('it renders', async function(assert) {
+    // Set any properties with this.set('myProperty', 'value');
+    // Handle any actions with this.on('myAction', function(val) { ... });
 
-  this.render(hbs`{{data-table-menu-general}}`);
+    await render(hbs`{{data-table-menu-general}}`);
 
-  assert.equal(this.$().text().trim(), '');
-});
+    assert.dom('*').hasText('');
+  });
 
-test('it renders block only if data table selection is empty', function(assert) {
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
+  test('it renders block only if data table selection is empty', async function(assert) {
+    // Set any properties with this.set('myProperty', 'value');
+    // Handle any actions with this.on('myAction', function(val) { ... });
 
-  this.set('data-table', { selectionIsEmpty: true });
-  // Template block usage:
-  this.render(hbs`
-    {{#data-table-menu-general data-table=data-table}}
-      template block text
-    {{/data-table-menu-general}}
-  `);
-  assert.equal(this.$().text().trim(), 'template block text');
+    this.set('data-table', { selectionIsEmpty: true });
+    // Template block usage:
+    await render(hbs`
+      {{#data-table-menu-general data-table=data-table}}
+        template block text
+      {{/data-table-menu-general}}
+    `);
+    assert.dom('*').hasText('template block text');
 
-  this.set('data-table', { selectionIsEmpty: false });
-  // Template block usage:
-  this.render(hbs`
-    {{#data-table-menu-general data-table=data-table}}
-      template block text
-    {{/data-table-menu-general}}
-  `);
+    this.set('data-table', { selectionIsEmpty: false });
+    // Template block usage:
+    await render(hbs`
+      {{#data-table-menu-general data-table=data-table}}
+        template block text
+      {{/data-table-menu-general}}
+    `);
 
-  assert.equal(this.$().text().trim(), '');
+    assert.dom('*').hasText('');
+  });
 });

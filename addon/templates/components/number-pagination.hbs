@@ -2,10 +2,11 @@
   <div class="data-table-pagination-left">
     Displaying {{startItem}}-{{endItem}}
     {{#if total}} of {{total}}{{/if}}
-    {{#if sizeOptions}} |
+    {{#if sizeOptions}}
+      |
       <select onchange={{action (mut size) value="target.value"}}>
-        {{#each sizeOptions as |option|}}
-          <option value={{option}} selected={{eq size option}}>{{option}}</option>
+        {{#each sizeOptions as |sizeOption|}}
+          <option value={{sizeOption}} selected={{eq size sizeOption}}>{{sizeOption}}</option>
         {{/each}}
       </select> per page
     {{/if}}
@@ -15,8 +16,8 @@
       <button {{action "changePage" links.first}} disabled={{isFirstPage}}>First</button>
       <button {{action "changePage" links.prev}} disabled={{isFirstPage}}>Previous</button>
       <select onchange={{action (mut currentPage) value="target.value"}}>
-        {{#each pageOptions as |option|}}
-          <option value={{option}} selected={{eq currentPage option}}>{{option}}</option>
+        {{#each pageOptions as |sizeOption|}}
+          <option value={{sizeOption}} selected={{eq currentPage sizeOption}}>{{sizeOption}}</option>
         {{/each}}
       </select>
       <button {{action "changePage" links.next}} disabled={{isLastPage}}>Next</button>
