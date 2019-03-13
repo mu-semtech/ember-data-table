@@ -1,6 +1,6 @@
 {
   "name": "ember-data-table",
-  "version": "1.0.0-beta.3",
+  "version": "1.0.0",
   "description": "Data tables for Ember following Google Design specs",
   "keywords": [
     "ember-addon",
