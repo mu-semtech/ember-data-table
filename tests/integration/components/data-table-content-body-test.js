@@ -45,7 +45,7 @@ module('Integration | Component | data table content body', function(hooks) {
     assert.equal(this.$('tr:first td').length, 4, 'displays 4 columns');
     assert.dom('tr.selected').exists({ count: 1 }, 'displays 1 selected row');
     assert.dom('tr input[type="checkbox"]').exists({ count: 3 }, 'displays a checkbox on each row');
-    assert.dom('tr input[type="checkbox"]').isChecked('displays 1 checked checkbox');
+    assert.dom('tr input[type="checkbox"]:checked').isChecked('displays 1 checked checkbox');
   });
 
   test('toggles selection if checkbox is clicked', async function(assert) {
@@ -61,9 +61,9 @@ module('Integration | Component | data table content body', function(hooks) {
 
     await render(hbs`{{data-table-content-body content=content data-table=data-table enableSelection=true}}`);
 
-    assert.dom('tr input[type="checkbox"]').isChecked('displays 1 checked checkbox before selecting a row');
+    assert.dom('tr input[type="checkbox"]:checked').isChecked('displays 1 checked checkbox before selecting a row');
     this.$('tr:first input[type="checkbox"]').click();
-    assert.dom('tr input[type="checkbox"]').isChecked('displays 2 checked checkboxes after selecting a row');
+    assert.dom('tr input[type="checkbox"]:checked').isChecked('displays 2 checked checkboxes after selecting a row');
   });
 
   test('add line numbers if enabled', async function(assert) {
