@@ -48,9 +48,9 @@ export default Mixin.create({
       query.split('&').forEach(pairs => {
         const [param, value] = pairs.split('=');
 
-        if (param === 'page[number]') {
+        if (decodeURIComponent(param) === 'page[number]') {
           meta[type].number = parseInt(value);
-        } else if (param === 'page[size]') {
+        } else if (decodeURIComponent(param) === 'page[size]') {
           meta[type].size = parseInt(value);
         }
 
