@@ -16,6 +16,7 @@ export default Component.extend({
   noDataMessage: 'No data',
   isLoading: false,
   lineNumbers: false,
+  searchDebounceTime:2000,
   enableLineNumbers: bool('lineNumbers'),
   enableSelection: oneWay('hasMenu'),
   selectionIsEmpty: computed('selection.[]', function() {

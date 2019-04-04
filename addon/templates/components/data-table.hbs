@@ -1,7 +1,7 @@
 {{#if hasBlock}}
   <div class="data-table-header {{unless selectionIsEmpty " selected"}}">
     {{#if enableSearch}}
-      {{text-search filter=filter auto=autoSearch}}
+      {{text-search filter=filter auto=autoSearch wait=searchDebounceTime}}
     {{/if}}
     {{yield (hash
         menu=(component "data-table-menu" data-table=this)
