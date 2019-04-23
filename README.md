@@ -63,6 +63,7 @@ The following parameters can be passed to the data-table component:
 | autoSearch | | true | whether filter value is updated automatically while typing (with a debounce) or user must click a search button explicitly to set the filter value.
 | noDataMessage | | No data | message to be shown when there is no content |
 | lineNumbers | | false | display a line number per table row (default: false). Must be true or false. |
+| searchDebounceTime | | 2000 | debounce time of the search action of the data table. Must be integer. |
 
 By default the data table will make each column sortable. The search text box is only shown if the `filter` parameter is bound. Pagination is only shown if the pagination metadata is set on the model (see the [Ember Data Table Serializer mixin](https://github.com/mu-semtech/ember-data-table#serializer)).
 

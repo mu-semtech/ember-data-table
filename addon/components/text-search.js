@@ -10,7 +10,6 @@ export default Component.extend({
   filter: '',
   classNames: ["data-table-search"],
   internalValue: oneWay('filter'),
-  wait: 2000,
   auto: true,
   placeholder: 'Search',
   init() {
