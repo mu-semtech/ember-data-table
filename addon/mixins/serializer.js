@@ -41,9 +41,8 @@ export default Mixin.create({
       const link = data[type];
       meta[type] = {};
 
-      let a = document.createElement('a');
-      a.href = link;
-      let query = a.search.slice(1);
+      //extracts from '/path?foo=bar?baz=foo' the string: foo=bar?baz=foo
+      const query = link.split(/\?(.+)/)[1] || '';
 
       query.split('&').forEach(pairs => {
         const [param, value] = pairs.split('=');
@@ -55,7 +54,7 @@ export default Mixin.create({
         }
 
       });
-      a = null;
+
     });
 
     return meta;
