@@ -1,6 +1,6 @@
 /*jshint unused:false */
 import Mixin from '@ember/object/mixin';
-import $ from 'jquery';
+import _ from 'lodash';
 
 export default Mixin.create({
   queryParams: {
@@ -22,7 +22,7 @@ export default Mixin.create({
     };
     // TODO: sending an empty filter param to backend returns []
     if (params.filter) { options['filter'] = params.filter; }
-    $.extend(options, this.mergeQueryOptions(params));
+     _.merge(options, this.mergeQueryOptions(params));
     return this.get('store').query(this.get('modelName'), options);
   },
   actions: {
