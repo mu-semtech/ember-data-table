@@ -41,7 +41,7 @@ export default Mixin.create({
       const link = data[type];
       meta[type] = {};
 
-      //extracts from '/path?foo=bar?baz=foo' the string: foo=bar?baz=foo
+      //extracts from '/path?foo=bar&baz=foo' the string: foo=bar&baz=foo
       const query = link.split(/\?(.+)/)[1] || '';
 
       query.split('&').forEach(pairs => {
