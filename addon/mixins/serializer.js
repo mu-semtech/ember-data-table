@@ -41,20 +41,21 @@ export default Mixin.create({
       const link = data[type];
       meta[type] = {};
 
-      //extracts from '/path?foo=bar&baz=foo' the string: foo=bar&baz=foo
-      const query = link.split(/\?(.+)/)[1] || '';
+      if (link) {
+        //extracts from '/path?foo=bar&baz=foo' the string: foo=bar&baz=foo
+        const query = link.split(/\?(.+)/)[1] || '';
 
-      query.split('&').forEach(pairs => {
-        const [param, value] = pairs.split('=');
+        query.split('&').forEach(pairs => {
+          const [param, value] = pairs.split('=');
 
-        if (decodeURIComponent(param) === 'page[number]') {
-          meta[type].number = parseInt(value);
-        } else if (decodeURIComponent(param) === 'page[size]') {
-          meta[type].size = parseInt(value);
-        }
+          if (decodeURIComponent(param) === 'page[number]') {
+            meta[type].number = parseInt(value);
+          } else if (decodeURIComponent(param) === 'page[size]') {
+            meta[type].size = parseInt(value);
+          }
 
-      });
-
+        });
+      }
     });
 
     return meta;
