@@ -1,5 +1,5 @@
 {{! template-lint-disable table-groups }}
-<table class="data-table">
+<table class="data-table {{tableClass}}">
   {{#if hasBlock}}
     {{yield (hash
         header=(component "data-table-content-header" enableSelection=enableSelection enableLineNumbers=enableLineNumbers data-table=data-table)
