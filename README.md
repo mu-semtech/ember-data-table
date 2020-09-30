@@ -7,8 +7,14 @@ Data table for Ember based on a JSONAPI compliant backend.
 Have a look at [ember-paper-data-table](https://github.com/mu-semtech/emper-paper-data-table) to get a data table styled with [ember-paper](https://github.com/miguelcobain/ember-paper).
 
 ## Installation
+If you're using Ember > v3.8
 ```bash
 ember install ember-data-table
+```
+
+For Ember < v3.8, use version 1.x of the addon
+```bash
+ember install ember-data-table@1.2.2
 ```
 
 ## Getting started
