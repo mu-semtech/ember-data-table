@@ -3,7 +3,7 @@
 {{else}}
   {{#if content}}
     {{#each wrappedItems as |wrapper index|}}
-      <tr role="button" class="{{if (contains wrapper.item data-table.selection) "selected"}} {{if onClickRow "clickable"}}" onclick={{action (optional onClickRow) wrapper.item}}>
+      <tr role="button" class="{{if (includes wrapper.item data-table.selection) "selected"}} {{if onClickRow "clickable"}}" onclick={{action (optional onClickRow) wrapper.item}}>
         {{#if enableSelection}}
           <td class="center">
             {{input type="checkbox" checked=wrapper.isSelected click=(action "updateSelection" wrapper)}}
