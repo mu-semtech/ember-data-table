@@ -16,7 +16,7 @@
   {{#if enableSearch}}
     <div class="data-table-header">
       <div class="data-table-menu">
-        {{text-search filter=filter auto=autoSearch}}
+        {{text-search filter=filter auto=autoSearch wait=searchDebounceTime}}
       </div>
     </div>
   {{/if}}
