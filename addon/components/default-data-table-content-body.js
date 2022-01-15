@@ -8,14 +8,14 @@ export default Component.extend({
   layout,
   tagName: '',
   allFields: oneWay('data-table.parsedFields'),
-  firstColumn: computed( 'data-table.parsedFields', function(){
+  firstColumn: computed('data-table.parsedFields', function () {
     const parsedFields = A(this.get('data-table.parsedFields'));
     return parsedFields.get('firstObject');
   }),
-  otherColumns: computed( 'data-table.parsedFields', function(){
+  otherColumns: computed('data-table.parsedFields', function () {
     let fields;
     [, ...fields] = this.get('data-table.parsedFields');
     return fields;
   }),
-  linkedRoute: oneWay( 'data-table.link' )
+  linkedRoute: oneWay('data-table.link'),
 });

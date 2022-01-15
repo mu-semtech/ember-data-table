@@ -2,7 +2,7 @@
 module.exports = {
   description: '',
 
-  normalizeEntityName: function() {},
+  normalizeEntityName: function () {},
 
   // locals: function(options) {
   //   // Return custom template variables here.
@@ -11,6 +11,5 @@ module.exports = {
   //   };
   // }
 
-  afterInstall: function() {
-  }
+  afterInstall: function () {},
 };

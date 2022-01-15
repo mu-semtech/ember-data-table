@@ -1,5 +1,5 @@
 {{#unless data-table.selectionIsEmpty}}
   <span class="item-count">{{selectionCount}} item(s) selected</span>
-  <button {{action "clearSelection"}}>Cancel</button>
+  <button type="button" {{action "clearSelection"}}>Cancel</button>
   {{yield (slice 0 selectionCount data-table.selection) data-table}}
 {{/unless}}

@@ -5,7 +5,7 @@
   {{#if enableLineNumbers}}
     <th>{{!-- Linenumbers --}}</th>
   {{/if}}
-  {{#if hasBlock}}
+  {{#if (has-block)}}
     {{yield}}
   {{else}}
     {{#each fields as |field|}}

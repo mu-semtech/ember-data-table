@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | data table menu general', function(hooks) {
+module('Integration | Component | data table menu general', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.on('myAction', function(val) { ... });
 
@@ -15,7 +15,7 @@ module('Integration | Component | data table menu general', function(hooks) {
     assert.dom('*').hasText('');
   });
 
-  test('it renders block only if data table selection is empty', async function(assert) {
+  test('it renders block only if data table selection is empty', async function (assert) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.on('myAction', function(val) { ... });
 

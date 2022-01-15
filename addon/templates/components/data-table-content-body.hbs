@@ -12,7 +12,7 @@
         {{#if enableLineNumbers}}
           <td>{{add index offset}}</td>
         {{/if}}
-        {{#if hasBlock}}
+        {{#if (has-block)}}
           {{yield wrapper.item}}
         {{else}}
           {{default-data-table-content-body item=wrapper.item data-table=data-table}}

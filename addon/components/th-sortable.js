@@ -7,8 +7,8 @@ export default Component.extend({
   tagName: 'th',
   classNames: ['sortable'],
   classNameBindings: ['isSorted:sorted'],
-  dasherizedField: computed('field', function() {
-    return this.get('field').replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+  dasherizedField: computed('field', function () {
+    return this.field.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
   }),
   /**
       Inverses the sorting parameter
@@ -19,17 +19,23 @@ export default Component.extend({
     if (sorting.substring(0, 1) === '-') {
       return sorting.substring(1);
     } else {
-      return "-" + sorting;
+      return '-' + sorting;
     }
   },
-  isSorted: computed('dasherizedField', 'currentSorting', function() {
-    return this.get('currentSorting') === this.get('dasherizedField') ||
-      this.get('currentSorting') === this._inverseSorting(this.get('dasherizedField'));
+  isSorted: computed('dasherizedField', 'currentSorting', function () {
+    return (
+      this.currentSorting === this.dasherizedField ||
+      this.currentSorting === this._inverseSorting(this.dasherizedField)
+    );
   }),
-  order: computed('dasherizedField', 'currentSorting', function() {
-    if (this.get('currentSorting') === this.get('dasherizedField')) { return 'asc'; }
-    else if (this.get('currentSorting') === `-${this.get('dasherizedField')}`) { return 'desc'; }
-    else { return ''; }
+  order: computed('dasherizedField', 'currentSorting', function () {
+    if (this.currentSorting === this.dasherizedField) {
+      return 'asc';
+    } else if (this.currentSorting === `-${this.dasherizedField}`) {
+      return 'desc';
+    } else {
+      return '';
+    }
   }),
 
   actions: {
@@ -41,14 +47,14 @@ export default Component.extend({
        Else, set the sorting to ascending on the given field.
      */
     inverseSorting() {
-      if (this.get('order') === 'asc') {
-        this.set('currentSorting', this._inverseSorting(this.get('currentSorting')));
-      } else if (this.get('order') === 'desc') {
+      if (this.order === 'asc') {
+        this.set('currentSorting', this._inverseSorting(this.currentSorting));
+      } else if (this.order === 'desc') {
         this.set('currentSorting', '');
-      } else { // if currentSorting is not set to this field
-        this.set('currentSorting', this.get('dasherizedField'));
+      } else {
+        // if currentSorting is not set to this field
+        this.set('currentSorting', this.dasherizedField);
       }
-    }
-  }
-
+    },
+  },
 });

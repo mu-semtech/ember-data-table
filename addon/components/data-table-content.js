@@ -4,6 +4,6 @@ import layout from '../templates/components/data-table-content';
 
 export default Component.extend({
   layout,
-  classNames: ["data-table-content"],
-  tableClass: alias("data-table.tableClass"),
+  classNames: ['data-table-content'],
+  tableClass: alias('data-table.tableClass'),
 });

@@ -8,30 +8,34 @@ import layout from '../templates/components/text-search';
 export default Component.extend({
   layout,
   filter: '',
-  classNames: ["data-table-search"],
+  classNames: ['data-table-search'],
   internalValue: oneWay('filter'),
   auto: true,
   placeholder: 'Search',
   init() {
     this._super(...arguments);
-    this.set('value', this.get('filter'));
+    this.set('value', this.filter);
   },
-  onValueChange: observer('value', function() {
-    this._valuePid = debounce(this, this.get('_setFilter'), this.get('wait'));
+  onValueChange: observer('value', function () {
+    this._valuePid = debounce(this, this._setFilter, this.wait);
   }),
-  onFilterChange: observer('filter', function() {
+  onFilterChange: observer('filter', function () {
     // update value if filter is update manually outsite this component
-    if (!this.isDestroying && !this.isDestroyed && !isEqual(this.get('filter'), this.get('value'))) {
-      this.set('value', this.get('filter'));
+    if (
+      !this.isDestroying &&
+      !this.isDestroyed &&
+      !isEqual(this.filter, this.value)
+    ) {
+      this.set('value', this.filter);
     }
   }),
   _setFilter() {
     if (!this.isDestroying && !this.isDestroyed) {
-      this.set('filter', this.get('value'));
+      this.set('filter', this.value);
     }
   },
   willDestroy() {
     this._super(...arguments);
     cancel(this._valuePid);
-  }
+  },
 });

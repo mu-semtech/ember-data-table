@@ -1,18 +1,18 @@
 /* eslint-disable ember/no-new-mixins,ember/no-mixins */
 
-import EmberObject from "@ember/object";
-import RouteMixin from "ember-data-table/mixins/route";
-import { module, test } from "qunit";
+import EmberObject from '@ember/object';
+import RouteMixin from 'ember-data-table/mixins/route';
+import { module, test } from 'qunit';
 
-module("Unit | Mixin | route", function () {
-  test("it (deep) merges the response of mergeQueryOptions method with the query param options", function (assert) {
+module('Unit | Mixin | route', function () {
+  test('it (deep) merges the response of mergeQueryOptions method with the query param options', function (assert) {
     assert.expect(2);
 
     let RouteObject = EmberObject.extend(RouteMixin, {
-      modelName: "test",
+      modelName: 'test',
       mergeQueryOptions() {
         return {
-          foo: "bar",
+          foo: 'bar',
           page: {
             size: 5,
           },
@@ -22,20 +22,20 @@ module("Unit | Mixin | route", function () {
 
     let mockStore = {
       query: (modelName, queryOptions) => {
-        assert.strictEqual(modelName, "test");
+        assert.strictEqual(modelName, 'test');
         assert.deepEqual(queryOptions, {
-          sort: "name",
+          sort: 'name',
           page: {
             size: 5,
             number: 0,
           },
-          foo: "bar",
+          foo: 'bar',
         });
       },
     };
 
     let mockRoute = RouteObject.create();
     mockRoute.store = mockStore;
-    mockRoute.model({ sort: "name", page: 0, size: 20 });
+    mockRoute.model({ sort: 'name', page: 0, size: 20 });
   });
 });

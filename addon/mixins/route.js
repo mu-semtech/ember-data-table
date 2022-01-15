@@ -9,7 +9,7 @@ export default Mixin.create({
     filter: { refreshModel: true },
     page: { refreshModel: true },
     size: { refreshModel: true },
-    sort: { refreshModel: true }
+    sort: { refreshModel: true },
   },
   mergeQueryOptions() {
     return {};
@@ -19,23 +19,25 @@ export default Mixin.create({
       sort: params.sort,
       page: {
         number: params.page,
-        size: params.size
-      }
+        size: params.size,
+      },
     };
     // TODO: sending an empty filter param to backend returns []
-    if (params.filter) { options['filter'] = params.filter; }
+    if (params.filter) {
+      options['filter'] = params.filter;
+    }
     merge(options, this.mergeQueryOptions(params));
-    return this.get('store').query(this.get('modelName'), options);
+    return this.store.query(this.modelName, options);
   },
   actions: {
     loading(transition) {
       let controller = this.controllerFor(this.routeName);
       controller.set('isLoadingModel', true);
-      transition.promise.finally(function() {
+      transition.promise.finally(function () {
         controller.set('isLoadingModel', false);
       });
 
       return true; // bubble the loading event
-    }
-  }
+    },
+  },
 });

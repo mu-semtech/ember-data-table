@@ -13,15 +13,15 @@
   </div>
   {{#if hasMultiplePages}}
     <div class="data-table-pagination-right">
-      <button {{action "changePage" links.first}} disabled={{isFirstPage}}>First</button>
-      <button {{action "changePage" links.prev}} disabled={{isFirstPage}}>Previous</button>
+      <button disabled={{isFirstPage}} type="button" {{action "changePage" links.first}}>First</button>
+      <button disabled={{isFirstPage}} type="button" {{action "changePage" links.prev}}>Previous</button>
       <select onchange={{action (mut currentPage) value="target.value"}}>
         {{#each pageOptions as |sizeOption|}}
           <option value={{sizeOption}} selected={{eq currentPage sizeOption}}>{{sizeOption}}</option>
         {{/each}}
       </select>
-      <button {{action "changePage" links.next}} disabled={{isLastPage}}>Next</button>
-      <button {{action "changePage" links.last}} disabled={{isLastPage}}>Last</button>
+      <button disabled={{isLastPage}} type="button" {{action "changePage" links.next}}>Next</button>
+      <button disabled={{isLastPage}} type="button" {{action "changePage" links.last}}>Last</button>
     </div>
   {{/if}}
 </div>

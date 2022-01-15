@@ -6,6 +6,6 @@ import layout from '../templates/components/data-table-content-header';
 export default Component.extend({
   layout,
   tagName: 'thead',
-  sort: alias("data-table.sort"),
-  fields: oneWay("data-table.parsedFields")
+  sort: alias('data-table.sort'),
+  fields: oneWay('data-table.parsedFields'),
 });

@@ -1,4 +1,4 @@
-{{#if hasBlock}}
+{{#if (has-block)}}
   <div class="data-table-header {{unless selectionIsEmpty " selected"}}">
     {{#if enableSearch}}
       {{text-search filter=filter auto=autoSearch wait=searchDebounceTime}}

@@ -1,7 +1,6 @@
 import Mixin from '@ember/object/mixin';
 
 export default Mixin.create({
-
   /**
       Parse the links in the JSONAPI response and convert to a meta-object
   */
@@ -37,7 +36,7 @@ export default Mixin.create({
   createPageMeta(data) {
     let meta = {};
 
-    Object.keys(data).forEach(type => {
+    Object.keys(data).forEach((type) => {
       const link = data[type];
       meta[type] = {};
 
@@ -45,7 +44,7 @@ export default Mixin.create({
         //extracts from '/path?foo=bar&baz=foo' the string: foo=bar&baz=foo
         const query = link.split(/\?(.+)/)[1] || '';
 
-        query.split('&').forEach(pairs => {
+        query.split('&').forEach((pairs) => {
           const [param, value] = pairs.split('=');
 
           if (decodeURIComponent(param) === 'page[number]') {
@@ -53,12 +52,10 @@ export default Mixin.create({
           } else if (decodeURIComponent(param) === 'page[size]') {
             meta[type].size = parseInt(value);
           }
-
         });
       }
     });
 
     return meta;
-  }
-
+  },
 });
