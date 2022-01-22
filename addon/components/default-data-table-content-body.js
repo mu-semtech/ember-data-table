@@ -1,21 +1,29 @@
-import { A } from '@ember/array';
-import { computed } from '@ember/object';
-import { oneWay } from '@ember/object/computed';
-import Component from '@ember/component';
-import layout from '../templates/components/default-data-table-content-body';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  layout,
-  tagName: '',
-  allFields: oneWay('data-table.parsedFields'),
-  firstColumn: computed('data-table.parsedFields', function () {
-    const parsedFields = A(this.get('data-table.parsedFields'));
-    return parsedFields.get('firstObject');
-  }),
-  otherColumns: computed('data-table.parsedFields', function () {
-    let fields;
-    [, ...fields] = this.get('data-table.parsedFields');
-    return fields;
-  }),
-  linkedRoute: oneWay('data-table.link'),
-});
+export default class DefaultDataTableContentBodyComponent extends Component {
+  get allFields() {
+    return this.args["data-table"].parsedFields; // TODO: pass directly?
+  }
+
+  get firstColumn() {
+    const parsedFields = this.args["data-table"].parsedFields;
+    if( parsedFields.length > 0 )
+      return parsedFields[0];
+    else
+      return null;
+  }
+
+  get otherColumns() {
+    const parsedFields = this.args["data-table"].parsedFields;
+    if( parsedFields.length > 0 ) {
+      let [, ...fields] = parsedFields;
+      return fields;
+    } else {
+      return [];
+    }
+  }
+
+  get linkedRoute() {
+    return this.args["data-table"].link;
+  }
+}

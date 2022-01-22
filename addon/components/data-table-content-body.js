@@ -1,47 +1,41 @@
-import { set } from '@ember/object';
-import { computed } from '@ember/object';
-import Component from '@ember/component';
-import layout from '../templates/components/data-table-content-body';
+import { action } from '@ember/object';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  tagName: 'tbody',
-  init() {
-    this._super(...arguments);
-    if (!this['data-table']) this.set('data-table', {});
-    if (!this['content']) this.set('content', []);
-  },
-  layout,
-  offset: computed('data-table.{page,size}', function () {
+export default class DataTableContentBodyComponent extends Component {
+  get offset() {
     var offset = 1; //to avoid having 0. row
-    var page = this.get('data-table.page');
-    var size = this.get('data-table.size');
+    var page = this.args["data-table"].page; // TODO: pass on page directly?
+    var size = this.args["data-table"].size; // TODO: pass on size directly?
     if (page && size) {
       offset += page * size;
     }
     return offset;
-  }),
-  wrappedItems: computed(
-    'content',
-    'content.[]',
-    'data-table.selection.[]',
-    function () {
-      const selection = this.get('data-table.selection') || [];
-      const content = this.content || [];
-      return content.map(function (item) {
-        return { item: item, isSelected: selection.includes(item) };
-      });
-    }
-  ),
-  actions: {
-    updateSelection(selectedWrapper, event) {
-      set(selectedWrapper, 'isSelected', event.target.checked);
-      this.wrappedItems.forEach((wrapper) => {
-        if (wrapper.isSelected) {
-          this.get('data-table').addItemToSelection(wrapper.item);
-        } else {
-          this.get('data-table').removeItemFromSelection(wrapper.item);
-        }
-      });
-    },
-  },
-});
+  }
+
+  get wrappedItems() {
+    const selection = this.args["data-table"].selection || []; // TODO: should the data-table ensure this is an array?
+    const content = this.args.content;
+    return content.map(function(item) {
+      return { item: item, isSelected: selection.includes(item) };
+    });
+  }
+
+  @action
+  updateSelection(selectedWrapper, event) {
+    selectedWrapper.isSelected = event.target.checked;
+
+    this.wrappedItems.forEach((wrapper) => {
+      if (wrapper.isSelected) {
+        this.args["data-table"].addItemToSelection(wrapper.item); // TODO: pass on addItemToSelection directly?
+      } else {
+        this.arg["data-table"].removeItemFromSelection(wrapper.item); // TODO: pass on removeItemFromSelection directly?
+      }
+    });
+  }
+
+  @action
+  onClickRow() {
+    if( this.args.onClickRow )
+      this.args.onClickRow(...arguments);
+  }
+}
