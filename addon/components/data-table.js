@@ -68,6 +68,10 @@ export default class DataTable extends Component {
       : true;
   }
 
+  get sort() {
+    return this.args.sort;
+  }
+
   _size = undefined;
   get size() {
     if (this._size === undefined && this.args.size)
@@ -117,7 +121,7 @@ export default class DataTable extends Component {
   }
 
   get parsedFields() {
-    const fields = this.fields;
+    const fields = this.args.fields;
     if (typeOf(fields) === 'string') {
       return fields.split(' ');
     } else {

@@ -1,0 +1,6 @@
+<th class={{concat "sortable" (if this.isSorted " sorted" "")}}>
+  <span role="button" {{on "click" this.inverseSorting}}>
+    {{#if this.order}}[{{this.order}}]{{/if}}
+    {{@label}}
+  </span>
+</th>
