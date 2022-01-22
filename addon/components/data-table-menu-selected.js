@@ -1,17 +1,18 @@
-import { computed } from '@ember/object';
-import Component from '@ember/component';
-import layout from '../templates/components/data-table-menu-selected';
+import { action } from '@ember/object';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  layout,
-  init: function () {
-    this._super(...arguments);
-    this.set('data-table.enableSelection', true);
-  },
-  selectionCount: computed.reads('data-table.selection.length'),
-  actions: {
-    clearSelection() {
-      this.get('data-table').clearSelection();
-    },
-  },
-});
+export default class DataTableMenuSelectedComponent extends Component {
+  constructor() {
+    super(...arguments);
+    this.args["data-table"].enableSelection = true; // TODO: is this the best way to handle such case?
+  }
+
+  get selectionCount() {
+    return this.args["data-table"].selection.length;
+  }
+
+  @action
+  clearSelection() {
+    this.args["data-table"].clearSelection();
+  }
+}

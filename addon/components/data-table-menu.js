@@ -1,7 +1,3 @@
-import Component from '@ember/component';
-import layout from '../templates/components/data-table-menu';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  layout,
-  classNames: ['data-table-menu'],
-});
+export default class DataTableMenuComponent extends Component {}

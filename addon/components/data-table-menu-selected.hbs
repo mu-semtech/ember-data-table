@@ -1,0 +1,5 @@
+{{#unless @data-table.selectionIsEmpty}}
+  <span class="item-count">{{this.selectionCount}} item(s) selected</span>
+  <button type="button" {{on "click" this.clearSelection}}>Cancel</button>
+  {{yield (slice 0 this.selectionCount @data-table.selection) @data-table}}
+{{/unless}}
