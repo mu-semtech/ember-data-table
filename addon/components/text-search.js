@@ -1,41 +1,39 @@
-import { isEqual } from '@ember/utils';
+import { action } from '@ember/object';
 import { cancel, debounce } from '@ember/runloop';
-import { observer } from '@ember/object';
-import { oneWay } from '@ember/object/computed';
-import Component from '@ember/component';
-import layout from '../templates/components/text-search';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  layout,
-  filter: '',
-  classNames: ['data-table-search'],
-  internalValue: oneWay('filter'),
-  auto: true,
-  placeholder: 'Search',
-  init() {
-    this._super(...arguments);
-    this.set('value', this.filter);
-  },
-  onValueChange: observer('value', function () {
-    this._valuePid = debounce(this, this._setFilter, this.wait);
-  }),
-  onFilterChange: observer('filter', function () {
-    // update value if filter is update manually outsite this component
-    if (
-      !this.isDestroying &&
-      !this.isDestroyed &&
-      !isEqual(this.filter, this.value)
-    ) {
-      this.set('value', this.filter);
+export default class TextSearchComponent extends Component {
+  enteredValue = undefined;
+
+  autoDebouncePid = undefined;
+
+  @action
+  handleAutoInput(event) {
+    this.enteredValue = event.target.value;
+    this.autoDebouncePid = debounce(this, this.submitCurrent, this.args.wait);
+  }
+
+  submitCurrent() {
+    if( !this.isDestroying && !this.isDestroyed ) {
+      this.args.updateFilter( this.enteredValue );
+      this.autoDebouncePid = undefined;
     }
-  }),
-  _setFilter() {
-    if (!this.isDestroying && !this.isDestroyed) {
-      this.set('filter', this.value);
-    }
-  },
+  }
+
   willDestroy() {
-    this._super(...arguments);
-    cancel(this._valuePid);
-  },
-});
+    super.willDestroy(...arguments);
+    cancel(this.autoDebouncePid);
+  }
+
+
+  @action
+  handleDirectInput(event) {
+    this.enteredValue = event.target.value;
+  }
+
+  @action
+  submitForm(event) {
+    event.preventDefault();
+    this.submitCurrent();
+  }
+}

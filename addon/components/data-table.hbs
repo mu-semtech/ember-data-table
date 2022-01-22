@@ -16,7 +16,13 @@
   {{#if this.enableSearch}}
     <div class="data-table-header">
       <div class="data-table-menu">
-        {{!-- text-search filter=this.filter auto=this.autoSearch --}}
+        <TextSearch
+          @filter={{this.filter}}
+          @auto={{this.autoSearch}}
+          @updateFilter={{this.updateFilter}}
+          @wait={{this.searchDebounceTime}}
+          @placeholder={{this.searchPlaceholder}}
+        />
       </div>
     </div>
   {{/if}}

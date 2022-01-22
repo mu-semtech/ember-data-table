@@ -1,0 +1,16 @@
+<form
+  {{on "submit" this.submitForm}}
+  class="data-table-search">
+  {{#if @auto}}
+    <input
+      value={{@filter}}
+      placeholder={{this.placeholder}}
+      {{on "input" this.handleAutoInput}} />
+  {{else}}
+    <input
+      value={{@filter}}
+      placeholder={{this.placeholder}}
+      {{on "input" this.handleDirectInput}}>
+    <button type="submit">Search</button>
+  {{/if}}
+</form>

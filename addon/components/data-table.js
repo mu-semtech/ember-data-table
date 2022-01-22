@@ -129,6 +129,12 @@ export default class DataTable extends Component {
     }
   }
 
+  get searchPlaceholder() {
+    return "searchPlaceholder" in this.args
+      ? this.args.searchPlaceholder
+      : "Search input";
+  }
+
   @action
   updatePageSize(size) {
     this.args.updatePage(0);
