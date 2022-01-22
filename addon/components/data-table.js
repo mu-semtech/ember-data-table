@@ -110,16 +110,6 @@ export default class DataTable extends Component {
       : true;
   }
 
-  // TODO: make sure onFilterChanged is called and pushes its values through
-  onFilterChanged() {
-    this.page = 0;
-  }
-
-  // TODO: make sure onSizeChanged is called and pushes its values through
-  onSizeChanged() {
-    this.page = 0;
-  }
-
   get parsedFields() {
     const fields = this.args.fields;
     if (typeOf(fields) === 'string') {
