@@ -24,7 +24,14 @@
 {{/if}}
 
 {{#if @content}}
-  {{!-- number-pagination
-      page=this.page size=this.size nbOfItems=@content.length sizeOptions=this.sizeOptions
-      total=@content.meta.count links=@content.meta.pagination --}}
+  <NumberPagination
+    @page={{@page}}
+    @size={{@size}}
+    @nbOfItems={{@content.length}}
+    @sizeOptions={{this.sizeOptions}}
+    @total={{@content.meta.count}}
+    @links={{@content.meta.pagination}}
+    @updatePage={{@updatePage}}
+    @updateSize={{this.updatePageSize}}
+  />
 {{/if}}

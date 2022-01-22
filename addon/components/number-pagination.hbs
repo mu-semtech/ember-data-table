@@ -1,0 +1,25 @@
+<div class="data-table-pagination">
+  <div class="data-table-pagination-left">
+    Displaying {{this.startItem}}-{{this.endItem}}
+    {{#if @total}} of {{@total}}{{/if}}
+    {{#if @sizeOptions}}
+      |
+      <label>
+        <select {{on "change" this.selectSizeOption}} value="target.value">
+          {{#each @sizeOptions as |sizeOption|}}
+            <option value={{sizeOption}} selected={{eq @size sizeOption}}>{{sizeOption}}</option>
+          {{/each}}
+        </select> per page
+      </label>
+    {{/if}}
+  </div>
+  {{#if this.hasMultiplePages}}
+    <div class="data-table-pagination-right">
+      <button disabled={{this.isFirstPage}} type="button" {{on "click" (fn this.updatePage @links.first)}}>First</button>
+      <button disabled={{this.isFirstPage}} type="button" {{on "click" (fn this.updatePage @links.prev)}}>Previous</button>
+
+      <button disabled={{this.isLastPage}} type="button" {{on "click" (fn this.updatePage @links.next)}}>Next</button>
+      <button disabled={{this.isLastPage}} type="button" {{on "click" (fn this.updatePage @links.last)}}>Last</button>
+    </div>
+  {{/if}}
+</div>

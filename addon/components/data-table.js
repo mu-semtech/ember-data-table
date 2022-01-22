@@ -1,3 +1,4 @@
+import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 
@@ -124,14 +125,23 @@ export default class DataTable extends Component {
     }
   }
 
-  // filterChanged: observer('filter', function () {
-  //   this.set('page', 0);
-  // }),
-  // sizeChanged: observer('size', function () {
-  //   this.set('page', 0);
-  // }),
-  // parsedFields: computed('fields', function () {
-  // }),
+  @action
+  updatePageSize(size) {
+    this.args.updatePage(0);
+    this.args.updatePageSize(size);
+  }
+
+  @action
+  updateFilter(filter) {
+    this.args.updatePage(0);
+    this.args.updateFilter(filter);
+  }
+
+  @action
+  updateSort(sort) {
+    this.args.updatePage(0);
+    this.args.updateSort(sort);
+  }
 
   addItemToSelection(item) {
     this.selection = [item, ...this.selection];

@@ -1,49 +1,60 @@
-import { computed } from '@ember/object';
-import Component from '@ember/component';
-import layout from '../templates/components/number-pagination';
+import { action } from '@ember/object';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  layout,
-  classNames: ['data-table-pagination'],
-  currentPage: computed('page', {
-    get() {
-      return this.page ? parseInt(this.page) + 1 : 1;
-    },
-    set(key, value) {
-      this.set('page', value - 1);
-      return value;
-    },
-  }),
-  firstPage: computed('links.first.number', function () {
-    return this.get('links.first.number') || 1;
-  }),
-  lastPage: computed('links.last.number', function () {
-    const max = this.get('links.last.number') || -1;
-    return max ? max + 1 : max;
-  }),
-  isFirstPage: computed('firstPage', 'currentPage', function () {
+export default class NumberPaginationComponent extends Component {
+  get currentPage() {
+    return this.args.page
+      ? parseInt(this.args.page) + 1 // TODO: verify this needs to parse the page, if the default is a number input should be parsed as a number too
+      : 1;
+  }
+
+  set currentPage(newPage) {
+    this.args.updatePage( newPage - 1 );
+  }
+
+  get firstPage() {
+    return this.args.links?.first?.number || 1;
+  }
+
+  get lastPage() {
+    return this.args.links?.last?.number || 1;
+  }
+
+  get isFirstPage() {
     return this.firstPage == this.currentPage;
-  }),
-  isLastPage: computed('lastPage', 'currentPage', function () {
+  }
+
+  get isLastPage() {
     return this.lastPage == this.currentPage;
-  }),
-  hasMultiplePages: computed.gt('lastPage', 0),
-  startItem: computed('size', 'currentPage', function () {
-    return this.size * (this.currentPage - 1) + 1;
-  }),
-  endItem: computed('startItem', 'nbOfItems', function () {
-    return this.startItem + this.nbOfItems - 1;
-  }),
-  pageOptions: computed('firstPage', 'lastPage', function () {
+  }
+
+  get hasMultiplePages() {
+    return this.lastPage > 0; // TODO: is this right?  All numbers seem to default to 1.
+  }
+
+  get startItem() {
+    return this.args.size * (this.currentPage - 1) + 1;
+  }
+
+  get endItem() {
+    return this.startItem + this.args.nbOfItems - 1;
+  }
+
+  get pageOptions() {
     const nbOfPages = this.lastPage - this.firstPage + 1;
     return Array.from(
       new Array(nbOfPages),
-      (val, index) => this.firstPage + index
+      (_val, index) => this.firstPage + index
     );
-  }),
-  actions: {
-    changePage(link) {
-      this.set('page', link['number'] || 0);
-    },
-  },
-});
+  }
+
+  @action
+  updatePage(link) {
+    this.args.updatePage( link?.number || 0 );
+  }
+
+  @action
+  selectSizeOption(event) {
+    this.args.updateSize(parseInt(event.target.value));
+  }
+}
