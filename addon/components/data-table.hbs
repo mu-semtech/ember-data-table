@@ -22,9 +22,11 @@
        links=@content.meta.pagination
        updatePage=@updatePage
        updateSize=this.updatePageSize)
-     as |search content pagination|}}
+     (component "data-table-menu"
+       data-table=this)
+     as |search content pagination menu|}}
   {{#if (has-block "default")}}
-    {{yield (hash search content pagination)}}
+    {{yield (hash search content pagination menu)}}
   {{else}}
     {{#if this.enableSearch}}
       {{#if (has-block "search")}}
@@ -36,6 +38,10 @@
           </div>
         </div>
       {{/if}}
+    {{/if}}
+
+    {{#if (has-block "menu")}}
+      {{yield menu to="menu"}}
     {{/if}}
 
     {{#if (has-block "content")}}
