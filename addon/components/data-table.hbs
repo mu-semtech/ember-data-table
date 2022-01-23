@@ -1,51 +1,55 @@
-{{#if (has-block)}}
-  <div class="data-table-header {{unless this.selectionIsEmpty " selected"}}">
+{{#let
+     (component "text-search"
+       filter=@filter
+       auto=this.autoSearch
+       updateFilter=this.updateFilter
+       wait=this.searchDebounceTime
+       placeholder=this.searchPlaceholder)
+     (component "data-table-content"
+       content=@content
+       noDataMessage=this.noDataMessage
+       enableSelection=this.enableSelection
+       enableLineNumbers=this.enableLineNumbers
+       onClickRow=@onClickRow
+       updateSort=this.updateSort
+       data-table=this)
+     (component "number-pagination"
+       page=@page
+       size=@size
+       nbOfItems=@content.length
+       sizeOptions=this.sizeOptions
+       total=@content.meta.count
+       links=@content.meta.pagination
+       updatePage=@updatePage
+       updateSize=this.updatePageSize)
+     as |search content pagination|}}
+  {{#if (has-block "default")}}
+    {{yield (hash search content pagination)}}
+  {{else}}
     {{#if this.enableSearch}}
-      {{text-search filter=this.filter auto=this.autoSearch wait=this.searchDebounceTime}}
+      {{#if (has-block "search")}}
+        {{yield search to="search"}}
+      {{else}}
+        <div class="data-table-header">
+          <div class="data-table-menu">
+            {{search}}
+          </div>
+        </div>
+      {{/if}}
     {{/if}}
-    {{yield (hash
-        menu=(component "data-table-menu" data-table=this)
-        )
-        this}}
-  </div>
-  {{yield (hash
-      content=(component "data-table-content" content=@content noDataMessage=this.noDataMessage enableSelection=this.enableSelection enableLineNumbers=this.enableLineNumbers onClickRow=@onClickRow data-table=this)
-      )
-      this}} {{!-- TODO: not sure about onClickRow --}}
-{{else}}
-  {{#if this.enableSearch}}
-    <div class="data-table-header">
-      <div class="data-table-menu">
-        <TextSearch
-          @filter={{@filter}}
-          @auto={{this.autoSearch}}
-          @updateFilter={{this.updateFilter}}
-          @wait={{this.searchDebounceTime}}
-          @placeholder={{this.searchPlaceholder}}
-        />
-      </div>
-    </div>
+
+    {{#if (has-block "content")}}
+      {{yield content to="content"}}
+    {{else}}
+      {{content}}
+    {{/if}}
+
+    {{#if @content}}
+      {{#if (has-block "pagination")}}
+        {{yield pagination to="pagination"}}
+      {{else}}
+        {{pagination}}
+      {{/if}}
+    {{/if}}
   {{/if}}
-
-  <DataTableContent
-    @content={{@content}}
-    @noDataMessage={{this.noDataMessage}}
-    @enableSelection={{this.enableSelection}}
-    @enableLineNumbers={{this.enableLineNumbers}}
-    @onClickRow={{@onClickRow}}
-    @updateSort={{this.updateSort}}
-    @data-table={{this}} />  {{!-- TODO: not sure about onClickRow --}}
-{{/if}}
-
-{{#if @content}}
-  <NumberPagination
-    @page={{@page}}
-    @size={{@size}}
-    @nbOfItems={{@content.length}}
-    @sizeOptions={{this.sizeOptions}}
-    @total={{@content.meta.count}}
-    @links={{@content.meta.pagination}}
-    @updatePage={{@updatePage}}
-    @updateSize={{this.updatePageSize}}
-  />
-{{/if}}
+{{/let}}

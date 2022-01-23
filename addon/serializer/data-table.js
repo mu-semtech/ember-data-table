@@ -39,7 +39,6 @@ function createPageMeta(data) {
   return meta;
 }
 
-
 /**
  * Adds the meta content to the query result.
  *
