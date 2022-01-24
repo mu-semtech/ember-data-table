@@ -1,16 +1,30 @@
-<form
-  {{on "submit" this.submitForm}}
-  class="data-table-search">
-  {{#if @auto}}
-    <input
-      value={{@filter}}
-      placeholder={{this.placeholder}}
-      {{on "input" this.handleAutoInput}} />
-  {{else}}
-    <input
-      value={{@filter}}
-      placeholder={{this.placeholder}}
-      {{on "input" this.handleDirectInput}}>
-    <button type="submit">Search</button>
-  {{/if}}
-</form>
+{{#if (has-block)}}
+  {{yield (hash
+      submitForm=this.submitForm
+      placeholder=this.placeholder
+      handleAutoInput=this.handleAutoInput
+      handleDirectInput=this.handleDirectInput
+      filter=@filter
+      auto=@auto)}}
+{{else}}
+  <form
+    {{on "submit" this.submitForm}}
+    class="data-table-search">
+    {{#if @auto}}
+      <label>Search:
+        <input
+          value={{@filter}}
+          placeholder={{this.placeholder}}
+          {{on "input" this.handleAutoInput}} />
+      </label>
+    {{else}}
+      <label>Search:
+        <input
+          value={{@filter}}
+          placeholder={{this.placeholder}}
+          {{on "input" this.handleDirectInput}} />
+      </label>
+      <button type="submit">Search</button>
+    {{/if}}
+  </form>
+{{/if}}
