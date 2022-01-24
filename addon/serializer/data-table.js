@@ -74,8 +74,8 @@ export function appendMetaToQueryResponse(result, payload) {
 export function withPageMeta(_target, _name, descriptor) {
   const original = descriptor.value;
 
-  descriptor.value = function(_store, _clazz, payload) {
-    const result = original.apply(this,arguments);
+  descriptor.value = function (_store, _clazz, payload) {
+    const result = original.apply(this, arguments);
     return appendMetaToQueryResponse(result, payload);
   };
 
@@ -92,8 +92,8 @@ export function withPageMeta(_target, _name, descriptor) {
  */
 export default class ApplicationSerializer extends JSONAPISerializer {
   /**
-    * Parse the links in the JSONAPI response and convert to a meta-object
-    */
+   * Parse the links in the JSONAPI response and convert to a meta-object
+   */
   @withPageMeta
   normalizeQueryResponse() {
     return super.normalizeQueryResponse(...arguments);

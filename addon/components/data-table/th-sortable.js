@@ -48,7 +48,7 @@ export default class ThSortableComponent extends Component {
     if (this.order === 'asc') {
       this.args.updateSort(this._inverseSorting(this.args.currentSorting));
     } else if (this.order === 'desc') {
-      this.args.updateSort("");
+      this.args.updateSort('');
     } else {
       // if currentSorting is not set to this field
       this.args.updateSort(this.dasherizedField);

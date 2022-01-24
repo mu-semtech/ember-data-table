@@ -14,8 +14,8 @@ export default class TextSearchComponent extends Component {
   }
 
   submitCurrent() {
-    if( !this.isDestroying && !this.isDestroyed ) {
-      this.args.updateFilter( this.enteredValue );
+    if (!this.isDestroying && !this.isDestroyed) {
+      this.args.updateFilter(this.enteredValue);
       this.autoDebouncePid = undefined;
     }
   }
@@ -24,7 +24,6 @@ export default class TextSearchComponent extends Component {
     super.willDestroy(...arguments);
     cancel(this.autoDebouncePid);
   }
-
 
   @action
   handleDirectInput(event) {

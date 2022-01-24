@@ -1,52 +1,13 @@
-<tbody>
-  {{#if @data-table.isLoading}}
-    {{#if (has-block "loading")}}
-      {{yield to="loading"}}
-    {{else}}
-      <tr><td colspan="100%" class="is-loading-data">Loading...</td></tr>
-    {{/if}}
-  {{else}}
-    {{#if @content}}
-      {{#each this.wrappedItems as |wrapper index|}}
-        {{#if (has-block "row")}}
-          {{yield (hash
-              wrapper=wrapper
-              item=item
-              enableLineNumbers=@enableLineNumbers
-              lineNumber=(add index offset)
-              selected=(includes wrapper.item @data-table.selection)
-              onClickRow=(and @onClickRow (fn this.onClickRow wrapper.item))
-              toggleSelected=(fn this.updateSelection wrapper))
-              to="row"}}
-        {{else}}
-          <tr role="button"
-            class="{{if (includes wrapper.item @data-table.selection) "selected"}} {{if @onClickRow "clickable"}}"
-            {{on "click" (fn this.onClickRow wrapper.item)}}>
-            {{#if @enableSelection}}
-              <td class="center">
-                {{input type="checkbox" checked=wrapper.isSelected click=(fn this.updateSelection wrapper)}}
-              </td>
-            {{/if}}
-            {{#if @enableLineNumbers}}
-              <td>{{add index offset}}</td>
-            {{/if}}
-            {{#if (has-block "data-cells")}}
-              {{yield
-                  (component "data-table/default-data-table-content-body" item=wrapper.item data-table=@data-table)
-                  wrapper.item
-                  to="data-cells"}}
-            {{else}}
-              <DataTable::DefaultDataTableContentBody @item={{wrapper.item}} @data-table={{@data-table}} />
-            {{/if}}
-          </tr>
-        {{/if}}
-      {{/each}}
-    {{else}}
-      {{#if (has-block "no-data-message")}}
-        {{yield to="no-data-message"}}
-      {{else}}
-        <tr><td colspan="100%" class="no-data-message"><p>{{@noDataMessage}}</p></td></tr>
-      {{/if}}
-    {{/if}}
-  {{/if}}
-</tbody>
+{{yield (hash
+    isLoading=@data-table.isLoading
+    content=@content
+    offset=this.offset
+    wrappedItems=this.wrappedItems
+    enableLineNumbers=@enableLineNumbers
+    hasClickRowAction=(and @onClickRow true)
+    onClickRow=this.onClickRow
+    toggleSelected=this.updateSelection
+    selection=@data-table.selection
+    enableSelection=@enableSelection
+    noDataMessage=@noDataMessage
+    DataCells=(component "data-table/default-data-table-content-body" data-table=@data-table))}}

@@ -9,7 +9,7 @@ export default class NumberPaginationComponent extends Component {
   }
 
   set currentPage(newPage) {
-    this.args.updatePage( newPage - 1 );
+    this.args.updatePage(newPage - 1);
   }
 
   get firstPage() {
@@ -50,7 +50,7 @@ export default class NumberPaginationComponent extends Component {
 
   @action
   updatePage(link) {
-    this.args.updatePage( link?.number || 0 );
+    this.args.updatePage(link?.number || 0);
   }
 
   @action

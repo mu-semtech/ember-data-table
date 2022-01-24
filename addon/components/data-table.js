@@ -9,7 +9,7 @@ export default class DataTable extends Component {
 
   get selection() {
     if (this._selection === undefined
-        && !('selection' in this.args))
+        && (this.args.selection === undefined))
       return [];
     else if (this._selection !== undefined)
       return this._selection;
@@ -22,9 +22,9 @@ export default class DataTable extends Component {
   }
 
   get noDataMessage() {
-    return 'noDataMessage' in this.args
-      ? this.args.noDataMessage
-      : 'No data';
+    return this.args.noDataMessage === undefined
+      ? "No data"
+      : this.args.noDataMessage;
   }
 
   get isLoading() {
@@ -36,9 +36,9 @@ export default class DataTable extends Component {
   }
 
   get searchDebounceTime() {
-    return 'searchDebounceTime' in this.args
-      ? this.args.searchDebounceTime
-      : 2000;
+    return this.args.searchDebounceTime === undefined
+      ? 2000
+      : this.args.searchDebounceTime;
   }
 
   get enableLineNumbers() {
@@ -63,9 +63,9 @@ export default class DataTable extends Component {
   }
 
   get enableSizes() {
-    return 'enableSizes' in this.args
-      ? this.args.enableSizes
-      : true;
+    return this.args.enableSizes === undefined
+      ? true
+      : this.args.enableSizes;
   }
 
   get sort() {
@@ -74,12 +74,9 @@ export default class DataTable extends Component {
 
   _size = undefined;
   get size() {
-    if (this._size === undefined && this.args.size)
-      return this.args.size;
-    else if (this._size)
-      return this._size;
-    else
-      return 5;
+    if (this._size === undefined && this.args.size) return this.args.size;
+    else if (this._size) return this._size;
+    else return 5;
   }
   set size(newSize) {
     this._size = newSize;
@@ -101,13 +98,13 @@ export default class DataTable extends Component {
   @tracked hasMenu = false; // old comment: set from inner component, migth fail with nested if
 
   get enableSearch() {
-    return 'filter' in this.args;
+    return this.args.filter !== undefined;
   }
 
   get autoSearch() {
-    return 'autoSearch' in this.args
-      ? this.args.autoSearch
-      : true;
+    return this.args.autoSearch === undefined
+      ? true
+      : this.args.autoSearch;
   }
 
   get parsedFields() {
@@ -120,9 +117,9 @@ export default class DataTable extends Component {
   }
 
   get searchPlaceholder() {
-    return "searchPlaceholder" in this.args
-      ? this.args.searchPlaceholder
-      : "Search input";
+    return this.args.searchPlaceholder === undefined
+      ? 'Search input'
+      : this.args.searchPlaceholder;
   }
 
   @action

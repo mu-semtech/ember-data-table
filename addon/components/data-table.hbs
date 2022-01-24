@@ -1,11 +1,12 @@
-{{#let
-     (component "data-table/text-search"
+{{yield
+  (hash
+    Search=(component "data-table/text-search"
        filter=@filter
        auto=this.autoSearch
        updateFilter=this.updateFilter
        wait=this.searchDebounceTime
        placeholder=this.searchPlaceholder)
-     (component "data-table/data-table-content"
+    Content=(component "data-table/data-table-content"
        content=@content
        noDataMessage=this.noDataMessage
        enableSelection=this.enableSelection
@@ -13,7 +14,7 @@
        onClickRow=@onClickRow
        updateSort=this.updateSort
        data-table=this)
-     (component "data-table/number-pagination"
+    Pagination=(component "data-table/number-pagination"
        page=@page
        size=@size
        nbOfItems=@content.length
@@ -22,40 +23,8 @@
        links=@content.meta.pagination
        updatePage=@updatePage
        updateSize=this.updatePageSize)
-     (component "data-table/data-table-menu"
+    Menu=(component "data-table/data-table-menu"
        data-table=this)
-     as |search content pagination menu|}}
-  {{#if (has-block "default")}}
-    {{yield (hash search content pagination menu)}}
-  {{else}}
-    {{#if this.enableSearch}}
-      {{#if (has-block "search")}}
-        {{yield search to="search"}}
-      {{else}}
-        <div class="data-table-header">
-          <div class="data-table-menu">
-            {{search}}
-          </div>
-        </div>
-      {{/if}}
-    {{/if}}
-
-    {{#if (has-block "menu")}}
-      {{yield menu to="menu"}}
-    {{/if}}
-
-    {{#if (has-block "content")}}
-      {{yield content to="content"}}
-    {{else}}
-      {{content}}
-    {{/if}}
-
-    {{#if @content}}
-      {{#if (has-block "pagination")}}
-        {{yield pagination to="pagination"}}
-      {{else}}
-        {{pagination}}
-      {{/if}}
-    {{/if}}
-  {{/if}}
-{{/let}}
+    content=@content
+    enableSearch=this.enableSearch
+    dataTable=this)}}

@@ -2,13 +2,5 @@
      (component "data-table/data-table-menu-general" data-table=@data-table)
      (component "data-table/data-table-menu-selected" data-table=@data-table)
      as |general selected|}}
-  {{#if (has-block)}}
-    {{yield (hash general selected)}}
-  {{else}}
-    <div class="data-table-menu">
-      {{!-- either we have a general block or we have to have a menu --}}
-      {{yield general to="general"}}
-      {{yield selected to="selected"}}
-    </div>
-  {{/if}}
+  {{yield general selected}}
 {{/let}}

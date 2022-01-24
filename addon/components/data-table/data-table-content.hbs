@@ -1,34 +1,15 @@
-{{#let
-     (component "data-table/data-table-content-header"
-       enableSelection=@enableSelection
-       enableLineNumbers=@enableLineNumbers
-       updateSort=@updateSort
-       data-table=@data-table)
-     (component "data-table/data-table-content-body"
-       content=@content
-       enableSelection=@enableSelection
-       enableLineNumbers=@enableLineNumbers
-       noDataMessage=@noDataMessage
-       onClickRow=@onClickRow
-       data-table=@data-table)
-  as |header body|}}
-{{! template-lint-disable table-groups }}
-  {{#if (has-block)}}
-    {{yield (hash header body)}}
-  {{else}}
-    <div class="data-table-content">
-      <table class="data-table {{@data-table.tableClass}}">
-        {{#if (has-block "header")}}
-          {{yield header to="header"}}
-        {{else}}
-          {{header}}
-        {{/if}}
-        {{#if (has-block "body")}}
-          {{yield body to="body"}}
-        {{else}}
-          {{body}}
-        {{/if}}
-      </table>
-    </div>
-  {{/if}}
-{{/let}}
+{{yield
+     (hash
+       Header=(component "data-table/data-table-content-header"
+         enableSelection=@enableSelection
+         enableLineNumbers=@enableLineNumbers
+         updateSort=@updateSort
+         data-table=@data-table)
+       Body=(component "data-table/data-table-content-body"
+         content=@content
+         enableSelection=@enableSelection
+         enableLineNumbers=@enableLineNumbers
+         noDataMessage=@noDataMessage
+         onClickRow=@onClickRow
+         data-table=@data-table)
+       dataTable=@data-table)}}

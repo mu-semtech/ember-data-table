@@ -1,14 +1,5 @@
-{{#if (has-block)}}
-  {{yield (hash
-      isSorted=this.isSorted
-      inverseSorting=this.inverseSorting
-      label=@label
-      order=this.order)}}
-{{else}}
-  <th class={{concat "sortable" (if this.isSorted " sorted" "")}}>
-    <span role="button" {{on "click" this.inverseSorting}}>
-      {{#if this.order}}[{{this.order}}]{{/if}}
-      {{@label}}
-    </span>
-  </th>
-{{/if}}
+{{yield (hash
+    isSorted=this.isSorted
+    inverseSorting=this.inverseSorting
+    label=@label
+    order=this.order)}}
