@@ -1,24 +1,34 @@
+{{#let
+     (component "data-table-content-header"
+       enableSelection=@enableSelection
+       enableLineNumbers=@enableLineNumbers
+       updateSort=@updateSort
+       data-table=@data-table)
+     (component "data-table-content-body"
+       content=@content
+       enableSelection=@enableSelection
+       enableLineNumbers=@enableLineNumbers
+       noDataMessage=@noDataMessage
+       onClickRow=@onClickRow
+       data-table=@data-table)
+  as |header body|}}
 {{! template-lint-disable table-groups }}
-<div class="data-table-content">
-  <table class="data-table {{@data-table.tableClass}}">
-    {{#if (has-block)}}
-      {{yield (hash
-          header=(component "data-table-content-header" enableSelection=@enableSelection enableLineNumbers=@enableLineNumbers data-table=@data-table)
-          body=(component "data-table-content-body" content=@content enableSelection=@enableSelection enableLineNumbers=@enableLineNumbers noDataMessage=@noDataMessage onClickRow=@onClickRow data-table=@data-table)
-          )}}
-    {{else}}
-      <DataTableContentHeader
-        @enableSelection={{@enableSelection}}
-        @enableLineNumbers={{@enableLineNumbers}}
-        @updateSort={{@updateSort}}
-        @data-table={{@data-table}} />
-      <DataTableContentBody
-        @content={{@content}}
-        @enableSelection={{@enableSelection}}
-        @enableLineNumbers={{@enableLineNumbers}}
-        @noDataMessage={{@noDataMessage}}
-        @onClickRow={{@onClickRow}}
-        @data-table={{@data-table}} />
-    {{/if}}
-  </table>
-</div>
+  {{#if (has-block)}}
+    {{yield (hash header body)}}
+  {{else}}
+    <div class="data-table-content">
+      <table class="data-table {{@data-table.tableClass}}">
+        {{#if (has-block "header")}}
+          {{yield header to="header"}}
+        {{else}}
+          {{header}}
+        {{/if}}
+        {{#if (has-block "body")}}
+          {{yield body to="body"}}
+        {{else}}
+          {{body}}
+        {{/if}}
+      </table>
+    </div>
+  {{/if}}
+{{/let}}

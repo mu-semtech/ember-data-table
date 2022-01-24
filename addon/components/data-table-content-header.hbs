@@ -1,17 +1,41 @@
-<thead>
-  <tr>
-    {{#if @enableSelection}}
-      <th>{{!-- Checkbox --}}</th>
-    {{/if}}
-    {{#if @enableLineNumbers}}
-      <th>{{!-- Linenumbers --}}</th>
-    {{/if}}
-    {{#if (has-block)}}
-      {{yield}}
-    {{else}}
-      {{#each @data-table.parsedFields as |field|}}
-        <ThSortable @field={{field}} @label={{field}} @currentSorting={{@data-table.sort}} @updateSort={{@updateSort}} />
-      {{/each}}
-    {{/if}}
-  </tr>
-</thead>
+{{#if (has-block)}}
+  {{yield (hash
+      enableSelection=@enableSelection
+      enableLineNumbers=@enableLineNumbers
+      parsedFields=@data-table.parsedFields
+      currentSorting=@data-table.sort
+      updateSort=@updateSort)}}
+{{else}}
+  <thead>
+    <tr>
+      {{#if @enableSelection}}
+        <th>{{!-- Checkbox --}}</th>
+      {{/if}}
+      {{#if @enableLineNumbers}}
+        <th>{{!-- Linenumbers --}}</th>
+      {{/if}}
+      {{#if (has-block "headers")}}
+        {{yield (hash
+            parsedFields=@data-table.parsedFields
+            currentSorting=@data-table.sort
+            updateSort=@updateSort)
+            to="headers"}}
+      {{else}}
+        {{#each @data-table.parsedFields as |field|}}
+          {{#let (component "th-sortable"
+               field=field
+               label=field
+               currentSorting=@data-table.sort
+               updateSort=@updateSort)
+               as |header|}}
+            {{#if (has-block "header")}}
+              {{yield header to="header"}}
+            {{else}}
+              {{header}}
+            {{/if}}
+          {{/let}}
+        {{/each}}
+      {{/if}}
+    </tr>
+  </thead>
+{{/if}}

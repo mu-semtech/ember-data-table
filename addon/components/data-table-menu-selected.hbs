@@ -1,5 +1,15 @@
-{{#unless @data-table.selectionIsEmpty}}
-  <span class="item-count">{{this.selectionCount}} item(s) selected</span>
-  <button type="button" {{on "click" this.clearSelection}}>Cancel</button>
-  {{yield (slice 0 this.selectionCount @data-table.selection) @data-table}}
-{{/unless}}
+{{#if (has-block)}}
+  {{yield (hash
+      selectionIsEmpty=@data-table.selectionIsEmpty
+      selectionCount=this.selectionCount
+      clearSelection=this.clearSelection
+      selection=@data-table.selection
+      data-table=@data-table)}} {{!-- TODO: must we pass the data table itself? --}}
+{{else}}
+  {{#unless @data-table.selectionIsEmpty}}
+    <span class="item-count">{{this.selectionCount}} item(s) selected</span>
+    <button type="button" {{on "click" this.clearSelection}}>Cancel</button>
+    {{yield (slice 0 this.selectionCount @data-table.selection) @data-table
+        to="actions"}}
+  {{/unless}}
+{{/if}}

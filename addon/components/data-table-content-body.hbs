@@ -1,29 +1,52 @@
 <tbody>
   {{#if @data-table.isLoading}}
-    <tr><td colspan="100%" class="is-loading-data">Loading...</td></tr>
+    {{#if (has-block "loading")}}
+      {{yield to="loading"}}
+    {{else}}
+      <tr><td colspan="100%" class="is-loading-data">Loading...</td></tr>
+    {{/if}}
   {{else}}
     {{#if @content}}
       {{#each this.wrappedItems as |wrapper index|}}
-        <tr role="button"
-          class="{{if (includes wrapper.item @data-table.selection) "selected"}} {{if @onClickRow "clickable"}}"
-          {{on "click" (fn this.onClickRow wrapper.item)}}>
-          {{#if @enableSelection}}
-            <td class="center">
-              {{input type="checkbox" checked=wrapper.isSelected click=(fn this.updateSelection wrapper)}}
-            </td>
-          {{/if}}
-          {{#if @enableLineNumbers}}
-            <td>{{add index offset}}</td>
-          {{/if}}
-          {{#if (has-block)}}
-            {{yield wrapper.item}}
-          {{else}}
-            <DefaultDataTableContentBody @item={{wrapper.item}} @data-table={{@data-table}} />
-          {{/if}}
-        </tr>
+        {{#if (has-block "row")}}
+          {{yield (hash
+              wrapper=wrapper
+              item=item
+              enableLineNumbers=@enableLineNumbers
+              lineNumber=(add index offset)
+              selected=(includes wrapper.item @data-table.selection)
+              onClickRow=(and @onClickRow (fn this.onClickRow wrapper.item))
+              toggleSelected=(fn this.updateSelection wrapper))
+              to="row"}}
+        {{else}}
+          <tr role="button"
+            class="{{if (includes wrapper.item @data-table.selection) "selected"}} {{if @onClickRow "clickable"}}"
+            {{on "click" (fn this.onClickRow wrapper.item)}}>
+            {{#if @enableSelection}}
+              <td class="center">
+                {{input type="checkbox" checked=wrapper.isSelected click=(fn this.updateSelection wrapper)}}
+              </td>
+            {{/if}}
+            {{#if @enableLineNumbers}}
+              <td>{{add index offset}}</td>
+            {{/if}}
+            {{#if (has-block "data-cells")}}
+              {{yield
+                  (component "default-data-table-content-body" item=wrapper.item data-table=@data-table)
+                  wrapper.item
+                  to="data-cells"}}
+            {{else}}
+              <DefaultDataTableContentBody @item={{wrapper.item}} @data-table={{@data-table}} />
+            {{/if}}
+          </tr>
+        {{/if}}
       {{/each}}
     {{else}}
-      <tr><td colspan="100%" class="no-data-message"><p>{{@noDataMessage}}</p></td></tr>
+      {{#if (has-block "no-data-message")}}
+        {{yield to="no-data-message"}}
+      {{else}}
+        <tr><td colspan="100%" class="no-data-message"><p>{{@noDataMessage}}</p></td></tr>
+      {{/if}}
     {{/if}}
   {{/if}}
 </tbody>

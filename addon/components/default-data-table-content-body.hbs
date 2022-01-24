@@ -1,15 +1,50 @@
-{{#if this.firstColumn}}
-  {{#if this.linkedRoute}}
-    {{#link-to this.linkedRoute @item tagName="td"}}{{get @item this.firstColumn}}{{/link-to}}
+{{#let (hash
+     columns=@data-table.parsedFields
+     firstColumn=this.firstColumn
+     otherColumns=this.otherColumns
+     item=@item
+     linkedRoute=this.linkedRoute)
+     as |d|}}
+  {{#if (has-block)}}
+    {{yield d}}
   {{else}}
-    <td>{{get @item this.firstColumn}}</td>
+    {{#if d.firstColumn}}
+      {{#if (has-block "data-cell")}}
+        {{yield (hash
+                  columns=d.columns
+                  firstColumn=d.firstColumn
+                  otherColumns=d.otherColumns
+                  item=d.item
+                  linkedRoute=d.linkedRoute
+                  field=(get @item d.firstColumn))
+            to="data-cell"}}
+      {{else}}
+        {{#if d.linkedRoute}}
+          {{#link-to d.linkedRoute d.item tagName="td"}}{{get d.item d.firstColumn}}{{/link-to}}
+        {{else}}
+          <td>{{get d.item d.firstColumn}}</td>
+        {{/if}}
+      {{/if}}
+    {{/if}}
+    {{#each d.otherColumns as |field|}}
+      {{#if (has-block "data-cell")}}
+        {{#let
+             (hash
+               columns=d.columns
+               firstColumn=d.firstColumn
+               otherColumns=d.otherColumns
+               item=d.item
+               linkedRoute=d.linkedRoute
+               field=(get @item field))
+             as |data-cell-data|}}
+          {{yield data-cell-data to="data-cell"}}
+        {{/let}}
+      {{else}}
+        <td>
+          {{!-- TODO: This should be based on the type of the field --}}
+          {{get @item field}}
+        </td>
+      {{/if}}
+    {{/each}}
   {{/if}}
-{{/if}}
-{{#each this.otherColumns as |field|}}
-  <td>
-    {{!-- TODO: This should be based on the type of the field --}}
-    {{get @item field}}
-  </td>
-{{/each}}
-{{yield}}
-
+{{/let}}
