@@ -22,7 +22,7 @@
             to="headers"}}
       {{else}}
         {{#each @data-table.parsedFields as |field|}}
-          {{#let (component "th-sortable"
+          {{#let (component "data-table/th-sortable"
                field=field
                label=field
                currentSorting=@data-table.sort

@@ -1,6 +1,6 @@
 {{#let
-     (component "data-table-menu-general" data-table=@data-table)
-     (component "data-table-menu-selected" data-table=@data-table)
+     (component "data-table/data-table-menu-general" data-table=@data-table)
+     (component "data-table/data-table-menu-selected" data-table=@data-table)
      as |general selected|}}
   {{#if (has-block)}}
     {{yield (hash general selected)}}

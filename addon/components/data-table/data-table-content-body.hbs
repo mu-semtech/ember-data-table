@@ -32,11 +32,11 @@
             {{/if}}
             {{#if (has-block "data-cells")}}
               {{yield
-                  (component "default-data-table-content-body" item=wrapper.item data-table=@data-table)
+                  (component "data-table/default-data-table-content-body" item=wrapper.item data-table=@data-table)
                   wrapper.item
                   to="data-cells"}}
             {{else}}
-              <DefaultDataTableContentBody @item={{wrapper.item}} @data-table={{@data-table}} />
+              <DataTable::DefaultDataTableContentBody @item={{wrapper.item}} @data-table={{@data-table}} />
             {{/if}}
           </tr>
         {{/if}}
