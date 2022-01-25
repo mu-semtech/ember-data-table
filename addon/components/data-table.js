@@ -28,18 +28,10 @@ export default class DataTable extends Component {
     return this.args.isLoading;
   }
 
-  get enableLineNumbers() {
-    return this.args.lineNumbers;
-  }
-
   get searchDebounceTime() {
     return this.args.searchDebounceTime === undefined
       ? 2000
       : this.args.searchDebounceTime;
-  }
-
-  get enableLineNumbers() {
-    return this.args.enableLineNumbers;
   }
 
   @tracked
@@ -65,6 +57,10 @@ export default class DataTable extends Component {
 
   get sort() {
     return this.args.sort;
+  }
+
+  get page() {
+    return this.args.page;
   }
 
   _size = undefined;

@@ -48,6 +48,8 @@ export default class NumberPaginationComponent extends Component {
     );
   }
 
+
+
   @action
   updatePage(link) {
     this.args.updatePage(link?.number || 0);
@@ -56,5 +58,10 @@ export default class NumberPaginationComponent extends Component {
   @action
   selectSizeOption(event) {
     this.args.updateSize(parseInt(event.target.value));
+  }
+
+  @action
+  setSizeOption(size) {
+    this.args.updateSize(parseInt(size));
   }
 }
