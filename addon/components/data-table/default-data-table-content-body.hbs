@@ -1,6 +1,13 @@
 {{yield (hash
     columns=@data-table.parsedFields
-     firstColumn=this.firstColumn
-     otherColumns=this.otherColumns
-     item=@item
-     linkedRoute=this.linkedRoute)}}
+    firstColumn=this.firstColumn
+    otherColumns=this.otherColumns
+    item=@item
+    linkedRoute=this.linkedRoute
+    DataCell=(component
+      "data-table/data-cell"
+      columns=@data-table.parsedFields
+      firstColumn=this.firstColumn
+      otherColumns=this.otherColumns
+      item=@item
+      linkedRoute=this.linkedRoute))}}

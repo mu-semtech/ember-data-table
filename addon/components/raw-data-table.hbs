@@ -104,19 +104,10 @@
                     <th>{{!-- Linenumbers --}}</th>
                   {{/if}}
                   {{#if (has-block "data-headers")}}
-                    {{yield (hash
-                        parsedFields=header.parsedFields
-                        currentSorting=header.currentSorting
-                        updateSort=header.updateSort)
-                        to="data-headers"}}
+                    {{yield headers.dataHeadersInfo to="data-headers"}}
                   {{else}}
                     {{#each header.parsedFields as |field|}}
-                      <DataTable::ThSortable
-                        @field={{field}}
-                        @label={{field}}
-                        @currentSorting={{header.currentSorting}}
-                        @updateSort={{header.updateSort}}
-                        as |dataHeader|>
+                      <header.ThSortable @field={{field}} @label={{field}} as |dataHeader|>
                         {{#if (has-block "data-header")}}
                           {{yield dataHeader to="data-header"}}
                         {{else}}
@@ -127,7 +118,7 @@
                             </span>
                           </th>
                         {{/if}}
-                      </DataTable::ThSortable>
+                      </header.ThSortable>
                     {{/each}}
                   {{/if}}
                 </tr>
@@ -151,85 +142,59 @@
                 {{else}}
                   {{#if body.content}}
                     {{#each body.wrappedItems as |wrapper index|}}
-                      {{#if (has-block "row")}}
-                        {{yield (hash
-                            wrapper=wrapper
-                            item=wrapper.item
-                            enableLineNumbers=body.enableLineNumbers
-                            lineNumber=(add index body.offset)
-                            selected=(includes wrapper.item body.selection)
-                            hasClickRowAction=body.hasClickRowAction
-                            onClickRow=(fn body.onClickRow wrapper.item)
-                            toggleSelected=(fn body.toggleSelected wrapper))
-                            to="row"}}
-                      {{else}}
-                        <tr role="button"
-                          class="{{if (includes wrapper.item body.selection) "selected"}} {{if body.hasClickRowAction "clickable"}}"
-                          {{on "click" (fn body.onClickRow wrapper.item)}}>
-                          {{#if body.enableSelection}}
-                            <td class="center">
-                              {{input type="checkbox" checked=wrapper.isSelected click=(fn body.toggleSelected wrapper)}}
-                            </td>
-                          {{/if}}
-                          {{#if body.enableLineNumbers}}
-                            <td>{{add index body.offset}}</td>
-                          {{/if}}
-                          <body.DataCells @item={{wrapper.item}} as |dataCells|>
-                            {{#if (has-block "data-cells")}}
-                              {{yield dataCells to="data-cells"}}
-                            {{else}}
-                              {{#if dataCells.firstColumn}}
-                                {{#if (has-block "first-data-cell")}}
-                                  {{yield (hash
-                                      columns=dataCells.columns
-                                      firstColumn=dataCells.firstColumn
-                                      otherColumns=dataCells.otherColumns
-                                      item=dataCells.item
-                                      linkedRoute=dataCells.linkedRoute
-                                      field=(get dataCells.item dataCells.firstColumn))
-                                      to="first-data-cell"}}
-                                {{else if (has-block "data-cell")}}
-                                  {{yield (hash
-                                      columns=dataCells.columns
-                                      firstColumn=dataCells.firstColumn
-                                      otherColumns=dataCells.otherColumns
-                                      item=dataCells.item
-                                      linkedRoute=dataCells.linkedRoute
-                                      field=(get dataCells.item dataCells.firstColumn))
-                                      to="data-cell"}}
-                                {{else}}
-                                  {{#if dataCells.linkedRoute}}
-                                    {{#link-to dataCells.linkedRoute dataCells.item tagName="td"}}{{get dataCells.item dataCells.firstColumn}}{{/link-to}}
-                                  {{else}}
-                                    <td>{{get dataCells.item dataCells.firstColumn}}</td>
-                                  {{/if}}
-                                {{/if}}
-                              {{/if}}
-                              {{#each dataCells.otherColumns as |field|}}
-                                {{#let (hash
-                                     columns=dataCells.columns
-                                     firstColumn=dataCells.firstColumn
-                                     otherColumns=dataCells.otherColumns
-                                     item=dataCells.item
-                                     linkedRoute=dataCells.linkedRoute
-                                     field=(get dataCells.item field))
-                                     as |data-cell-data|}}
-                                  {{#if (has-block "rest-data-cell")}}
-                                    {{yield data-cell-data to="rest-data-cell"}}
-                                  {{else if (has-block "data-cell")}}
-                                    {{yield data-cell-data to="rest-data-cell"}}
-                                  {{else}}
-                                    <td>
-                                      {{!-- TODO: This should be based on the type of the field --}}
-                                      {{get dataCells.item field}}
-                                    </td>
-                                  {{/if}}
-                                {{/let}}
-                              {{/each}}
+                      <body.Row @wrapper={{wrapper}} @index={{index}} as |row|>
+                        {{#if (has-block "row")}}
+                          {{yield row to="row"}}
+                        {{else}}
+                          <tr role="button"
+                            class="{{if row.isSelected "selected"}} {{if row.hasClickRowAction "clickable"}}"
+                            {{on "click" row.onClickRow}}>
+                            {{#if row.enableSelection}}
+                              <td class="center">
+                                {{input type="checkbox" checked=row.isSelected click=row.toggleSelected}}
+                              </td>
                             {{/if}}
-                          </body.DataCells>
-                        </tr>
-                      {{/if}}
+                            {{#if row.enableLineNumbers}}
+                              <td>{{row.lineNumber}}</td>
+                            {{/if}}
+                            <row.DataCells @item={{wrapper.item}} as |dataCells|>
+                              {{#if (has-block "data-cells")}}
+                                {{yield dataCells to="data-cells"}}
+                              {{else}}
+                                {{#if dataCells.firstColumn}}
+                                  <dataCells.DataCell @column={{dataCells.firstColumn}} as |cell|>
+                                    {{#if (has-block "first-data-cell")}}
+                                      {{yield cell to="first-data-cell"}}
+                                    {{else if (has-block "data-cell")}}
+                                      {{yield cell to="data-cell"}}
+                                    {{else}}
+                                      {{#if cell.linkedRoute}}
+                                        {{#link-to cell.linkedRoute cell.item tagName="td"}}{{cell.value}}{{/link-to}}
+                                      {{else}}
+                                        <td>{{cell.value}}</td>
+                                      {{/if}}
+                                    {{/if}}
+                                  </dataCells.DataCell>
+                                {{/if}}
+                                {{#each dataCells.otherColumns as |column|}}
+                                  <dataCells.DataCell @column={{column}} as |cell|>
+                                    {{#if (has-block "rest-data-cell")}}
+                                      {{yield cell to="rest-data-cell"}}
+                                    {{else if (has-block "data-cell")}}
+                                      {{yield cell to="data-cell"}}
+                                    {{else}}
+                                      <td>
+                                        {{!-- TODO: This should be based on the type of the field --}}
+                                        {{cell.value}}
+                                      </td>
+                                    {{/if}}
+                                  </dataCells.DataCell>
+                                {{/each}}
+                              {{/if}}
+                            </row.DataCells>
+                          </tr>
+                        {{/if}}
+                      </body.Row>
                     {{/each}}
                   {{else}}
                     {{#if (has-block "no-data-message")}}

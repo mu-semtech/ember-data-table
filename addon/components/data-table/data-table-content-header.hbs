@@ -3,4 +3,12 @@
     enableLineNumbers=@enableLineNumbers
     parsedFields=@data-table.parsedFields
     currentSorting=@data-table.sort
-    updateSort=@updateSort)}}
+    updateSort=@updateSort
+    dataHeadersInfo=(hash
+      parsedFields=@data-table.parsedFields
+      currentSorting=@data-table.sort
+      updateSort=@updateSort)
+    ThSortable=(component
+      "data-table/th-sortable"
+      currentSorting=@data-table.sort
+      updateSort=@updateSort))}}

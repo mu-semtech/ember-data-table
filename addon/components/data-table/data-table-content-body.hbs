@@ -10,4 +10,16 @@
     selection=@data-table.selection
     enableSelection=@enableSelection
     noDataMessage=@noDataMessage
-    DataCells=(component "data-table/default-data-table-content-body" data-table=@data-table))}}
+    Row=(component "data-table/row"
+      data-table=@data-table
+      enableLineNumbers=@enableLineNumbers
+      enableSelection=@enableSelection
+      selection=@data-table.selection
+      offset=this.offset
+      hasClickRowAction=(and @onClickRow true)
+      onClickRow=this.onClickRow
+      toggleSelected=this.updateSelection))}}
+
+{{!--
+
+  --}}

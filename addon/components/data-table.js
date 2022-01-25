@@ -8,13 +8,10 @@ export default class DataTable extends Component {
   @tracked _selection = undefined;
 
   get selection() {
-    if (this._selection === undefined
-        && (this.args.selection === undefined))
+    if (this._selection === undefined && this.args.selection === undefined)
       return [];
-    else if (this._selection !== undefined)
-      return this._selection;
-    else
-      return this.args.selection;
+    else if (this._selection !== undefined) return this._selection;
+    else return this.args.selection;
   }
 
   set selection(newSelection) {
@@ -23,7 +20,7 @@ export default class DataTable extends Component {
 
   get noDataMessage() {
     return this.args.noDataMessage === undefined
-      ? "No data"
+      ? 'No data'
       : this.args.noDataMessage;
   }
 
@@ -63,9 +60,7 @@ export default class DataTable extends Component {
   }
 
   get enableSizes() {
-    return this.args.enableSizes === undefined
-      ? true
-      : this.args.enableSizes;
+    return this.args.enableSizes === undefined ? true : this.args.enableSizes;
   }
 
   get sort() {
@@ -102,9 +97,7 @@ export default class DataTable extends Component {
   }
 
   get autoSearch() {
-    return this.args.autoSearch === undefined
-      ? true
-      : this.args.autoSearch;
+    return this.args.autoSearch === undefined ? true : this.args.autoSearch;
   }
 
   get parsedFields() {
