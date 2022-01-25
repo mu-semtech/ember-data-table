@@ -9,6 +9,7 @@
     toggleSelected=this.updateSelection
     selection=@data-table.selection
     enableSelection=@enableSelection
+    linkedRoute=@linkedRoute
     noDataMessage=@noDataMessage
     Row=(component "data-table/row"
       data-table=@data-table
@@ -18,8 +19,5 @@
       offset=this.offset
       hasClickRowAction=(and @onClickRow true)
       onClickRow=this.onClickRow
+      linkedRoute=@linkedRoute
       toggleSelected=this.updateSelection))}}
-
-{{!--
-
-  --}}

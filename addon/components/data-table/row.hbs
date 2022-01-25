@@ -9,6 +9,8 @@
     onClickRow=(fn @onClickRow @wrapper.item)
     toggleSelected=(fn @toggleSelected @wrapper)
     isSelected=(includes @wrapper.item @selection)
+    linkedRoute=@linkedRoute
     DataCells=(component
       "data-table/default-data-table-content-body"
+      linkedRoute=@linkedRoute
       data-table=@data-table))}}

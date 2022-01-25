@@ -20,8 +20,4 @@ export default class DefaultDataTableContentBodyComponent extends Component {
       return [];
     }
   }
-
-  get linkedRoute() {
-    return this.args['data-table'].link;
-  }
 }
