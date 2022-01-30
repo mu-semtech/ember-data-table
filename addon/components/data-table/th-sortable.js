@@ -36,6 +36,14 @@ export default class ThSortableComponent extends Component {
     }
   }
 
+  get isCustom() {
+    return this.args.customHeaders?.split(" ").includes(this.args.field);
+  }
+
+  hasCustom() {
+    return this.args.customHeaders;
+  }
+
   /**
        Sets the current sorting parameter.
        Note: the current sorting parameter may contain another field than the given field.

@@ -10,7 +10,9 @@
     toggleSelected=(fn @toggleSelected @wrapper)
     isSelected=(includes @wrapper.item @selection)
     linkedRoute=@linkedRoute
+    customFields=@customFields
     DataCells=(component
       "data-table/default-data-table-content-body"
       linkedRoute=@linkedRoute
+      customFields=@customFields
       data-table=@data-table))}}

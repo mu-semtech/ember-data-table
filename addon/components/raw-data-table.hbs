@@ -104,11 +104,13 @@
                       <th>{{!-- Linenumbers --}}</th>
                     {{/if}}
                     {{#if (has-block "data-headers")}}
-                      {{yield headers.dataHeadersInfo to="data-headers"}}
+                      {{yield header.dataHeadersInfo to="data-headers"}}
                     {{else}}
                       {{#each header.parsedFields as |field|}}
                         <header.ThSortable @field={{field}} @label={{field}} as |dataHeader|>
-                          {{#if (has-block "data-header")}}
+                          {{#if (and (has-block "data-header") dataHeader.isCustom)}}
+                            {{yield dataHeader to="data-header"}}
+                          {{else if (and (has-block "data-header") (not dataHeader.hasCustom))}}
                             {{yield dataHeader to="data-header"}}
                           {{else}}
                             <th class={{concat "sortable" (if dataHeader.isSorted " sorted" "")}}>
@@ -165,11 +167,15 @@
                                     <dataCells.DataCell @column={{dataCells.firstColumn}} as |cell|>
                                       {{#if (has-block "first-data-cell")}}
                                         {{yield cell to="first-data-cell"}}
-                                      {{else if (has-block "data-cell")}}
+                                      {{else if (and (has-block "data-cell") cell.isCustom)}}
+                                        {{yield cell to="data-cell"}}
+                                      {{else if (and (has-block "data-cell") (not cell.hasCustom))}}
                                         {{yield cell to="data-cell"}}
                                       {{else}}
                                         {{#if cell.linkedRoute}}
-                                          {{#link-to cell.linkedRoute cell.item tagName="td"}}{{cell.value}}{{/link-to}}
+                                          <LinkTo @route={{cell.linkedRoute}} @model={{cell.item}} @tagName="td">
+                                            {{cell.value}}
+                                          </LinkTo>
                                         {{else}}
                                           <td>{{cell.value}}</td>
                                         {{/if}}
@@ -180,7 +186,9 @@
                                     <dataCells.DataCell @column={{column}} as |cell|>
                                       {{#if (has-block "rest-data-cell")}}
                                         {{yield cell to="rest-data-cell"}}
-                                      {{else if (has-block "data-cell")}}
+                                      {{else if (and (has-block "data-cell") cell.isCustom)}}
+                                        {{yield cell to="data-cell"}}
+                                      {{else if (and (has-block "data-cell") (not cell.hasCustom))}}
                                         {{yield cell to="data-cell"}}
                                       {{else}}
                                         <td>

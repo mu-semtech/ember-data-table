@@ -4,11 +4,14 @@
     parsedFields=@data-table.parsedFields
     currentSorting=@data-table.sort
     updateSort=@updateSort
+    customHeaders=@customHeaders
     dataHeadersInfo=(hash
       parsedFields=@data-table.parsedFields
       currentSorting=@data-table.sort
+      customHeaders=@customHeaders
       updateSort=@updateSort)
     ThSortable=(component
       "data-table/th-sortable"
       currentSorting=@data-table.sort
+      customHeaders=@customHeaders
       updateSort=@updateSort))}}
