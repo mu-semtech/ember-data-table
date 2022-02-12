@@ -249,36 +249,34 @@
 
     {{!-- START: pagination --}}
     <dt.Pagination as |pagination|>
-      {{#if @content}}
-        {{#if (has-block "pagination")}}
-          {{yield pagination to="pagination"}}
-        {{else}}
-          <div class="data-table-pagination">
-            <div class="data-table-pagination-left">
-              Displaying {{pagination.startItem}}-{{pagination.endItem}}
-              {{#if pagination.total}} of {{pagination.total}}{{/if}}
-              {{#if pagination.sizeOptions}}
-                |
-                <label>
-                  <select {{on "change" pagination.selectSizeOption}} value="target.value">
-                    {{#each pagination.sizeOptions as |sizeOption|}}
-                      <option value={{sizeOption}} selected={{eq pagination.size sizeOption}}>{{sizeOption}}</option>
-                    {{/each}}
-                  </select> per page
-                </label>
-              {{/if}}
-            </div>
-            {{#if pagination.hasMultiplePages}}
-              <div class="data-table-pagination-right">
-                <button disabled={{pagination.isFirstPage}} type="button" {{on "click" (fn pagination.updatePage pagination.links.first)}}>First</button>
-                <button disabled={{pagination.isFirstPage}} type="button" {{on "click" (fn pagination.updatePage pagination.links.prev)}}>Previous</button>
-
-                <button disabled={{pagination.isLastPage}} type="button" {{on "click" (fn pagination.updatePage pagination.links.next)}}>Next</button>
-                <button disabled={{pagination.isLastPage}} type="button" {{on "click" (fn pagination.updatePage pagination.links.last)}}>Last</button>
-              </div>
+      {{#if (has-block "pagination")}}
+        {{yield pagination to="pagination"}}
+      {{else}}
+        <div class="data-table-pagination">
+          <div class="data-table-pagination-left">
+            Displaying {{pagination.startItem}}-{{pagination.endItem}}
+            {{#if pagination.hasTotal}} of {{pagination.total}}{{/if}}
+            {{#if pagination.sizeOptions}}
+              |
+              <label>
+                <select {{on "change" pagination.selectSizeOption}} value="target.value">
+                  {{#each pagination.sizeOptions as |sizeOption|}}
+                    <option value={{sizeOption}} selected={{eq pagination.pageSize sizeOption}}>{{sizeOption}}</option>
+                  {{/each}}
+                </select> per page
+              </label>
             {{/if}}
           </div>
-        {{/if}}
+          {{#if pagination.hasMultiplePages}}
+            <div class="data-table-pagination-right">
+              <button disabled={{pagination.isFirstPage}} type="button" {{on "click" (fn pagination.updatePage pagination.links.first)}}>First</button>
+              <button disabled={{pagination.isFirstPage}} type="button" {{on "click" (fn pagination.updatePage pagination.links.prev)}}>Previous</button>
+
+              <button disabled={{pagination.isLastPage}} type="button" {{on "click" (fn pagination.updatePage pagination.links.next)}}>Next</button>
+              <button disabled={{pagination.isLastPage}} type="button" {{on "click" (fn pagination.updatePage pagination.links.last)}}>Last</button>
+            </div>
+          {{/if}}
+        </div>
       {{/if}}
     </dt.Pagination>
     {{!-- END: pagination --}}
