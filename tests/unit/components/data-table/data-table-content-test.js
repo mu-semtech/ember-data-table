@@ -19,8 +19,8 @@ module('Unit | Component | data-table-content', function() {
 
   test('it splits definitions', function(assert) {
     assert.deepEqual(splitDefinitions("hello world"), ["hello", "world"]);
-    assert.strictEqual(splitDefinitions(null), null);
-    assert.strictEqual(splitDefinitions(undefined), undefined);
+    assert.deepEqual(splitDefinitions(null), []);
+    assert.deepEqual(splitDefinitions(undefined), []);
   });
 
   test('it creates definition objects', function(assert) {

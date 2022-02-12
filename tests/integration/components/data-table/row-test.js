@@ -10,13 +10,16 @@ module('Integration | Component | data-table/row', function (hooks) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`<DataTable::Row />`);
+    this.set('onClickRow', () => undefined );
+    this.set('toggleSelected', () => undefined );
+
+    await render(hbs`<DataTable::Row @onClickRow={{this.onClickRow}} @toggleSelected={{this.toggleSelected}} />`);
 
     assert.dom(this.element).hasText('');
 
     // Template block usage:
     await render(hbs`
-      <DataTable::Row>
+      <DataTable::Row @onClickRow={{this.onClickRow}} @toggleSelected={{this.toggleSelected}}>
         template block text
       </DataTable::Row>
     `);

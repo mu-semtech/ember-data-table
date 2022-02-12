@@ -9,7 +9,7 @@ module('Integration | Component | data table content body', function (hooks) {
   test('it renders', async function (assert) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.on('myAction', function(val) { ... });
-    await render(hbs`{{data-table-content-body}}`);
+    await render(hbs`{{data-table/data-table-content-body}}`);
     assert.dom('tbody').exists({ count: 1 });
   });
 
@@ -23,7 +23,7 @@ module('Integration | Component | data table content body', function (hooks) {
     this.set('dataTable.selection', []);
 
     await render(
-      hbs`{{data-table-content-body content=content data-table=dataTable}}`
+      hbs`{{data-table/data-table-content-body content=content data-table=dataTable}}`
     );
 
     assert.dom('tr').exists({ count: 2 }, 'displays 2 rows');
@@ -55,7 +55,7 @@ module('Integration | Component | data table content body', function (hooks) {
     this.set('data-table.selection', [jane]);
 
     await render(
-      hbs`{{data-table-content-body content=content data-table=data-table enableSelection=true}}`
+      hbs`{{data-table/data-table-content-body content=content data-table=data-table enableSelection=true}}`
     );
 
     assert.equal(this.$('tr:first td').length, 4, 'displays 4 columns');
@@ -82,7 +82,7 @@ module('Integration | Component | data table content body', function (hooks) {
     this.set('data-table.removeItemFromSelection', function () {}); // mock function
 
     await render(
-      hbs`{{data-table-content-body content=content data-table=data-table enableSelection=true}}`
+      hbs`{{data-table/data-table-content-body content=content data-table=data-table enableSelection=true}}`
     );
 
     assert
@@ -104,7 +104,7 @@ module('Integration | Component | data table content body', function (hooks) {
     this.set('data-table.selection', []);
 
     await render(
-      hbs`{{data-table-content-body content=content data-table=data-table enableLineNumbers=true}}`
+      hbs`{{data-table/data-table-content-body content=content data-table=data-table enableLineNumbers=true}}`
     );
 
     assert.equal(this.$('tr:first td').length, 4, 'displays 4 columns');
@@ -127,7 +127,7 @@ module('Integration | Component | data table content body', function (hooks) {
     this.set('data-table.page', 2);
     this.set('data-table.size', 5);
     await render(
-      hbs`{{data-table-content-body content=content data-table=data-table enableLineNumbers=true}}`
+      hbs`{{data-table/data-table-content-body content=content data-table=data-table enableLineNumbers=true}}`
     );
 
     assert.equal(
@@ -161,7 +161,7 @@ module('Integration | Component | data table content body', function (hooks) {
     this.set('data-table.selection', []);
 
     await render(
-      hbs`{{data-table-content-body noDataMessage=noDataMessage data-table=data-table}}`
+      hbs`{{data-table/data-table-content-body noDataMessage=noDataMessage data-table=data-table}}`
     );
     assert
       .dom('td.no-data-message')
@@ -172,7 +172,7 @@ module('Integration | Component | data table content body', function (hooks) {
 
     this.set('content', []);
     await render(
-      hbs`{{data-table-content-body content=content noDataMessage=noDataMessage data-table=data-table}}`
+      hbs`{{data-table/data-table-content-body content=content noDataMessage=noDataMessage data-table=data-table}}`
     );
     assert
       .dom('td.no-data-message')
@@ -183,7 +183,7 @@ module('Integration | Component | data table content body', function (hooks) {
 
     this.set('content', ['foo', 'bar']);
     await render(
-      hbs`{{data-table-content-body content=content noDataMessage=noDataMessage data-table=data-table}}`
+      hbs`{{data-table/data-table-content-body content=content noDataMessage=noDataMessage data-table=data-table}}`
     );
     assert
       .dom('td.no-data-message')
