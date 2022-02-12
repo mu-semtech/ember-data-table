@@ -14,7 +14,11 @@
   @updatePageSize={{@updatePageSize}} {{!-- change to size or vice-versa? --}}
   @updateFilter={{@updateFilter}}
   @updateSort={{@updateSort}}
+  @onClickRow={{@onClickRow}}
   @links={{@links}}
+  @rowLink={{@rowLink}}
+  @customHeaders={{@customHeaders}}
+  @customFields={{@customFields}}
   as |dt|>
   {{!-- START: search --}}
   <div class="raw-data-table">
@@ -155,7 +159,7 @@
                           {{#if (has-block "row")}}
                             {{yield row to="row"}}
                           {{else}}
-                            <tr role="button"
+                            <tr role={{if row.hasClickRowAction "button" "row"}}
                               class="{{if row.isSelected "selected"}} {{if row.hasClickRowAction "clickable"}}"
                               {{on "click" row.onClickRow}}>
                               {{#if row.enableSelection}}
@@ -207,6 +211,19 @@
                                   {{/each}}
                                 {{/if}}
                               </row.DataCells>
+                              {{#if (has-block "actions")}}
+                                {{yield row to="actions"}}
+                              {{else}}
+                                {{#if row.linkedRoutes}}
+                                  <td>
+                                    {{#each row.linkedRoutes as |linkedRoute|}}
+                                      <LinkTo @route={{linkedRoute.route}} @model={{row.item}}>
+                                        {{or linkedRoute.label linkedRoute.route}}
+                                      </LinkTo>
+                                    {{/each}}
+                                  </td>
+                                {{/if}}
+                              {{/if}}
                             </tr>
                           {{/if}}
                         </body.Row>

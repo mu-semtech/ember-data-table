@@ -4,12 +4,13 @@
     offset=this.offset
     wrappedItems=this.wrappedItems
     enableLineNumbers=@enableLineNumbers
-    hasClickRowAction=(and @onClickRow true)
-    onClickRow=this.onClickRow
+    hasClickRowAction=(and (@onClickRow @rowLink) true)
+    onClickRow=@onClickRow
     toggleSelected=this.updateSelection
     selection=@data-table.selection
     enableSelection=@enableSelection
     linkedRoutes=@linkedRoutes
+    rowLink=@rowLink
     noDataMessage=@noDataMessage
     customFields=@customFields
     Row=(component "data-table/row"
@@ -18,7 +19,7 @@
       enableSelection=@enableSelection
       selection=@data-table.selection
       offset=this.offset
-      hasClickRowAction=(and @onClickRow true)
+      hasClickRowAction=(and (or @onClickRow @rowLink) true)
       onClickRow=this.onClickRow
       linkedRoutes=@linkedRoutes
       customFields=@customFields

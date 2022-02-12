@@ -1,7 +1,10 @@
+import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import Component from '@glimmer/component';
 
 export default class DataTableContentBodyComponent extends Component {
+  @service router
+
   get offset() {
     var offset = 1; //to avoid having 0. row
     var page = this.args['data-table'].page; // TODO: pass on page directly?
@@ -35,6 +38,9 @@ export default class DataTableContentBodyComponent extends Component {
 
   @action
   onClickRow() {
-    if (this.args.onClickRow) this.args.onClickRow(...arguments);
+    if (this.args.onClickRow)
+      this.args.onClickRow(...arguments);
+    else if ( this.args.rowLink )
+      this.router.transitionTo( this.args.rowLink, arguments[0] );
   }
 }
