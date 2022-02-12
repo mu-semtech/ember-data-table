@@ -14,7 +14,7 @@
   @updatePageSize={{@updatePageSize}} {{!-- change to size or vice-versa? --}}
   @updateFilter={{@updateFilter}}
   @updateSort={{@updateSort}}
-  @linkedRoute={{@linkedRoute}}
+  @links={{@links}}
   as |dt|>
   {{!-- START: search --}}
   <div class="raw-data-table">
@@ -122,6 +122,13 @@
                           {{/if}}
                         </header.ThSortable>
                       {{/each}}
+                    {{/if}}
+                    {{#if (has-block "actions-header")}}
+                      {{yield to="actions-header"}}
+                    {{else}}
+                      {{#if (or (has-block "actions") header.hasLinks)}}
+                        <th></th>
+                      {{/if}}
                     {{/if}}
                   </tr>
                 </thead>

@@ -9,7 +9,7 @@
     toggleSelected=this.updateSelection
     selection=@data-table.selection
     enableSelection=@enableSelection
-    linkedRoute=@linkedRoute
+    linkedRoutes=@linkedRoutes
     noDataMessage=@noDataMessage
     customFields=@customFields
     Row=(component "data-table/row"
@@ -20,6 +20,6 @@
       offset=this.offset
       hasClickRowAction=(and @onClickRow true)
       onClickRow=this.onClickRow
-      linkedRoute=@linkedRoute
+      linkedRoutes=@linkedRoutes
       customFields=@customFields
       toggleSelected=this.updateSelection))}}
