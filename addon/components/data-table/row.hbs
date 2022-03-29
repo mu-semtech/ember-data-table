@@ -1,0 +1,18 @@
+{{yield (hash
+    wrapper=@wrapper
+    item=@wrapper.item
+    enableLineNumbers=@enableLineNumbers
+    lineNumber=(add @index @offset)
+    enableSelection=@enableSelection
+    selected=(includes @wrapper.item @selection)
+    hasClickRowAction=@hasClickRowAction
+    onClickRow=(fn @onClickRow @wrapper.item)
+    toggleSelected=(fn @toggleSelected @wrapper)
+    isSelected=(includes @wrapper.item @selection)
+    linkedRoutes=@linkedRoutes
+    customFields=@customFields
+    DataCells=(component
+      "data-table/default-data-table-content-body"
+      linkedRoute=@linkedRoute
+      customFields=@customFields
+      data-table=@data-table))}}

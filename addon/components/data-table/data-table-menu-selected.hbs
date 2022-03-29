@@ -1,0 +1,8 @@
+{{yield (hash
+    selectionIsEmpty=@data-table.selectionIsEmpty
+    selectionCount=this.selectionCount
+    clearSelection=this.clearSelection
+    selection=@data-table.selection
+    data-table=@data-table)}}
+
+{{!-- TODO: must we pass the data table itself?  It is shared with the consumers. --}}

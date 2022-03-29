@@ -1,0 +1,284 @@
+<DataTable
+  @content={{@content}}
+  @fields={{@fields}}
+  @page={{@page}}
+  @size={{@size}}
+  @sort={{@sort}}
+  @filter={{@filter}}
+  @hasMenu={{@hasMenu}}
+  @selection={{@selection}}
+  @noDataMessage={{@noDataMessage}}
+  @isLoading={{@isloading}}
+  @lineNumbers={{@lineNumbers}}
+  @updatePage={{@updatePage}}
+  @updatePageSize={{@updatePageSize}} {{!-- change to size or vice-versa? --}}
+  @updateFilter={{@updateFilter}}
+  @updateSort={{@updateSort}}
+  @onClickRow={{@onClickRow}}
+  @links={{@links}}
+  @rowLink={{@rowLink}}
+  @customHeaders={{@customHeaders}}
+  @customFields={{@customFields}}
+  as |dt|>
+  {{!-- START: search --}}
+  <div class="raw-data-table">
+    {{#if dt.enableSearch}}
+      <dt.Search as |search|>
+        {{#if (has-block "search")}}
+          {{yield search to="search"}}
+        {{else}}
+          <div class="data-table-header">
+            <div class="data-table-menu">
+              <form
+                {{on "submit" search.submitForm}}
+                class="data-table-search">
+                {{#if search.auto}}
+                  <label>Search:
+                    <input
+                      value={{search.filter}}
+                      placeholder={{search.placeholder}}
+                      {{on "input" search.handleAutoInput}} />
+                  </label>
+                {{else}}
+                  <label>Search:
+                    <input
+                      value={{search.filter}}
+                      placeholder={{search.placeholder}}
+                      {{on "input" search.handleDirectInput}} />
+                  </label>
+                  <button type="submit">Search</button>
+                {{/if}}
+              </form>
+            </div>
+          </div>
+        {{/if}}
+      </dt.Search>
+    {{/if}}
+    {{!-- END: search --}}
+
+    {{!-- START: menu --}}
+    <dt.Menu as |General Selected|>
+      {{#if (has-block "menu")}}
+        {{yield (hash General Selected)}}
+      {{else}}
+        {{#if dt.dataTable.enableSelection}}
+          <div class="data-table-menu">
+            {{!-- either we have a general block or we have to have a menu --}}
+            <General as |general|>
+              {{#if general.data-table.selectionIsEmpty}}
+                {{yield general.data-table to="general-menu"}}
+              {{/if}}
+            </General>
+            <Selected as |selected|>
+              {{#unless selected.data-table.selectionIsEmpty}}
+                {{#if (has-block "selection-menu")}}
+                  {{yield selected to="selection-menu"}}
+                {{else}}
+                  <span class="item-count">{{selected.selectionCount}} item(s) selected</span>
+                  <button type="button" {{on "click" selected.clearSelection}}>Cancel</button>
+                  {{yield (slice 0 selected.selectionCount selected.selection) selected.data-table
+                      to="selection-menu-actions"}}
+                {{/if}}
+              {{/unless}}
+            </Selected>
+          </div>
+        {{/if}}
+      {{/if}}
+    </dt.Menu>
+    {{!-- END: menu --}}
+
+    {{!-- START: content --}}
+    <dt.Content as |content|>
+      {{#if (has-block "content")}}
+        {{yield content to="content"}}
+      {{else}}
+        <div class="data-table-content">
+          <table class="data-table {{content.dataTable.tableClass}}">
+            {{!-- START: headers --}}
+            <content.Header as |header|>
+              {{#if (has-block "full-header")}}
+                {{yield header to="full-header"}}
+              {{else}}
+                <thead>
+                  <tr>
+                    {{#if header.enableSelection}}
+                      <th>{{!-- Checkbox --}}</th>
+                    {{/if}}
+                    {{#if header.enableLineNumbers}}
+                      <th>{{!-- Linenumbers --}}</th>
+                    {{/if}}
+                    {{#if (has-block "data-headers")}}
+                      {{yield header.dataHeadersInfo to="data-headers"}}
+                    {{else}}
+                      {{#each header.parsedFields as |field|}}
+                        <header.ThSortable @field={{field}} @label={{field}} as |dataHeader|>
+                          {{#if (and (has-block "data-header") dataHeader.isCustom)}}
+                            {{yield dataHeader to="data-header"}}
+                          {{else if (and (has-block "data-header") (not dataHeader.hasCustom))}}
+                            {{yield dataHeader to="data-header"}}
+                          {{else}}
+                            <th class={{concat "sortable" (if dataHeader.isSorted " sorted" "")}}>
+                              <span role="button" {{on "click" dataHeader.inverseSorting}}>
+                                {{#if dataHeader.order}}[{{dataHeader.order}}]{{/if}}
+                                {{dataHeader.label}}
+                              </span>
+                            </th>
+                          {{/if}}
+                        </header.ThSortable>
+                      {{/each}}
+                    {{/if}}
+                    {{#if (has-block "actions-header")}}
+                      {{yield to="actions-header"}}
+                    {{else}}
+                      {{#if (or (has-block "actions") header.hasLinks)}}
+                        <th></th>
+                      {{/if}}
+                    {{/if}}
+                  </tr>
+                </thead>
+              {{/if}}
+            </content.Header>
+            {{!-- END: headers --}}
+
+            {{!-- START: body --}}
+            <content.Body as |body|>
+              {{#if (has-block "body")}}
+                {{yield body to="body"}}
+              {{else}}
+                <tbody>
+                  {{#if body.isLoading}}
+                    {{#if (has-block "body-loading")}}
+                      {{yield to="body-loading"}}
+                    {{else}}
+                      <tr><td colspan="100%" class="is-loading-data">Loading...</td></tr>
+                    {{/if}}
+                  {{else}}
+                    {{#if body.content}}
+                      {{#each body.wrappedItems as |wrapper index|}}
+                        <body.Row @wrapper={{wrapper}} @index={{index}} as |row|>
+                          {{#if (has-block "row")}}
+                            {{yield row to="row"}}
+                          {{else}}
+                            <tr role={{if row.hasClickRowAction "button" "row"}}
+                              class="{{if row.isSelected "selected"}} {{if row.hasClickRowAction "clickable"}}"
+                              {{on "click" row.onClickRow}}>
+                              {{#if row.enableSelection}}
+                                <td class="center">
+                                  {{input type="checkbox" checked=row.isSelected click=row.toggleSelected}}
+                                </td>
+                              {{/if}}
+                              {{#if row.enableLineNumbers}}
+                                <td>{{row.lineNumber}}</td>
+                              {{/if}}
+                              <row.DataCells @item={{wrapper.item}} as |dataCells|>
+                                {{#if (has-block "data-cells")}}
+                                  {{yield dataCells to="data-cells"}}
+                                {{else}}
+                                  {{#if dataCells.firstColumn}}
+                                    <dataCells.DataCell @column={{dataCells.firstColumn}} as |cell|>
+                                      {{#if (has-block "first-data-cell")}}
+                                        {{yield cell to="first-data-cell"}}
+                                      {{else if (and (has-block "data-cell") cell.isCustom)}}
+                                        {{yield cell to="data-cell"}}
+                                      {{else if (and (has-block "data-cell") (not cell.hasCustom))}}
+                                        {{yield cell to="data-cell"}}
+                                      {{else}}
+                                        {{#if cell.linkedRoute}}
+                                          <LinkTo @route={{cell.linkedRoute}} @model={{cell.item}} @tagName="td">
+                                            {{cell.value}}
+                                          </LinkTo>
+                                        {{else}}
+                                          <td>{{cell.value}}</td>
+                                        {{/if}}
+                                      {{/if}}
+                                    </dataCells.DataCell>
+                                  {{/if}}
+                                  {{#each dataCells.otherColumns as |column|}}
+                                    <dataCells.DataCell @column={{column}} as |cell|>
+                                      {{#if (has-block "rest-data-cell")}}
+                                        {{yield cell to="rest-data-cell"}}
+                                      {{else if (and (has-block "data-cell") cell.isCustom)}}
+                                        {{yield cell to="data-cell"}}
+                                      {{else if (and (has-block "data-cell") (not cell.hasCustom))}}
+                                        {{yield cell to="data-cell"}}
+                                      {{else}}
+                                        <td>
+                                          {{!-- TODO: This should be based on the type of the field --}}
+                                          {{cell.value}}
+                                        </td>
+                                      {{/if}}
+                                    </dataCells.DataCell>
+                                  {{/each}}
+                                {{/if}}
+                              </row.DataCells>
+                              {{#if (has-block "actions")}}
+                                {{yield row to="actions"}}
+                              {{else}}
+                                {{#if row.linkedRoutes}}
+                                  <td>
+                                    {{#each row.linkedRoutes as |linkedRoute|}}
+                                      <LinkTo @route={{linkedRoute.route}} @model={{row.item}}>
+                                        {{or linkedRoute.label linkedRoute.route}}
+                                      </LinkTo>
+                                    {{/each}}
+                                  </td>
+                                {{/if}}
+                              {{/if}}
+                            </tr>
+                          {{/if}}
+                        </body.Row>
+                      {{/each}}
+                    {{else}}
+                      {{#if (has-block "no-data-message")}}
+                        {{yield to="no-data-message"}}
+                      {{else}}
+                        <tr><td colspan="100%" class="no-data-message"><p>{{@noDataMessage}}</p></td></tr>
+                      {{/if}}
+                    {{/if}}
+                  {{/if}}
+                </tbody>
+              {{/if}}
+            </content.Body>
+            {{!-- END: body --}}
+          </table>
+        </div>
+      {{/if}}
+    </dt.Content>
+
+    {{!-- END: content --}}
+
+    {{!-- START: pagination --}}
+    <dt.Pagination as |pagination|>
+      {{#if (has-block "pagination")}}
+        {{yield pagination to="pagination"}}
+      {{else}}
+        <div class="data-table-pagination">
+          <div class="data-table-pagination-left">
+            Displaying {{pagination.startItem}}-{{pagination.endItem}}
+            {{#if pagination.hasTotal}} of {{pagination.total}}{{/if}}
+            {{#if pagination.sizeOptions}}
+              |
+              <label>
+                <select {{on "change" pagination.selectSizeOption}} value="target.value">
+                  {{#each pagination.sizeOptions as |sizeOption|}}
+                    <option value={{sizeOption}} selected={{eq pagination.pageSize sizeOption}}>{{sizeOption}}</option>
+                  {{/each}}
+                </select> per page
+              </label>
+            {{/if}}
+          </div>
+          {{#if pagination.hasMultiplePages}}
+            <div class="data-table-pagination-right">
+              <button disabled={{pagination.isFirstPage}} type="button" {{on "click" (fn pagination.updatePage pagination.links.first)}}>First</button>
+              <button disabled={{pagination.isFirstPage}} type="button" {{on "click" (fn pagination.updatePage pagination.links.prev)}}>Previous</button>
+
+              <button disabled={{pagination.isLastPage}} type="button" {{on "click" (fn pagination.updatePage pagination.links.next)}}>Next</button>
+              <button disabled={{pagination.isLastPage}} type="button" {{on "click" (fn pagination.updatePage pagination.links.last)}}>Last</button>
+            </div>
+          {{/if}}
+        </div>
+      {{/if}}
+    </dt.Pagination>
+    {{!-- END: pagination --}}
+  </div>
+</DataTable>

@@ -1,0 +1,6 @@
+{{#let
+     (component "data-table/data-table-menu-general" data-table=@data-table)
+     (component "data-table/data-table-menu-selected" data-table=@data-table)
+     as |general selected|}}
+  {{yield general selected}}
+{{/let}}

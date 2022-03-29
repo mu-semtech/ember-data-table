@@ -1,0 +1,20 @@
+{{yield
+     (hash
+       Header=(component "data-table/data-table-content-header"
+         enableSelection=@enableSelection
+         enableLineNumbers=@enableLineNumbers
+         updateSort=@updateSort
+         hasLinks=this.hasLinks
+         customHeaders=@customHeaders
+         data-table=@data-table)
+       Body=(component "data-table/data-table-content-body"
+         content=@content
+         enableSelection=@enableSelection
+         enableLineNumbers=@enableLineNumbers
+         noDataMessage=@noDataMessage
+         onClickRow=@onClickRow
+         linkedRoutes=this.linkedRoutes
+         rowLink=@rowLink
+         customFields=@customFields
+         data-table=@data-table)
+       dataTable=@data-table)}}
