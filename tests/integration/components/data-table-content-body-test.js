@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { click, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | data table content body', function (hooks) {
@@ -27,22 +27,10 @@ module('Integration | Component | data table content body', function (hooks) {
     );
 
     assert.dom('tr').exists({ count: 2 }, 'displays 2 rows');
-    assert.equal(this.$('tr:first td').length, 3, 'displays 3 columns');
-    assert.equal(
-      this.$('tr:first td:first').text().trim(),
-      'John',
-      'displays firstName is first column'
-    );
-    assert.equal(
-      this.$('tr:first td:nth-child(2)').text().trim(),
-      'Doe',
-      'displays lastName in second column'
-    );
-    assert.equal(
-      this.$('tr:first td:nth-child(3)').text().trim(),
-      '20',
-      'displays age in third column'
-    );
+    assert.dom('tr:first-child td').exists({count: 3}, 'displays 3 columns')
+    assert.dom('tr:first-child td:first-child').hasText('John', 'displays firstName in first column');
+    assert.dom('tr:first-child td:nth-child(2)').hasText('Doe', 'displays lastName in second column');
+    assert.dom('tr:first-child td:nth-child(3)').hasText('20', 'displays age in third column');
   });
 
   test('add checkboxes for selection if enabled', async function (assert) {
@@ -58,7 +46,7 @@ module('Integration | Component | data table content body', function (hooks) {
       hbs`{{data-table-content-body content=content data-table=data-table enableSelection=true}}`
     );
 
-    assert.equal(this.$('tr:first td').length, 4, 'displays 4 columns');
+    assert.dom('tr:first-child td').exists({ count: 4 }, 'displays 4 columns');
     assert.dom('tr.selected').exists({ count: 1 }, 'displays 1 selected row');
     assert
       .dom('tr input[type="checkbox"]')
@@ -88,7 +76,9 @@ module('Integration | Component | data table content body', function (hooks) {
     assert
       .dom('tr input[type="checkbox"]:checked')
       .isChecked('displays 1 checked checkbox before selecting a row');
-    this.$('tr:first input[type="checkbox"]').click();
+
+    await click('tr:first-child input[type="checkbox"]');
+
     assert
       .dom('tr input[type="checkbox"]:checked')
       .isChecked('displays 2 checked checkboxes after selecting a row');
@@ -107,22 +97,10 @@ module('Integration | Component | data table content body', function (hooks) {
       hbs`{{data-table-content-body content=content data-table=data-table enableLineNumbers=true}}`
     );
 
-    assert.equal(this.$('tr:first td').length, 4, 'displays 4 columns');
-    assert.equal(
-      this.$('tr:first td:first').text().trim(),
-      '1',
-      'displays offset 1 on the first row'
-    );
-    assert.equal(
-      this.$('tr:nth-child(2) td:first').text().trim(),
-      '2',
-      'displays offset 2 on the second row'
-    );
-    assert.equal(
-      this.$('tr:nth-child(3) td:first').text().trim(),
-      '3',
-      'displays offset 3 on the third row'
-    );
+    assert.dom('tr:first-child td').exists({ count: 4 }, 'displays 4 columns');
+    assert.dom('tr:first-child td:first-child').hasText('1', 'displays offset 1 on the first row');
+    assert.dom('tr:nth-child(2) td:first-child').hasText('2', 'displays offset 2 on the second row');
+    assert.dom('tr:nth-child(3) td:first-child').hasText('3', 'displays offset 3 on the third row');
 
     this.set('data-table.page', 2);
     this.set('data-table.size', 5);
@@ -130,26 +108,10 @@ module('Integration | Component | data table content body', function (hooks) {
       hbs`{{data-table-content-body content=content data-table=data-table enableLineNumbers=true}}`
     );
 
-    assert.equal(
-      this.$('tr:first td').length,
-      4,
-      'displays 4 columns on page 3'
-    );
-    assert.equal(
-      this.$('tr:first td:first').text().trim(),
-      '11',
-      'displays offset 11 on the first row on page 3'
-    );
-    assert.equal(
-      this.$('tr:nth-child(2) td:first').text().trim(),
-      '12',
-      'displays offset 12 on the second row on page 3'
-    );
-    assert.equal(
-      this.$('tr:nth-child(3) td:first').text().trim(),
-      '13',
-      'displays offset 13 on the third row of page 3'
-    );
+    assert.dom('tr:first-child td').exists({ count: 4 }, 'displays 4 columns on page 3');
+    assert.dom('tr:first-child td:first-child').hasText('11', 'displays offset 11 on the first row on page 3');
+    assert.dom('tr:nth-child(2) td:first-child').hasText('12', 'displays offset 12 on the second row on page 3');
+    assert.dom('tr:nth-child(3) td:first-child').hasText('13', 'displays offset 13 on the third row of page 3');
   });
 
   test('displays no data message if there is no data', async function (assert) {
