@@ -5,17 +5,17 @@
     <h1 id="title">Ember Data Table demo</h1>
     <h2>Simple table</h2>
     <blockquote>Generated table header and body based on given <code>fields</code></blockquote>
-    {{data-table content=model fields="firstName lastName age created modified" sort=sort page=page size=size filter=filter}}
+    {{data-table content=this.model fields="firstName lastName age created modified" sort=this.sort page=this.page size=this.size filter=this.filter}}
 
     <h2>Semi-complex table</h2>
     <blockquote>Customized table header and body</blockquote>
-    <DataTable @content={{model}} @sort={{sort}} @page={{page}} @size={{size}} @filter={{filter}} as |t|>
+    <DataTable @content={{this.model}} @sort={{this.sort}} @page={{this.page}} @size={{this.size}} @filter={{this.filter}} as |t|>
       <t.content as |c|>
         <c.header>
-          {{th-sortable field="firstName" currentSorting=sort label="First name"}}
-          {{th-sortable field="lastName" currentSorting=sort label="Last name"}}
+          {{th-sortable field="firstName" currentSorting=this.sort label="First name"}}
+          {{th-sortable field="lastName" currentSorting=this.sort label="Last name"}}
           <th>Age</th>
-          {{th-sortable field="created" currentSorting=sort label="Created"}}
+          {{th-sortable field="created" currentSorting=this.sort label="Created"}}
           <th>Modified</th>
         </c.header>
         <c.body as |row|>
@@ -30,7 +30,7 @@
 
     <h2>Complex table</h2>
     <blockquote>Customized table including an action menu on top</blockquote>
-    <DataTable @content={{model}} @sort={{sort}} @page={{page}} @size={{size}} @filter={{filter}} @autoSearch={{false}} @onClickRow={{action "clickRow"}} as |t|>
+    <DataTable @content={{this.model}} @sort={{this.sort}} @page={{this.page}} @size={{this.size}} @filter={{this.filter}} @autoSearch={{false}} @onClickRow={{action "clickRow"}} as |t|>
       <t.menu as |menu|>
         <menu.general>
           <button type="button" {{action "menuTest"}}>Export</button>
@@ -42,10 +42,10 @@
       </t.menu>
       <t.content as |c|>
         <c.header>
-          {{th-sortable field="firstName" currentSorting=sort label="First name"}}
-          {{th-sortable field="lastName" currentSorting=sort label="Last name"}}
-          <th>Age</th>
-          {{th-sortable field="created" currentSorting=sort label="Created"}}
+          {{th-sortable field="firstName" currentSorting=this.sort label="First name"}}
+          {{th-sortable field="lastName" currentSorting=this.sort label="Last name"}}
+          <th>Age</th>input
+          {{th-sortable field="created" currentSorting=this.sort label="Created"}}
           <th>Modified</th>
           <th>
           </th>
@@ -63,10 +63,10 @@
 
     <h2>Internal variables</h2>
     <ul>
-      <li>Sort: {{sort}}</li>
-      <li>Page: {{page}}</li>
-      <li>Size: {{size}}</li>
-      <li>Filter: {{filter}}</li>
+      <li>Sort: {{this.sort}}</li>
+      <li>Page: {{this.page}}</li>
+      <li>Size: {{this.size}}</li>
+      <li>Filter: {{this.filter}}</li>
     </ul>
   </div>
 </div>

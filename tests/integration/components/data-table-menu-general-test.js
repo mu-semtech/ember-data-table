@@ -22,7 +22,7 @@ module('Integration | Component | data table menu general', function (hooks) {
     this.set('data-table', { selectionIsEmpty: true });
     // Template block usage:
     await render(hbs`
-      {{#data-table-menu-general data-table=data-table}}
+      {{#data-table-menu-general data-table=this.data-table}}
         template block text
       {{/data-table-menu-general}}
     `);
@@ -31,7 +31,7 @@ module('Integration | Component | data table menu general', function (hooks) {
     this.set('data-table', { selectionIsEmpty: false });
     // Template block usage:
     await render(hbs`
-      {{#data-table-menu-general data-table=data-table}}
+      {{#data-table-menu-general data-table=this.data-table}}
         template block text
       {{/data-table-menu-general}}
     `);

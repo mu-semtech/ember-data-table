@@ -1,6 +1,6 @@
-{{#if auto}}
-  {{input value=value placeholder=placeholder}}
+{{#if this.auto}}
+  <Input @value={{this.value}} placeholder={{this.placeholder}} />
 {{else}}
-  <input value={{internalValue}} placeholder={{placeholder}} oninput={{action (mut internalValue) value="target.value"}}>
-  <button type="button" {{action (mut filter) internalValue}}>Search</button>
+  <input value={{this.internalValue}} placeholder={{this.placeholder}} oninput={{action (mut this.internalValue) value="target.value"}}>
+  <button type="button" {{action (mut this.filter) this.internalValue}}>Search</button>
 {{/if}}

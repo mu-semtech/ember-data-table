@@ -1,27 +1,27 @@
 <div>
   <div class="data-table-pagination-left">
-    Displaying {{startItem}}-{{endItem}}
-    {{#if total}} of {{total}}{{/if}}
-    {{#if sizeOptions}}
+    Displaying {{this.startItem}}-{{this.endItem}}
+    {{#if this.total}} of {{this.total}}{{/if}}
+    {{#if this.sizeOptions}}
       |
-      <select onchange={{action (mut size) value="target.value"}}>
-        {{#each sizeOptions as |sizeOption|}}
-          <option value={{sizeOption}} selected={{eq size sizeOption}}>{{sizeOption}}</option>
+      <select onchange={{action (mut this.size) value="target.value"}}>
+        {{#each this.sizeOptions as |sizeOption|}}
+          <option value={{sizeOption}} selected={{eq this.size sizeOption}}>{{sizeOption}}</option>
         {{/each}}
       </select> per page
     {{/if}}
   </div>
-  {{#if hasMultiplePages}}
+  {{#if this.hasMultiplePages}}
     <div class="data-table-pagination-right">
-      <button disabled={{isFirstPage}} type="button" {{action "changePage" links.first}}>First</button>
-      <button disabled={{isFirstPage}} type="button" {{action "changePage" links.prev}}>Previous</button>
-      <select onchange={{action (mut currentPage) value="target.value"}}>
-        {{#each pageOptions as |sizeOption|}}
-          <option value={{sizeOption}} selected={{eq currentPage sizeOption}}>{{sizeOption}}</option>
+      <button disabled={{this.isFirstPage}} type="button" {{action "changePage" this.links.first}}>First</button>
+      <button disabled={{this.isFirstPage}} type="button" {{action "changePage" this.links.prev}}>Previous</button>
+      <select onchange={{action (mut this.currentPage) value="target.value"}}>
+        {{#each this.pageOptions as |sizeOption|}}
+          <option value={{sizeOption}} selected={{eq this.currentPage sizeOption}}>{{sizeOption}}</option>
         {{/each}}
       </select>
-      <button disabled={{isLastPage}} type="button" {{action "changePage" links.next}}>Next</button>
-      <button disabled={{isLastPage}} type="button" {{action "changePage" links.last}}>Last</button>
+      <button disabled={{this.isLastPage}} type="button" {{action "changePage" this.links.next}}>Next</button>
+      <button disabled={{this.isLastPage}} type="button" {{action "changePage" this.links.last}}>Last</button>
     </div>
   {{/if}}
 </div>
