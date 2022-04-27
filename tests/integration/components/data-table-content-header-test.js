@@ -29,22 +29,19 @@ module('Integration | Component | data table content header', function (hooks) {
     this.set('data-table', {});
     this.set('data-table.parsedFields', ['firstName', 'lastName', 'age']);
 
-    await render(hbs`{{data-table-content-header data-table=data-table}}`);
+    await render(hbs`{{data-table-content-header data-table=this.data-table}}`);
 
     assert.dom('tr').exists({ count: 1 }, 'displays 1 header row');
-    assert.equal(this.$('tr:first th').length, 3, 'displays 3 column headers');
-    assert.equal(
-      this.$('tr:first th:first').text().trim(),
+    assert.dom('tr:first-child th').exists({ count: 3}, 'displays 3 column headers');
+    assert.dom('tr:first-child th:first-child').hasText(
       'firstName',
       'displays firstName as first header'
     );
-    assert.equal(
-      this.$('tr:first th:nth-child(2)').text().trim(),
+    assert.dom('tr:first-child th:nth-child(2)').hasText(
       'lastName',
       'displays lastName as second column header'
     );
-    assert.equal(
-      this.$('tr:first th:nth-child(3)').text().trim(),
+    assert.dom('tr:first-child th:nth-child(3)').hasText(
       'age',
       'displays age as third column header'
     );
@@ -55,13 +52,12 @@ module('Integration | Component | data table content header', function (hooks) {
     this.set('data-table.parsedFields', ['firstName', 'lastName', 'age']);
 
     await render(
-      hbs`{{data-table-content-header data-table=data-table enableSelection=true}}`
+      hbs`{{data-table-content-header data-table=this.data-table enableSelection=true}}`
     );
 
     assert.dom('tr').exists({ count: 1 }, 'displays 1 header row');
-    assert.equal(this.$('tr:first th').length, 4, 'displays 4 column headers');
-    assert.equal(
-      this.$('tr:first th:first').text().trim(),
+    assert.dom('tr:first-child th').exists({ count: 4 }, 'displays 4 column headers');
+    assert.dom('tr:first-child th:first-child').hasText(
       '',
       'displays selection as first header'
     );
@@ -72,13 +68,12 @@ module('Integration | Component | data table content header', function (hooks) {
     this.set('data-table.parsedFields', ['firstName', 'lastName', 'age']);
 
     await render(
-      hbs`{{data-table-content-header data-table=data-table enableLineNumbers=true}}`
+      hbs`{{data-table-content-header data-table=this.data-table enableLineNumbers=true}}`
     );
 
     assert.dom('tr').exists({ count: 1 }, 'displays 1 header row');
-    assert.equal(this.$('tr:first th').length, 4, 'displays 4 column headers');
-    assert.equal(
-      this.$('tr:first th:first').text().trim(),
+    assert.dom('tr:first-child th').exists({ count: 4 }, 'displays 4 column headers');
+    assert.dom('tr:first-child th:first-child').hasText(
       '',
       'displays line number as first header'
     );

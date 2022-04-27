@@ -17,14 +17,14 @@ module(
       });
 
       await render(
-        hbs`{{default-data-table-content-body data-table=data-table}}`
+        hbs`{{default-data-table-content-body data-table=this.data-table}}`
       );
 
       assert.dom().hasText('');
 
       // Template block usage:
       await render(hbs`
-      <DefaultDataTableContentBody @data-table={{data-table}}>
+      <DefaultDataTableContentBody @data-table={{this.data-table}}>
         template block text
       </DefaultDataTableContentBody>
     `);

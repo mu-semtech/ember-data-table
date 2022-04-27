@@ -1,8 +1,6 @@
 import { typeOf } from '@ember/utils';
-import { observer } from '@ember/object';
-import { computed } from '@ember/object';
-import { oneWay } from '@ember/object/computed';
-import { bool } from '@ember/object/computed';
+import { computed, observer } from '@ember/object';
+import { bool, equal, oneWay } from '@ember/object/computed';
 import Component from '@ember/component';
 import layout from '../templates/components/data-table';
 
@@ -18,7 +16,7 @@ export default Component.extend({
   searchDebounceTime: 2000,
   enableLineNumbers: bool('lineNumbers'),
   enableSelection: oneWay('hasMenu'),
-  selectionIsEmpty: computed.equal('selection.length', 0),
+  selectionIsEmpty: equal('selection.length', 0),
   enableSizes: true,
   size: 5,
   sizeOptions: computed('size', 'sizes', 'enableSizes', function () {

@@ -1,15 +1,15 @@
 <tr>
-  {{#if enableSelection}}
+  {{#if this.enableSelection}}
     <th>{{!-- Checkbox --}}</th>
   {{/if}}
-  {{#if enableLineNumbers}}
+  {{#if this.enableLineNumbers}}
     <th>{{!-- Linenumbers --}}</th>
   {{/if}}
   {{#if (has-block)}}
     {{yield}}
   {{else}}
-    {{#each fields as |field|}}
-      {{th-sortable field=field label=field currentSorting=sort}}
+    {{#each this.fields as |field|}}
+      {{th-sortable field=field label=field currentSorting=this.sort}}
     {{/each}}
   {{/if}}
 </tr>

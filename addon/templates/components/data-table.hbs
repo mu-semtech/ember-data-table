@@ -1,7 +1,7 @@
 {{#if (has-block)}}
-  <div class="data-table-header {{unless selectionIsEmpty " selected"}}">
-    {{#if enableSearch}}
-      {{text-search filter=filter auto=autoSearch wait=searchDebounceTime}}
+  <div class="data-table-header {{unless this.selectionIsEmpty " selected"}}">
+    {{#if this.enableSearch}}
+      {{text-search filter=this.filter auto=this.autoSearch wait=this.searchDebounceTime}}
     {{/if}}
     {{yield (hash
         menu=(component "data-table-menu" data-table=this)
@@ -9,22 +9,22 @@
         this}}
   </div>
   {{yield (hash
-      content=(component "data-table-content" content=content noDataMessage=noDataMessage enableSelection=enableSelection enableLineNumbers=enableLineNumbers onClickRow=(optional onClickRow) data-table=this)
+      content=(component "data-table-content" content=this.content noDataMessage=this.noDataMessage enableSelection=this.enableSelection enableLineNumbers=this.enableLineNumbers onClickRow=(optional this.onClickRow) data-table=this)
       )
       this}}
 {{else}}
-  {{#if enableSearch}}
+  {{#if this.enableSearch}}
     <div class="data-table-header">
       <div class="data-table-menu">
-        {{text-search filter=filter auto=autoSearch}}
+        {{text-search filter=this.filter auto=this.autoSearch}}
       </div>
     </div>
   {{/if}}
-  {{component "data-table-content" content=content noDataMessage=noDataMessage enableSelection=enableSelection enableLineNumbers=enableLineNumbers onClickRow=(optional onClickRow) data-table=this}}
+  {{component "data-table-content" content=this.content noDataMessage=this.noDataMessage enableSelection=this.enableSelection enableLineNumbers=this.enableLineNumbers onClickRow=(optional this.onClickRow) data-table=this}}
 {{/if}}
 
-{{#if content}}
+{{#if this.content}}
   {{number-pagination
-      page=page size=size nbOfItems=content.length sizeOptions=sizeOptions
-      total=content.meta.count links=content.meta.pagination}}
+      page=this.page size=this.size nbOfItems=this.content.length sizeOptions=this.sizeOptions
+      total=this.content.meta.count links=this.content.meta.pagination}}
 {{/if}}

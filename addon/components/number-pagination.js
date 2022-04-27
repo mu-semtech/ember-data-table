@@ -1,4 +1,5 @@
 import { computed } from '@ember/object';
+import { gt } from '@ember/object/computed';
 import Component from '@ember/component';
 import layout from '../templates/components/number-pagination';
 
@@ -27,7 +28,7 @@ export default Component.extend({
   isLastPage: computed('lastPage', 'currentPage', function () {
     return this.lastPage == this.currentPage;
   }),
-  hasMultiplePages: computed.gt('lastPage', 0),
+  hasMultiplePages: gt('lastPage', 0),
   startItem: computed('size', 'currentPage', function () {
     return this.size * (this.currentPage - 1) + 1;
   }),

@@ -10,7 +10,7 @@ module('Integration | Component | data table menu selected', function (hooks) {
     this.set('data-table', { selectionIsEmpty: true });
     // Template block usage:
     await render(hbs`
-      {{#data-table-menu-selected data-table=data-table}}
+      {{#data-table-menu-selected data-table=this.data-table}}
         template block text
       {{/data-table-menu-selected}}
     `);
@@ -21,7 +21,7 @@ module('Integration | Component | data table menu selected', function (hooks) {
     this.set('data-table', { selectionIsEmpty: false, selection: ['foo'] });
     // Template block usage:
     await render(hbs`
-      {{#data-table-menu-selected data-table=data-table}}
+      {{#data-table-menu-selected data-table=this.data-table}}
         template block text
       {{/data-table-menu-selected}}
     `);
@@ -34,7 +34,7 @@ module('Integration | Component | data table menu selected', function (hooks) {
     });
     // Template block usage:
     await render(hbs`
-      {{#data-table-menu-selected data-table=data-table}}
+      {{#data-table-menu-selected data-table=this.data-table}}
         template block text
       {{/data-table-menu-selected}}
     `);
@@ -51,7 +51,7 @@ module('Integration | Component | data table menu selected', function (hooks) {
     });
     // Template block usage:
     await render(hbs`
-      {{#data-table-menu-selected data-table=data-table}}
+      {{#data-table-menu-selected data-table=this.data-table}}
         template block text
       {{/data-table-menu-selected}}
     `);
