@@ -6,7 +6,8 @@ Data table for Ember based on a JSONAPI compliant backend.
 
 Have a look at [ember-paper-data-table](https://github.com/mu-semtech/emper-paper-data-table) to get a data table styled with [ember-paper](https://github.com/miguelcobain/ember-paper).
 
-## Installation
+## Getting started
+### Installation
 If you're using Ember > v3.8
 ```bash
 ember install ember-data-table
@@ -17,7 +18,7 @@ For Ember < v3.8, use version 1.x of the addon
 ember install ember-data-table@1.2.2
 ```
 
-## Getting started
+### Usage
 Include the `DataTableRouteMixin` in the route which model you want to show in the data table. Configure the model name.
 
 ```javascript
@@ -31,7 +32,7 @@ export default Ember.Route.extend(DataTableRouteMixin, {
 
 Next, include the data table in your template:
 
-```htmlbars
+```hbs
 {{data-table
   content=model
   fields="firstName lastName age created modified"
@@ -47,9 +48,11 @@ Note: the filtering, sorting and pagination isn't done at the frontend. By inclu
 
 Have a look at [Customizing the data table](https://github.com/erikap/ember-data-table#customizing-the-data-table) to learn how you can customize the data table's header and body.
 
-## Data table component
 
-### Specification
+## Reference
+### Data table component
+
+#### Specification
 
 The following parameters can be passed to the data-table component:
 
@@ -73,7 +76,7 @@ The following parameters can be passed to the data-table component:
 
 By default the data table will make each column sortable. The search text box is only shown if the `filter` parameter is bound. Pagination is only shown if the pagination metadata is set on the model (see the [Ember Data Table Serializer mixin](https://github.com/mu-semtech/ember-data-table#serializer)).
 
-### Customizing the data table
+#### Customizing the data table
 The way the data is shown in the table can be customized by defining a `content` block instead of a `fields` parameter.
 
 ```htmlbars
@@ -98,7 +101,7 @@ The way the data is shown in the table can be customized by defining a `content`
 ```
 Have a look at the [helper components](https://github.com/mu-semtech/ember-data-table#helper-components).
 
-### Adding actions to the data table
+#### Adding actions to the data table
 The user can add actions on top of the data table by providing a `menu` block.
 ```htmlbars
 {{#data-table content=model filter=filter sort=sort page=page size=size isLoading=isLoadingModel as |t|}}
@@ -128,11 +131,11 @@ actions:
   }    
 ```
 
-## Helper components
+### Helper components
 The following components may be helpful when customizing the data table:
 * [Sortable header](https://github.com/mu-semtech/ember-data-table#sortable-header)
 
-### Sortable header
+#### Sortable header
 The `th-sortable` component makes a column in the data table sortable. It displays a table header `<th>` element including an ascending/descending sorting icon in case the table is currently sorted by the given column.
 
 ```htmlbars
@@ -149,13 +152,13 @@ The following parameters are passed to the `th-sortable` component:
 
 Note: the data table will update the `currentSorting` variable, but the user needs to handle the reloading of the data. The [Ember Data Table Route mixin](https://github.com/mu-semtech/ember-data-table#route) may be of use.
 
-## Mixins
+### Mixins
 The following mixins may be helpful to use with the data table:
 * [Serializer mixin](https://github.com/mu-semtech/ember-data-table#serializer)
 * [Route mixin](https://github.com/mu-semtech/ember-data-table#route)
 * [Default Query Params mixin](https://github.com/mu-semtech/ember-data-table#default-query-params)
 
-### Serializer
+#### Serializer
 Upon installation, the `DataTableSerializerMixin` is automatically included in your application serializer to add parsing of the filter, sortig and pagination meta data from the links in the [JSONAPI](http://jsonapi.org) responses. The data is stored in [Ember's model metadata](https://guides.emberjs.com/v2.9.0/models/handling-metadata/).
 
 To include the `DataTableSerializerMixin` in your application, add the mixin to your application serializer:
@@ -189,7 +192,7 @@ meta: {
 }
 ```
 
-### Route
+#### Route
 The route providing data for the `data-table` component often looks similar. The model hook needs to query a list of resources of a specific model from the server. This list needs to be reloaded when the sorting, page or page size changes. The `DataTableRouteMixin` provides a default implementation of this behaviour. Just include the mixin in your route and specify the model to be queried as `modelName`.
 
 ```javascript
@@ -229,7 +232,7 @@ mergeQueryOptions(params) {
 
 The `DataTableRouteMixin` also sets the `isLoadingModel` flag on the controller while the route's model is being loaded. Passing this flag to the data table's `isLoading` property will show a spinner while data is loaded.
 
-### Default Query Params
+#### Default Query Params
 The `DefaultQueryParams` mixin provides sensible defaults for the `page` (default: 0), `size` (default: 25) and `filter` (default: '') query parameters. The mixin can be mixed in a controller that uses the `page` and `filter` query params.
 
 ```javascript
