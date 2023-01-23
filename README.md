@@ -49,6 +49,105 @@ Note: the filtering, sorting and pagination isn't done at the frontend. By inclu
 Have a look at [Customizing the data table](https://github.com/erikap/ember-data-table#customizing-the-data-table) to learn how you can customize the data table's header and body.
 
 
+### Visualizing your Ember Data with ember-data-table
+In this tutorial we show you how to easily render a data table with search, sort and pagination. The [ember-data-table addon](https://www.npmjs.com/package/ember-data-table) provides a component to visualize your Ember Data in a data table according to [Google’s  Material Design specification](https://material.io/guidelines/components/data-tables.html). Have a look at the [demo](https://ember-data-table.semte.ch) to get an idea of its capabilites. The addon assumes a [JSON:API](http://jsonapi.org/) compliant backend, like mu.semte.ch. It has support for sorting, search and pagination. However, the actual sorting, search and pagination is done by the backend.
+
+In this tutorial we will build the data table on [an extension of the books-service from the Getting Started guide](https://github.com/erikap/books-service/tree/ember-data-table-example). We start with a simple data table using a lot of defaults. We we will first create a new Ember app and install `ember-data-table` and its dependencies. Next, we will generate a model and configure the data table. In the next tutorials we will gradually convert this simple data table into a fully customized data table to display our books. If you already want to try on your own, an extensive overview of all the options, components and helpers of the data table can be found [in the reference](#reference).
+
+#### Creating your app
+
+Let’s get started! First, create a new Ember app and install the `ember-data-table` addon and its prerequisites.
+
+```bash
+ember new my-ember-app
+cd my-ember-app
+ember install ember-cli-sass
+ember install ember-cli-materialize
+ember install ember-data-table
+```
+
+The installation process will first install the `ember-data-table` package. Next, it will overwrite `app.scss` and the `ApplicationSerializer`. The `app.scss` imports the data table styling, while the changes in the `ApplicationSerializer` will automatically parse the pagination metadata from the JSONAPI responses. You don’t have to know the technical details of the serializer to use the addon, but if you’re interested, have a look at the [DataTableSerializerMixin](https://github.com/mu-semtech/ember-data-table/blob/master/addon/mixins/serializer.js) which is included in the `ApplicationSerializer`.
+
+#### Generating a model and a route
+
+Now the addon is installed, we can include our first data table. We will first generate a model for a book and an author:
+
+```bash
+ember generate model book title isbn publicationDate:date genre language numberOfPages:number authors:hasMany
+ember generate model author name books:hasMany
+```
+
+Next, generate a new route `/books` to show our table.
+
+```bash
+ember generate route books
+```
+
+
+#### Configuring the data table
+Include the [DataTableRouteMixin](https://github.com/mu-semtech/ember-data-table/blob/master/addon/mixins/route.js) in `app/routes/books.js` and set the model name:
+
+```js
+import Ember from 'ember';
+import DataTableRouteMixin from 'ember-data-table/mixins/route';
+
+export default Ember.Route.extend(DataTableRouteMixin, {
+   modelName: 'book'
+});
+```
+
+Finally, add the data-table in your template `app/templates/book.hbs`:
+```hbs
+<h1>My books</h1>
+{{data-table content=model fields="title isbn"}}
+```
+
+#### Adding sorting and pagination
+
+By including the `DataTableRouteMixin` in the `/books` route, we get sorting and pagination for free (if your back-end supports it of course). Just pass the ‘page’ and ‘sort’ parameters to the data table. The `DataTableRouteMixin` will make sure the model gets refreshed when one of the parameters is updated.
+
+```hbs
+<h1>My books</h1>
+{{data-table content=model 
+    fields="title isbn genre publicationDate language numberOfPages" 
+    page=page sort=sort}}
+```
+
+#### Adding free-text search
+Finally, we will include a free-text search field. The only thing we need to do to enable this is passing the filter parameter to the data-table and initializing it on an empty string in the controller.
+
+Generate a controller for the `/books` route.
+
+```bash
+ember generate controller books
+```
+
+Initialize the filter query param by including the [DefaultParamsMixin](https://github.com/mu-semtech/ember-data-table/blob/master/addon/mixins/default-query-params.js).
+
+```js
+import Ember from 'ember';
+import DefaultQueryParamsMixin from 'ember-data-table/mixins/default-query-params';
+
+export default Ember.Controller.extend(DefaultQueryParamsMixin, {
+});
+```
+
+Update the `books.hbs` template with the filter paramater.
+
+```hbs
+<h1>My books</h1>
+{{data-table content=model 
+    fields="title isbn genre publicationDate language numberOfPages" 
+    page=page sort=sort filter=filter}}
+```
+
+That’s it. We now have a simple data table including sorting, pagination and free-text search with minimal effort. In the [following part of the tutorial below](#tailoring-ember-data-table-to-your-app) we will customize the formatting of the columns and add some custom action buttons in the table header.
+
+
+### Tailoring ember-data-table to your app
+
+
+
 ## Reference
 ### Data table component
 
