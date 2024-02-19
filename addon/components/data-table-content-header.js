@@ -1,3 +1,4 @@
+/* eslint-disable ember/no-classic-classes, ember/no-classic-components, ember/require-tagless-components */
 import { oneWay } from '@ember/object/computed';
 import { alias } from '@ember/object/computed';
 import Component from '@ember/component';

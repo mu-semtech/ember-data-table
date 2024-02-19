@@ -1,3 +1,4 @@
+/* eslint-disable ember/no-actions-hash, ember/no-classic-classes, ember/no-classic-components, ember/require-tagless-components */
 import { computed } from '@ember/object';
 import Component from '@ember/component';
 import layout from '../templates/components/th-sortable';

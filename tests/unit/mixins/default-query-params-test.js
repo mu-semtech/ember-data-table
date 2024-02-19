@@ -1,3 +1,4 @@
+/* eslint-disable ember/no-mixins, ember/no-new-mixins */
 import EmberObject from '@ember/object';
 import DefaultQueryParamsMixin from 'ember-data-table/mixins/default-query-params';
 import { module, test } from 'qunit';

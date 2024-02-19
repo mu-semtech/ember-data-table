@@ -1,4 +1,4 @@
-/* eslint-disable ember/no-new-mixins,ember/no-mixins */
+/* eslint-disable ember/no-classic-classes, ember/no-mixins, ember/no-new-mixins */
 
 import EmberObject from '@ember/object';
 import RouteMixin from 'ember-data-table/mixins/route';
