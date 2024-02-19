@@ -19,9 +19,9 @@ module('Integration | Component | data table content', function (hooks) {
 
     // Template block usage:
     await render(hbs`
-      {{#data-table-content}}
+      <DataTableContent>
         template block text
-      {{/data-table-content}}
+      </DataTableContent>
     `);
 
     assert.dom('*').hasText('template block text');

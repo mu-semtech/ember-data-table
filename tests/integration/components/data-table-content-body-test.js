@@ -27,10 +27,16 @@ module('Integration | Component | data table content body', function (hooks) {
     );
 
     assert.dom('tr').exists({ count: 2 }, 'displays 2 rows');
-    assert.dom('tr:first-child td').exists({count: 3}, 'displays 3 columns')
-    assert.dom('tr:first-child td:first-child').hasText('John', 'displays firstName in first column');
-    assert.dom('tr:first-child td:nth-child(2)').hasText('Doe', 'displays lastName in second column');
-    assert.dom('tr:first-child td:nth-child(3)').hasText('20', 'displays age in third column');
+    assert.dom('tr:first-child td').exists({ count: 3 }, 'displays 3 columns');
+    assert
+      .dom('tr:first-child td:first-child')
+      .hasText('John', 'displays firstName in first column');
+    assert
+      .dom('tr:first-child td:nth-child(2)')
+      .hasText('Doe', 'displays lastName in second column');
+    assert
+      .dom('tr:first-child td:nth-child(3)')
+      .hasText('20', 'displays age in third column');
   });
 
   test('add checkboxes for selection if enabled', async function (assert) {
@@ -98,9 +104,15 @@ module('Integration | Component | data table content body', function (hooks) {
     );
 
     assert.dom('tr:first-child td').exists({ count: 4 }, 'displays 4 columns');
-    assert.dom('tr:first-child td:first-child').hasText('1', 'displays offset 1 on the first row');
-    assert.dom('tr:nth-child(2) td:first-child').hasText('2', 'displays offset 2 on the second row');
-    assert.dom('tr:nth-child(3) td:first-child').hasText('3', 'displays offset 3 on the third row');
+    assert
+      .dom('tr:first-child td:first-child')
+      .hasText('1', 'displays offset 1 on the first row');
+    assert
+      .dom('tr:nth-child(2) td:first-child')
+      .hasText('2', 'displays offset 2 on the second row');
+    assert
+      .dom('tr:nth-child(3) td:first-child')
+      .hasText('3', 'displays offset 3 on the third row');
 
     this.set('data-table.page', 2);
     this.set('data-table.size', 5);
@@ -108,10 +120,18 @@ module('Integration | Component | data table content body', function (hooks) {
       hbs`{{data-table-content-body content=this.content data-table=this.data-table enableLineNumbers=true}}`
     );
 
-    assert.dom('tr:first-child td').exists({ count: 4 }, 'displays 4 columns on page 3');
-    assert.dom('tr:first-child td:first-child').hasText('11', 'displays offset 11 on the first row on page 3');
-    assert.dom('tr:nth-child(2) td:first-child').hasText('12', 'displays offset 12 on the second row on page 3');
-    assert.dom('tr:nth-child(3) td:first-child').hasText('13', 'displays offset 13 on the third row of page 3');
+    assert
+      .dom('tr:first-child td')
+      .exists({ count: 4 }, 'displays 4 columns on page 3');
+    assert
+      .dom('tr:first-child td:first-child')
+      .hasText('11', 'displays offset 11 on the first row on page 3');
+    assert
+      .dom('tr:nth-child(2) td:first-child')
+      .hasText('12', 'displays offset 12 on the second row on page 3');
+    assert
+      .dom('tr:nth-child(3) td:first-child')
+      .hasText('13', 'displays offset 13 on the third row of page 3');
   });
 
   test('displays no data message if there is no data', async function (assert) {

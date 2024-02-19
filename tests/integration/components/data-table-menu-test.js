@@ -16,9 +16,9 @@ module('Integration | Component | data table menu', function (hooks) {
 
     // Template block usage:
     await render(hbs`
-      {{#data-table-menu}}
+      <DataTableMenu>
         template block text
-      {{/data-table-menu}}
+      </DataTableMenu>
     `);
 
     assert.dom('*').hasText('template block text');

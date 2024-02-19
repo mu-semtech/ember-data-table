@@ -6,7 +6,7 @@
         body=(component "data-table-content-body" content=this.content enableSelection=this.enableSelection enableLineNumbers=this.enableLineNumbers noDataMessage=this.noDataMessage onClickRow=(optional this.onClickRow) data-table=this.data-table)
         )}}
   {{else}}
-    {{component "data-table-content-header" enableSelection=this.enableSelection enableLineNumbers=this.enableLineNumbers data-table=this.data-table}}
-    {{component "data-table-content-body" content=this.content enableSelection=this.enableSelection enableLineNumbers=this.enableLineNumbers noDataMessage=this.noDataMessage onClickRow=(optional this.onClickRow) data-table=this.data-table}}
+    {{data-table-content-header enableSelection=this.enableSelection enableLineNumbers=this.enableLineNumbers data-table=this.data-table}}
+    {{data-table-content-body content=this.content enableSelection=this.enableSelection enableLineNumbers=this.enableLineNumbers noDataMessage=this.noDataMessage onClickRow=(optional this.onClickRow) data-table=this.data-table}}
   {{/if}}
 </table>
