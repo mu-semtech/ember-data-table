@@ -10,7 +10,7 @@ module('Integration | Component | data table content header', function (hooks) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.on('myAction', function(val) { ... });
 
-    await render(hbs`{{data-table-content-header}}`);
+    await render(hbs`<DataTableContentHeader />`);
     assert.dom('thead').exists({ count: 1 });
 
     assert.dom('*').hasText('');
@@ -29,7 +29,9 @@ module('Integration | Component | data table content header', function (hooks) {
     this.set('data-table', {});
     this.set('data-table.parsedFields', ['firstName', 'lastName', 'age']);
 
-    await render(hbs`{{data-table-content-header data-table=this.data-table}}`);
+    await render(
+      hbs`<DataTableContentHeader @data-table={{this.data-table}} />`
+    );
 
     assert.dom('tr').exists({ count: 1 }, 'displays 1 header row');
     assert
@@ -51,7 +53,7 @@ module('Integration | Component | data table content header', function (hooks) {
     this.set('data-table.parsedFields', ['firstName', 'lastName', 'age']);
 
     await render(
-      hbs`{{data-table-content-header data-table=this.data-table enableSelection=true}}`
+      hbs`<DataTableContentHeader @data-table={{this.data-table}} @enableSelection={{true}} />`
     );
 
     assert.dom('tr').exists({ count: 1 }, 'displays 1 header row');
@@ -68,7 +70,7 @@ module('Integration | Component | data table content header', function (hooks) {
     this.set('data-table.parsedFields', ['firstName', 'lastName', 'age']);
 
     await render(
-      hbs`{{data-table-content-header data-table=this.data-table enableLineNumbers=true}}`
+      hbs`<DataTableContentHeader @data-table={{this.data-table}} @enableLineNumbers={{true}} />`
     );
 
     assert.dom('tr').exists({ count: 1 }, 'displays 1 header row');
