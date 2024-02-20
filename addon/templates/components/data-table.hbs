@@ -1,3 +1,4 @@
+{{! template-lint-disable no-curly-component-invocation }}
 {{#if (has-block)}}
   <div class="data-table-header {{unless this.selectionIsEmpty " selected"}}">
     {{#if this.enableSearch}}
@@ -20,7 +21,7 @@
       </div>
     </div>
   {{/if}}
-  {{component "data-table-content" content=this.content noDataMessage=this.noDataMessage enableSelection=this.enableSelection enableLineNumbers=this.enableLineNumbers onClickRow=(optional this.onClickRow) data-table=this}}
+  {{data-table-content content=this.content noDataMessage=this.noDataMessage enableSelection=this.enableSelection enableLineNumbers=this.enableLineNumbers onClickRow=(optional this.onClickRow) data-table=this}}
 {{/if}}
 
 {{#if this.content}}

@@ -1,3 +1,4 @@
+/* eslint-disable ember/no-actions-hash, ember/no-classic-classes, ember/no-mixins */
 import EmberObject from '@ember/object';
 import ArrayProxy from '@ember/array/proxy';
 import Controller from '@ember/controller';

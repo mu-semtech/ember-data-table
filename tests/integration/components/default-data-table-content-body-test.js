@@ -17,7 +17,7 @@ module(
       });
 
       await render(
-        hbs`{{default-data-table-content-body data-table=this.data-table}}`
+        hbs`<DefaultDataTableContentBody @data-table={{this.data-table}} />`
       );
 
       assert.dom().hasText('');

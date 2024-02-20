@@ -1,3 +1,4 @@
+/* eslint-disable ember/no-classic-classes, ember/no-classic-components, ember/no-get */
 import { A } from '@ember/array';
 import { computed } from '@ember/object';
 import { oneWay } from '@ember/object/computed';

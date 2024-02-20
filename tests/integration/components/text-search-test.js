@@ -10,7 +10,7 @@ module('Integration | Component | text search', function (hooks) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.on('myAction', function(val) { ... });
 
-    await render(hbs`{{text-search}}`);
+    await render(hbs`<TextSearch />`);
 
     assert.dom('.data-table-search').exists({ count: 1 });
   });

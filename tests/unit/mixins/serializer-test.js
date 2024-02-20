@@ -1,3 +1,4 @@
+/* eslint-disable ember/no-mixins, ember/no-new-mixins */
 import EmberObject from '@ember/object';
 import SerializerMixin from 'ember-data-table/mixins/serializer';
 import { module, test } from 'qunit';

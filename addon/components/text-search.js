@@ -1,3 +1,4 @@
+/* eslint-disable ember/no-classic-classes, ember/no-classic-components, ember/no-observers, ember/require-tagless-components */
 import { isEqual } from '@ember/utils';
 import { cancel, debounce } from '@ember/runloop';
 import { observer } from '@ember/object';

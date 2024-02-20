@@ -10,7 +10,7 @@ module('Integration | Component | data table menu general', function (hooks) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.on('myAction', function(val) { ... });
 
-    await render(hbs`{{data-table-menu-general}}`);
+    await render(hbs`<DataTableMenuGeneral />`);
 
     assert.dom('*').hasText('');
   });
@@ -22,18 +22,18 @@ module('Integration | Component | data table menu general', function (hooks) {
     this.set('data-table', { selectionIsEmpty: true });
     // Template block usage:
     await render(hbs`
-      {{#data-table-menu-general data-table=this.data-table}}
+      <DataTableMenuGeneral @data-table={{this.data-table}}>
         template block text
-      {{/data-table-menu-general}}
+      </DataTableMenuGeneral>
     `);
     assert.dom('*').hasText('template block text');
 
     this.set('data-table', { selectionIsEmpty: false });
     // Template block usage:
     await render(hbs`
-      {{#data-table-menu-general data-table=this.data-table}}
+      <DataTableMenuGeneral @data-table={{this.data-table}}>
         template block text
-      {{/data-table-menu-general}}
+      </DataTableMenuGeneral>
     `);
 
     assert.dom('*').hasText('');
