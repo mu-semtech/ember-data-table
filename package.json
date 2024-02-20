@@ -37,7 +37,7 @@
     "ember-cli-htmlbars": "^6.2.0",
     "ember-composable-helpers": "^5.0.0",
     "ember-math-helpers": "^2.18.0",
-    "ember-truth-helpers": "^3.0.0",
+    "ember-truth-helpers": "^4.0.3",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
