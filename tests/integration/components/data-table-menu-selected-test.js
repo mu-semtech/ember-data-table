@@ -10,9 +10,9 @@ module('Integration | Component | data table menu selected', function (hooks) {
     this.set('data-table', { selectionIsEmpty: true });
     // Template block usage:
     await render(hbs`
-      {{#data-table-menu-selected data-table=this.data-table}}
+      <DataTableMenuSelected @data-table={{this.data-table}}>
         template block text
-      {{/data-table-menu-selected}}
+      </DataTableMenuSelected>
     `);
     assert.dom('*').hasText('');
   });
@@ -21,9 +21,9 @@ module('Integration | Component | data table menu selected', function (hooks) {
     this.set('data-table', { selectionIsEmpty: false, selection: ['foo'] });
     // Template block usage:
     await render(hbs`
-      {{#data-table-menu-selected data-table=this.data-table}}
+      <DataTableMenuSelected @data-table={{this.data-table}}>
         template block text
-      {{/data-table-menu-selected}}
+      </DataTableMenuSelected>
     `);
 
     assert.dom('span.item-count').hasText('1 item(s) selected', 'item count 1');
@@ -34,9 +34,9 @@ module('Integration | Component | data table menu selected', function (hooks) {
     });
     // Template block usage:
     await render(hbs`
-      {{#data-table-menu-selected data-table=this.data-table}}
+      <DataTableMenuSelected @data-table={{this.data-table}}>
         template block text
-      {{/data-table-menu-selected}}
+      </DataTableMenuSelected>
     `);
 
     assert.dom('span.item-count').hasText('2 item(s) selected', 'item count 2');
@@ -51,9 +51,9 @@ module('Integration | Component | data table menu selected', function (hooks) {
     });
     // Template block usage:
     await render(hbs`
-      {{#data-table-menu-selected data-table=this.data-table}}
+      <DataTableMenuSelected @data-table={{this.data-table}}>
         template block text
-      {{/data-table-menu-selected}}
+      </DataTableMenuSelected>
     `);
 
     assert.dom('button').hasText('Cancel', 'renders a cancel button');

@@ -15,7 +15,9 @@ module('Integration | Component | number pagination', function (hooks) {
       first: { number: 1 },
       last: { number: 10 },
     });
-    await render(hbs`{{number-pagination page=this.page links=this.links}}`);
+    await render(
+      hbs`<NumberPagination @page={{this.page}} @links={{this.links}} />`
+    );
 
     assert.dom('.data-table-pagination').exists({ count: 1 });
   });

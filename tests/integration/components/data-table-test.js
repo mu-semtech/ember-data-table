@@ -18,7 +18,9 @@ module('Integration | Component | data table', function (hooks) {
       },
     });
 
-    await render(hbs`{{data-table content=this.content enableSizes=false}}`);
+    await render(
+      hbs`<DataTable @content={{this.content}} @enableSizes={{false}} />`
+    );
 
     assert.dom('.data-table-content').exists({ count: 1 });
   });

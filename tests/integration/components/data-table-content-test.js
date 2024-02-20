@@ -10,7 +10,7 @@ module('Integration | Component | data table content', function (hooks) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.on('myAction', function(val) { ... });
 
-    await render(hbs`{{data-table-content}}`);
+    await render(hbs`<DataTableContent />`);
     assert
       .dom('table.data-table')
       .exists({ count: 1 }, 'displays 1 data table');
@@ -19,9 +19,9 @@ module('Integration | Component | data table content', function (hooks) {
 
     // Template block usage:
     await render(hbs`
-      {{#data-table-content}}
+      <DataTableContent>
         template block text
-      {{/data-table-content}}
+      </DataTableContent>
     `);
 
     assert.dom('*').hasText('template block text');

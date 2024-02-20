@@ -10,7 +10,7 @@ module('Integration | Component | th sortable', function (hooks) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.on('myAction', function(val) { ... });
 
-    await render(hbs`{{th-sortable field='title'}}`);
+    await render(hbs`<ThSortable @field='title' />`);
 
     assert.dom('.sortable').exists({ count: 1 });
   });

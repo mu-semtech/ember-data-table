@@ -1,3 +1,4 @@
+/* eslint-disable ember/no-classic-classes, ember/no-classic-components, ember/no-observers, ember/require-tagless-components */
 import { typeOf } from '@ember/utils';
 import { computed, observer } from '@ember/object';
 import { bool, equal, oneWay } from '@ember/object/computed';
