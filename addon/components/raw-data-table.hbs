@@ -1,6 +1,8 @@
+{{!-- template-lint-disable no-inline-styles --}}
 <DataTable
   @content={{@content}}
   @fields={{@fields}}
+  @autoSearch={{@autoSearch}}
   @page={{@page}}
   @size={{@size}}
   @sort={{@sort}}
@@ -183,10 +185,13 @@
                                       {{else if (and (has-block "data-cell") (not cell.hasCustom))}}
                                         {{yield cell to="data-cell"}}
                                       {{else}}
+                                        {{!-- TODO: This should be based on the type of the field --}}
                                         {{#if cell.linkedRoute}}
-                                          <LinkTo @route={{cell.linkedRoute}} @model={{cell.item}} @tagName="td">
-                                            {{cell.value}}
-                                          </LinkTo>
+                                          <td>
+                                            <LinkTo @route={{cell.linkedRoute}} @model={{cell.item}} style="display: inline-block; width: 100%; height: 100%; margin: 0; padding: 0;" >
+                                              {{cell.value}}
+                                            </LinkTo>
+                                          </td>
                                         {{else}}
                                           <td>{{cell.value}}</td>
                                         {{/if}}
@@ -202,10 +207,16 @@
                                       {{else if (and (has-block "data-cell") (not cell.hasCustom))}}
                                         {{yield cell to="data-cell"}}
                                       {{else}}
-                                        <td>
-                                          {{!-- TODO: This should be based on the type of the field --}}
-                                          {{cell.value}}
-                                        </td>
+                                        {{!-- TODO: This should be based on the type of the field --}}
+                                        {{#if cell.linkedRoute}}
+                                          <td>
+                                            <LinkTo @route={{cell.linkedRoute}} @model={{cell.item}} style="display: inline-block; width: 100%; height: 100%; margin: 0; padding: 0;" >
+                                              {{cell.value}}
+                                            </LinkTo>
+                                          </td>
+                                        {{else}}
+                                          <td>{{cell.value}}</td>
+                                        {{/if}}
                                       {{/if}}
                                     </dataCells.DataCell>
                                   {{/each}}
@@ -244,7 +255,6 @@
         </div>
       {{/if}}
     </dt.Content>
-
     {{!-- END: content --}}
 
     {{!-- START: pagination --}}
