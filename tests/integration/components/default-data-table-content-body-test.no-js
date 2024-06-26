@@ -12,19 +12,19 @@ module(
       // Set any properties with this.set('myProperty', 'value');
       // Handle any actions with this.on('myAction', function(val) { ... });
 
-      this.set('data-table', {
+      this.set('dataTable', {
         parsedFields: ['firstName', 'lastName', 'age'],
       });
 
       await render(
-        hbs`{{default-data-table-content-body data-table=data-table}}`
+        hbs`{{default-data-table-content-body dataTable=dataTable}}`
       );
 
       assert.dom().hasText('');
 
       // Template block usage:
       await render(hbs`
-      <DefaultDataTableContentBody @data-table={{data-table}}>
+      <DefaultDataTableContentBody @dataTable={{dataTable}}>
         template block text
       </DefaultDataTableContentBody>
     `);

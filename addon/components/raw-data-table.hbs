@@ -67,18 +67,18 @@
           <div class="data-table-menu">
             {{!-- either we have a general block or we have to have a menu --}}
             <General as |general|>
-              {{#if general.data-table.selectionIsEmpty}}
-                {{yield general.data-table to="general-menu"}}
+              {{#if general.dataTable.selectionIsEmpty}}
+                {{yield general.dataTable to="general-menu"}}
               {{/if}}
             </General>
             <Selected as |selected|>
-              {{#unless selected.data-table.selectionIsEmpty}}
+              {{#unless selected.dataTable.selectionIsEmpty}}
                 {{#if (has-block "selection-menu")}}
                   {{yield selected to="selection-menu"}}
                 {{else}}
                   <span class="item-count">{{selected.selectionCount}} item(s) selected</span>
                   <button type="button" {{on "click" selected.clearSelection}}>Cancel</button>
-                  {{yield (slice 0 selected.selectionCount selected.selection) selected.data-table
+                  {{yield (slice 0 selected.selectionCount selected.selection) selected.dataTable
                       to="selection-menu-actions"}}
                 {{/if}}
               {{/unless}}

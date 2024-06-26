@@ -7,8 +7,8 @@ export default class DataTableContentBodyComponent extends Component {
 
   get offset() {
     var offset = 1; //to avoid having 0. row
-    var page = this.args['data-table'].page; // TODO: pass on page directly?
-    var size = this.args['data-table'].size; // TODO: pass on size directly?
+    var page = this.args.dataTable.page; // TODO: pass on page directly?
+    var size = this.args.dataTable.size; // TODO: pass on size directly?
     if (page && size) {
       offset += page * size;
     }
@@ -16,7 +16,7 @@ export default class DataTableContentBodyComponent extends Component {
   }
 
   get wrappedItems() {
-    const selection = this.args['data-table'].selection || []; // TODO: should the data-table ensure this is an array?
+    const selection = this.args.dataTable.selection || []; // TODO: should the dataTable ensure this is an array?
     const content = this.args.content;
     return content.map(function (item) {
       return { item: item, isSelected: selection.includes(item) };
@@ -29,9 +29,9 @@ export default class DataTableContentBodyComponent extends Component {
 
     this.wrappedItems.forEach((wrapper) => {
       if (wrapper.isSelected) {
-        this.args['data-table'].addItemToSelection(wrapper.item); // TODO: pass on addItemToSelection directly?
+        this.args.dataTable.addItemToSelection(wrapper.item); // TODO: pass on addItemToSelection directly?
       } else {
-        this.arg['data-table'].removeItemFromSelection(wrapper.item); // TODO: pass on removeItemFromSelection directly?
+        this.args.dataTable.removeItemFromSelection(wrapper.item); // TODO: pass on removeItemFromSelection directly?
       }
     });
   }

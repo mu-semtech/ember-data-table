@@ -1,7 +1,7 @@
 {{!-- Used in: data-table/data-table-content-body --}}
 {{yield (hash
-    columns=@data-table.parsedFields
-    fields=@data-table.fields
+    columns=@dataTable.parsedFields
+    fields=@dataTable.fields
     firstColumn=this.firstColumn
     otherColumns=this.otherColumns
     item=@item
@@ -9,8 +9,8 @@
     customFields=@customfields
     DataCell=(component
       "data-table/data-cell"
-      columns=@data-table.parsedFields
-      fields=@data-table.fields
+      columns=@dataTable.parsedFields
+      fields=@dataTable.fields
       firstColumn=this.firstColumn
       otherColumns=this.otherColumns
       item=@item

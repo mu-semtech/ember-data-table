@@ -23,7 +23,7 @@ module('Integration | Component | data table content body', function (hooks) {
     this.set('dataTable.selection', []);
 
     await render(
-      hbs`{{data-table/data-table-content-body content=content data-table=dataTable}}`
+      hbs`{{data-table/data-table-content-body content=content dataTable=dataTable}}`
     );
 
     assert.dom('tr').exists({ count: 2 }, 'displays 2 rows');
@@ -50,12 +50,12 @@ module('Integration | Component | data table content body', function (hooks) {
     const jane = { firstName: 'Jane', lastName: 'Doe', age: 21 };
     const jeff = { firstName: 'Jeff', lastName: 'Doe', age: 22 };
     this.set('content', [john, jane, jeff]);
-    this.set('data-table', {});
-    this.set('data-table.parsedFields', ['firstName', 'lastName', 'age']);
-    this.set('data-table.selection', [jane]);
+    this.set('dataTable', {});
+    this.set('dataTable.parsedFields', ['firstName', 'lastName', 'age']);
+    this.set('dataTable.selection', [jane]);
 
     await render(
-      hbs`{{data-table/data-table-content-body content=content data-table=data-table enableSelection=true}}`
+      hbs`{{data-table/data-table-content-body content=content dataTable=dataTable enableSelection=true}}`
     );
 
     assert.equal(this.$('tr:first td').length, 4, 'displays 4 columns');
@@ -73,16 +73,16 @@ module('Integration | Component | data table content body', function (hooks) {
     const jane = { firstName: 'Jane', lastName: 'Doe', age: 21 };
     const jeff = { firstName: 'Jeff', lastName: 'Doe', age: 22 };
     this.set('content', [john, jane, jeff]);
-    this.set('data-table', {});
-    this.set('data-table.parsedFields', ['firstName', 'lastName', 'age']);
-    this.set('data-table.selection', [jane]);
-    this.set('data-table.addItemToSelection', () =>
-      this.set('data-table.selection', [john, jane])
+    this.set('dataTable', {});
+    this.set('dataTable.parsedFields', ['firstName', 'lastName', 'age']);
+    this.set('dataTable.selection', [jane]);
+    this.set('dataTable.addItemToSelection', () =>
+      this.set('dataTable.selection', [john, jane])
     ); // mock function
-    this.set('data-table.removeItemFromSelection', function () {}); // mock function
+    this.set('dataTable.removeItemFromSelection', function () {}); // mock function
 
     await render(
-      hbs`{{data-table/data-table-content-body content=content data-table=data-table enableSelection=true}}`
+      hbs`{{data-table/data-table-content-body content=content dataTable=dataTable enableSelection=true}}`
     );
 
     assert
@@ -99,12 +99,12 @@ module('Integration | Component | data table content body', function (hooks) {
     const jane = { firstName: 'Jane', lastName: 'Doe', age: 21 };
     const jeff = { firstName: 'Jeff', lastName: 'Doe', age: 22 };
     this.set('content', [john, jane, jeff]);
-    this.set('data-table', {});
-    this.set('data-table.parsedFields', ['firstName', 'lastName', 'age']);
-    this.set('data-table.selection', []);
+    this.set('dataTable', {});
+    this.set('dataTable.parsedFields', ['firstName', 'lastName', 'age']);
+    this.set('dataTable.selection', []);
 
     await render(
-      hbs`{{data-table/data-table-content-body content=content data-table=data-table enableLineNumbers=true}}`
+      hbs`{{data-table/data-table-content-body content=content dataTable=dataTable enableLineNumbers=true}}`
     );
 
     assert.equal(this.$('tr:first td').length, 4, 'displays 4 columns');
@@ -124,10 +124,10 @@ module('Integration | Component | data table content body', function (hooks) {
       'displays offset 3 on the third row'
     );
 
-    this.set('data-table.page', 2);
-    this.set('data-table.size', 5);
+    this.set('dataTable.page', 2);
+    this.set('dataTable.size', 5);
     await render(
-      hbs`{{data-table/data-table-content-body content=content data-table=data-table enableLineNumbers=true}}`
+      hbs`{{data-table/data-table-content-body content=content dataTable=dataTable enableLineNumbers=true}}`
     );
 
     assert.equal(
@@ -156,12 +156,12 @@ module('Integration | Component | data table content body', function (hooks) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.on('myAction', function(val) { ... });
     this.set('noDataMessage', 'No data');
-    this.set('data-table', {});
-    this.set('data-table.parsedFields', ['firstName', 'lastName', 'age']);
-    this.set('data-table.selection', []);
+    this.set('dataTable', {});
+    this.set('dataTable.parsedFields', ['firstName', 'lastName', 'age']);
+    this.set('dataTable.selection', []);
 
     await render(
-      hbs`{{data-table/data-table-content-body noDataMessage=noDataMessage data-table=data-table}}`
+      hbs`{{data-table/data-table-content-body noDataMessage=noDataMessage dataTable=dataTable}}`
     );
     assert
       .dom('td.no-data-message')
@@ -172,7 +172,7 @@ module('Integration | Component | data table content body', function (hooks) {
 
     this.set('content', []);
     await render(
-      hbs`{{data-table/data-table-content-body content=content noDataMessage=noDataMessage data-table=data-table}}`
+      hbs`{{data-table/data-table-content-body content=content noDataMessage=noDataMessage dataTable=dataTable}}`
     );
     assert
       .dom('td.no-data-message')
@@ -183,7 +183,7 @@ module('Integration | Component | data table content body', function (hooks) {
 
     this.set('content', ['foo', 'bar']);
     await render(
-      hbs`{{data-table/data-table-content-body content=content noDataMessage=noDataMessage data-table=data-table}}`
+      hbs`{{data-table/data-table-content-body content=content noDataMessage=noDataMessage dataTable=dataTable}}`
     );
     assert
       .dom('td.no-data-message')

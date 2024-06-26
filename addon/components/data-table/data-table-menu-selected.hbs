@@ -1,9 +1,9 @@
 {{!-- Used in: data-table/data-table-menu --}}
 {{yield (hash
-    selectionIsEmpty=@data-table.selectionIsEmpty
+    selectionIsEmpty=@dataTable.selectionIsEmpty
     selectionCount=this.selectionCount
     clearSelection=this.clearSelection
-    selection=@data-table.selection
-    data-table=@data-table)}}
+    selection=@dataTable.selection
+    dataTable=@dataTable)}}
 
 {{!-- TODO: must we pass the data table itself?  It is shared with the consumers. --}}

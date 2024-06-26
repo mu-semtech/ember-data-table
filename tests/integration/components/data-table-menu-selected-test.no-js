@@ -7,10 +7,10 @@ module('Integration | Component | data table menu selected', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders block only if data table selection is not empty', async function (assert) {
-    this.set('data-table', { selectionIsEmpty: true });
+    this.set('dataTable', { selectionIsEmpty: true });
     // Template block usage:
     await render(hbs`
-      {{#data-table-menu-selected data-table=data-table}}
+      {{#data-table-menu-selected dataTable=dataTable}}
         template block text
       {{/data-table-menu-selected}}
     `);
@@ -18,23 +18,23 @@ module('Integration | Component | data table menu selected', function (hooks) {
   });
 
   test('it renders selection count', async function (assert) {
-    this.set('data-table', { selectionIsEmpty: false, selection: ['foo'] });
+    this.set('dataTable', { selectionIsEmpty: false, selection: ['foo'] });
     // Template block usage:
     await render(hbs`
-      {{#data-table-menu-selected data-table=data-table}}
+      {{#data-table-menu-selected dataTable=dataTable}}
         template block text
       {{/data-table-menu-selected}}
     `);
 
     assert.dom('span.item-count').hasText('1 item(s) selected', 'item count 1');
 
-    this.set('data-table', {
+    this.set('dataTable', {
       selectionIsEmpty: false,
       selection: ['foo', 'bar'],
     });
     // Template block usage:
     await render(hbs`
-      {{#data-table-menu-selected data-table=data-table}}
+      {{#data-table-menu-selected dataTable=dataTable}}
         template block text
       {{/data-table-menu-selected}}
     `);
@@ -45,13 +45,13 @@ module('Integration | Component | data table menu selected', function (hooks) {
   test('calls clearSelection on cancel button click', async function (assert) {
     assert.expect(2); // 2 asserts in this test
 
-    this.set('data-table', { selectionIsEmpty: false, selection: ['foo'] });
-    this.set('data-table.clearSelection', function () {
-      assert.ok(true, 'data-table.clearSelection gets called');
+    this.set('dataTable', { selectionIsEmpty: false, selection: ['foo'] });
+    this.set('dataTable.clearSelection', function () {
+      assert.ok(true, 'dataTable.clearSelection gets called');
     });
     // Template block usage:
     await render(hbs`
-      {{#data-table-menu-selected data-table=data-table}}
+      {{#data-table-menu-selected dataTable=dataTable}}
         template block text
       {{/data-table-menu-selected}}
     `);

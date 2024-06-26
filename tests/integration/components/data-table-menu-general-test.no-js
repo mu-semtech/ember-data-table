@@ -22,16 +22,16 @@ module('Integration | Component | data table menu general', function (hooks) {
     this.set('data-table', { selectionIsEmpty: true });
     // Template block usage:
     await render(hbs`
-      {{#data-table-menu-general data-table=data-table}}
+      {{#data-table-menu-general dataTable=dataTable}}
         template block text
       {{/data-table-menu-general}}
     `);
     assert.dom('*').hasText('template block text');
 
-    this.set('data-table', { selectionIsEmpty: false });
+    this.set('dataTable', { selectionIsEmpty: false });
     // Template block usage:
     await render(hbs`
-      {{#data-table-menu-general data-table=data-table}}
+      {{#data-table-menu-general dataTable=dataTable}}
         template block text
       {{/data-table-menu-general}}
     `);

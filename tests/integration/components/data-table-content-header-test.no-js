@@ -26,10 +26,10 @@ module('Integration | Component | data table content header', function (hooks) {
   });
 
   test('display column headers', async function (assert) {
-    this.set('data-table', {});
-    this.set('data-table.parsedFields', ['firstName', 'lastName', 'age']);
+    this.set('dataTable', {});
+    this.set('dataTable.parsedFields', ['firstName', 'lastName', 'age']);
 
-    await render(hbs`{{data-table-content-header data-table=data-table}}`);
+    await render(hbs`{{data-table-content-header dataTable=dataTable}}`);
 
     assert.dom('tr').exists({ count: 1 }, 'displays 1 header row');
     assert.equal(this.$('tr:first th').length, 3, 'displays 3 column headers');
@@ -51,11 +51,11 @@ module('Integration | Component | data table content header', function (hooks) {
   });
 
   test('add selection column header if enabled', async function (assert) {
-    this.set('data-table', {});
-    this.set('data-table.parsedFields', ['firstName', 'lastName', 'age']);
+    this.set('dataTable', {});
+    this.set('dataTable.parsedFields', ['firstName', 'lastName', 'age']);
 
     await render(
-      hbs`{{data-table-content-header data-table=data-table enableSelection=true}}`
+      hbs`{{data-table-content-header dataTable=dataTable enableSelection=true}}`
     );
 
     assert.dom('tr').exists({ count: 1 }, 'displays 1 header row');
@@ -68,11 +68,11 @@ module('Integration | Component | data table content header', function (hooks) {
   });
 
   test('add line number column header if enabled', async function (assert) {
-    this.set('data-table', {});
-    this.set('data-table.parsedFields', ['firstName', 'lastName', 'age']);
+    this.set('dataTable', {});
+    this.set('dataTable.parsedFields', ['firstName', 'lastName', 'age']);
 
     await render(
-      hbs`{{data-table-content-header data-table=data-table enableLineNumbers=true}}`
+      hbs`{{data-table-content-header dataTable=dataTable enableLineNumbers=true}}`
     );
 
     assert.dom('tr').exists({ count: 1 }, 'displays 1 header row');

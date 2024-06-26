@@ -1,6 +1,6 @@
 {{!-- Used in: data-table/data-table-content --}}
 {{yield (hash
-    isLoading=@data-table.isLoading
+    isLoading=@dataTable.isLoading
     content=@content
     offset=this.offset
     wrappedItems=this.wrappedItems
@@ -8,17 +8,17 @@
     hasClickRowAction=(and (@onClickRow @rowLink) true)
     onClickRow=@onClickRow
     toggleSelected=this.updateSelection
-    selection=@data-table.selection
+    selection=@dataTable.selection
     enableSelection=@enableSelection
     linkedRoutes=@linkedRoutes
     rowLink=@rowLink
     noDataMessage=@noDataMessage
     customFields=@customFields
     Row=(component "data-table/row"
-      data-table=@data-table
+      dataTable=@dataTable
       enableLineNumbers=@enableLineNumbers
       enableSelection=@enableSelection
-      selection=@data-table.selection
+      selection=@dataTable.selection
       offset=this.offset
       hasClickRowAction=(and (or @onClickRow @rowLink) true)
       onClickRow=this.onClickRow
