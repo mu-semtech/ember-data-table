@@ -152,20 +152,41 @@ export default class DataTable extends Component {
 
   @action
   updatePageSize(size) {
-    this.args.updatePage(0);
-    this.args.updatePageSize(size);
+    if( !this.args.updatePageSize ) {
+      console.error(`Could not update page size to ${size} because @updatePageSize was not supplied to data table`);
+    } else {
+      this.updatePage(0);
+      this.args.updatePageSize(size);
+    }
   }
 
   @action
   updateFilter(filter) {
-    this.args.updatePage(0);
-    this.args.updateFilter(filter);
+    if( !this.args.updateFilter ) {
+      console.error(`Could not update filter to '${filter}' because @updateFilter was not supplied to data table`);
+    } else {
+      this.updatePage(0);
+      this.args.updateFilter(filter);
+    }
   }
 
   @action
   updateSort(sort) {
-    this.args.updatePage(0);
-    this.args.updateSort(sort);
+    if( !this.args.updateSort ) {
+      console.error(`Could not update sorting to '${sort}' because @updateSort was not supplied to data table`);
+    } else {
+      this.updatePage(0);
+      this.args.updateSort(sort);
+    }
+  }
+
+  @action
+  updatePage(page) {
+    if( !this.args.updatePage ) {
+      console.error(`Could not update page to ${page} because @updatePage was not supplied to data table`);
+    } else {
+      this.args.updatePage(page);
+    }
   }
 
   addItemToSelection(item) {
