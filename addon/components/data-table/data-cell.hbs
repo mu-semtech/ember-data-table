@@ -4,9 +4,11 @@
     firstColumn=@firstColumn
     otherColumns=@otherColumns
     item=@item
-    label=@column
+    label=@column.label
     customFields=@customFields
     linkedRoute=@linkedRoute
     isCustom=this.isCustom
     hasCustom=this.hasCustom
-    value=(get @item @column))}}
+    attribute=@column.attribute
+    renderCustomBlock=this.renderCustomBlock
+    value=(get @item @column.attribute))}}

@@ -2,10 +2,14 @@ import Component from '@glimmer/component';
 
 export default class DataTableDataCellComponent extends Component {
   get isCustom() {
-    return this.args.customFields?.split(" ").includes(this.args.column);
+    return this.args.column.isCustom;
   }
 
-  get hasCustom() {
-    return this.args.customFields;
+  get hasCustomFields() {
+    return this.args.fields.find( ({isCustom}) => isCustom) || false;
+  }
+
+  get renderCustomBlock() {
+    return this.args.hasCustomBlock && ( this.isCustom || !this.hasCustomFields );
   }
 }

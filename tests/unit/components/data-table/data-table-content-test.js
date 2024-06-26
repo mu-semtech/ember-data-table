@@ -1,5 +1,9 @@
 import { module, test } from 'qunit';
-import { deUnderscoreString, splitDefinitions, convertDefinition } from 'ember-data-table/components/data-table/data-table-content';
+import { deUnderscoreString, splitDefinitions, toComponentSpecifications } from 'ember-data-table/utils/string-specification-helpers';
+
+function convertDefinition(string) {
+  return toComponentSpecifications(string || "", [{ raw: "route" }, "label", "icon"]);
+}
 
 module('Unit | Component | data-table-content', function() {
   test('it strips underscores', (assert) => {

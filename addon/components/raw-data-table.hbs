@@ -112,19 +112,21 @@
                     {{#if (has-block "data-headers")}}
                       {{yield header.dataHeadersInfo to="data-headers"}}
                     {{else}}
-                      {{#each header.parsedFields as |field|}}
-                        <header.ThSortable @field={{field}} @label={{field}} as |dataHeader|>
-                          {{#if (and (has-block "data-header") dataHeader.isCustom)}}
-                            {{yield dataHeader to="data-header"}}
-                          {{else if (and (has-block "data-header") (not dataHeader.hasCustom))}}
+                      {{#each header.fields as |field|}}
+                        <header.ThSortable @field={{field}} @hasCustomBlock={{has-block "data-header"}} as |dataHeader|>
+                          {{#if dataHeader.renderCustomBlock}}
                             {{yield dataHeader to="data-header"}}
                           {{else}}
-                            <th class={{concat "sortable" (if dataHeader.isSorted " sorted" "")}}>
-                              <span role="button" {{on "click" dataHeader.inverseSorting}}>
-                                {{#if dataHeader.order}}[{{dataHeader.order}}]{{/if}}
-                                {{dataHeader.label}}
-                              </span>
-                            </th>
+                            {{#if dataHeader.isSortable}}
+                              <th class={{concat "sortable" (if dataHeader.isSorted " sorted" "")}}>
+                                <span role="button" {{on "click" dataHeader.inverseSorting}}>
+                                  {{#if dataHeader.order}}[{{dataHeader.order}}]{{/if}}
+                                  {{dataHeader.label}}
+                                </span>
+                              </th>
+                            {{else}}
+                              <th>{{dataHeader.label}}</th>
+                            {{/if}}
                           {{/if}}
                         </header.ThSortable>
                       {{/each}}
@@ -176,13 +178,12 @@
                                 {{#if (has-block "data-cells")}}
                                   {{yield dataCells to="data-cells"}}
                                 {{else}}
+                                  {{!-- NOTE: you may drop this {{#if dataCells.firstColumn}}...{{/if}} when no custom first column styling is needed --}}
                                   {{#if dataCells.firstColumn}}
-                                    <dataCells.DataCell @column={{dataCells.firstColumn}} as |cell|>
+                                    <dataCells.DataCell @column={{dataCells.firstColumn}} @hasCustomBlock={{has-block "data-cell"}} as |cell|>
                                       {{#if (has-block "first-data-cell")}}
                                         {{yield cell to="first-data-cell"}}
-                                      {{else if (and (has-block "data-cell") cell.isCustom)}}
-                                        {{yield cell to="data-cell"}}
-                                      {{else if (and (has-block "data-cell") (not cell.hasCustom))}}
+                                      {{else if cell.renderCustomBlock}}
                                         {{yield cell to="data-cell"}}
                                       {{else}}
                                         {{!-- TODO: This should be based on the type of the field --}}
@@ -198,13 +199,12 @@
                                       {{/if}}
                                     </dataCells.DataCell>
                                   {{/if}}
+                                  {{!-- NOTE: if you dropped custom styling for dataCells.firstColumn then use {{#each dataCells.fields as |column|}}...{{/each}} --}}
                                   {{#each dataCells.otherColumns as |column|}}
-                                    <dataCells.DataCell @column={{column}} as |cell|>
+                                    <dataCells.DataCell @column={{column}} @hasCustomBlock={{has-block "data-cell"}} as |cell|>
                                       {{#if (has-block "rest-data-cell")}}
                                         {{yield cell to="rest-data-cell"}}
-                                      {{else if (and (has-block "data-cell") cell.isCustom)}}
-                                        {{yield cell to="data-cell"}}
-                                      {{else if (and (has-block "data-cell") (not cell.hasCustom))}}
+                                      {{else if cell.renderCustomBlock}}
                                         {{yield cell to="data-cell"}}
                                       {{else}}
                                         {{!-- TODO: This should be based on the type of the field --}}

@@ -1,8 +1,8 @@
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
-
 import { typeOf } from '@ember/utils';
+import { toComponentSpecifications, splitDefinitions } from "../utils/string-specification-helpers";
 
 export default class DataTable extends Component {
   @tracked _selection = undefined;
@@ -96,13 +96,52 @@ export default class DataTable extends Component {
     return this.args.autoSearch === undefined ? true : this.args.autoSearch;
   }
 
-  get parsedFields() {
+  get fieldsWithMeta() {
     const fields = this.args.fields;
+
     if (typeOf(fields) === 'string') {
-      return fields.split(' ');
+      return toComponentSpecifications(fields, [{raw: "attribute"},{name: "label", default: "attribute"}]);
     } else {
       return fields || [];
     }
+  }
+
+  get fields() {
+    return this
+      .fieldsWithMeta
+      .map( ({ attribute, label, isSortable, hasCustomHeader, isCustom }) => ({
+        attribute,
+        label,
+        isSortable: isSortable
+          || !this.sortableFields
+          || this.sortableFields.includes(attribute),
+        hasCustomHeader: hasCustomHeader
+          || this.customHeaders.includes(attribute),
+        isCustom: isCustom
+          || this.customFields.includes(attribute)
+      }) );
+  }
+
+  get customHeaders() {
+    return splitDefinitions(this.args.customHeaders);
+  }
+
+  get customFields() {
+    return splitDefinitions(this.args.customFields);
+  }
+
+  get sortableFields() {
+    const sortableFields = this.args.sortableFields;
+    if (sortableFields || sortableFields === "")
+      // default: all fields are sortable
+      return splitDefinitions(sortableFields);
+    else
+      return null;
+  }
+
+  get parsedFields() {
+    console.warn("Use of parsedFields in dataTable is deprecated");
+    return this.fieldsWithMeta.map(({attribute}) => attribute);
   }
 
   get searchPlaceholder() {

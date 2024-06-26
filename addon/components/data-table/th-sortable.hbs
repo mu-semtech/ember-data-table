@@ -2,7 +2,10 @@
 {{yield (hash
     isSorted=this.isSorted
     inverseSorting=this.inverseSorting
-    label=@label
+    isSortable=@field.isSortable
+    label=@field.label
+    attribute=@field.attribute
     order=this.order
+    renderCustomBlock=this.renderCustomBlock
     isCustom=this.isCustom
     hasCustom=this.hasCustom)}}

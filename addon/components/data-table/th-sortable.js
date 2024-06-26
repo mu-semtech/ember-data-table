@@ -2,8 +2,9 @@ import { action } from '@ember/object';
 import Component from '@glimmer/component';
 
 export default class ThSortableComponent extends Component {
+  // TODO: this is a json-api translation and it should be configurable on the data-table
   get dasherizedField() {
-    return this.args.field.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+    return this.args.field.attribute.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
   }
 
   /**
@@ -36,12 +37,22 @@ export default class ThSortableComponent extends Component {
     }
   }
 
-  get isCustom() {
-    return this.args.customHeaders?.split(" ").includes(this.args.field);
+  get renderCustomBlock() {
+    // render the custom block when this header is custom or when a
+    // custom block was given and no specific headers were supplied to
+    // be custom.
+    //
+    // Note: data table can't make this decision because it doesn't know
+    // whether a custom block was supplied.
+    return this.args.hasCustomBlock && (this.isCustom || !this.hasCustomHeaders);
   }
 
-  hasCustom() {
-    return this.args.customHeaders;
+  get isCustom() {
+    return this.args.field.hasCustomHeader;
+  }
+
+  get hasCustomHeaders() {
+    return this.args.fields.find(({hasCustomHeader}) => hasCustomHeader) || false;
   }
 
   /**
