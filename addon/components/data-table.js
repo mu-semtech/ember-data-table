@@ -139,11 +139,6 @@ export default class DataTable extends Component {
       return null;
   }
 
-  get parsedFields() {
-    console.warn("Use of parsedFields in dataTable is deprecated");
-    return this.fieldsWithMeta.map(({attribute}) => attribute);
-  }
-
   get searchPlaceholder() {
     return this.args.searchPlaceholder === undefined
       ? 'Search input'
