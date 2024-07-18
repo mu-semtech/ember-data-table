@@ -10,7 +10,7 @@ export default class TextSearchComponent extends Component {
   @action
   handleAutoInput(event) {
     this.enteredValue = event.target.value;
-    this.autoDebouncePid = debounce(this, this.submitCurrent, this.args.wait);
+    this.autoDebouncePid = debounce(this, this.submitCurrent, this.args.searchDebounceTime);
   }
 
   submitCurrent() {

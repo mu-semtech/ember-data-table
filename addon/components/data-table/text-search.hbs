@@ -1,8 +1,8 @@
 {{!-- Used in data-table.hbs --}}
 {{yield (hash
-    submitForm=this.submitForm
-    placeholder=this.placeholder
-    handleAutoInput=this.handleAutoInput
-    handleDirectInput=this.handleDirectInput
     filter=@filter
-    auto=@auto)}}
+    placeholder=@placeholder
+    autoSearch=@autoSearch
+    submitForm=this.submitForm
+    handleAutoInput=this.handleAutoInput
+    handleDirectInput=this.handleDirectInput)}}

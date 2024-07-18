@@ -28,9 +28,18 @@ export default class DataTable extends Component {
     return this.args.isLoading;
   }
 
+  /**
+   * Calculates the search debounce time.
+   *
+   * If the user supplies searchDebounceTime, that is what we should
+   * use.  A shorthand form is supported in which the user supplies a
+   * number to autoSearch in which case we use that.  This would not
+   * work with 0 (which is a strange debounce time in itself) so this
+   * option exists for now.
+   */
   get searchDebounceTime() {
     return this.args.searchDebounceTime === undefined
-      ? 2000
+      ? isNaN(this.args.autoSearch) ? 2000 : this.args.autoSearch
       : this.args.searchDebounceTime;
   }
 

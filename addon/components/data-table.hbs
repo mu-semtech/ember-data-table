@@ -2,10 +2,10 @@
   (hash
     Search=(component "data-table/text-search"
        filter=@filter
-       auto=this.autoSearch
+       placeholder=this.searchPlaceholder
+       autoSearch=this.autoSearch
        updateFilter=this.updateFilter
-       wait=this.searchDebounceTime
-       placeholder=this.searchPlaceholder)
+       searchDebounceTime=this.searchDebounceTime)
     Content=(component "data-table/data-table-content"
        content=@content
        noDataMessage=this.noDataMessage
