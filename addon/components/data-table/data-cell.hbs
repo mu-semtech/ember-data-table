@@ -1,11 +1,10 @@
 {{!-- Used in: data-table/default-data-table-content-body --}}
 {{yield (hash
-    columns=@columns
     firstColumn=@firstColumn
     otherColumns=@otherColumns
     item=@item
     label=@column.label
-    customFields=@customFields
+    fields=@fields
     linkedRoute=@linkedRoute
     isCustom=this.isCustom
     hasCustom=this.hasCustom

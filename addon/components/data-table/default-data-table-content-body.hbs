@@ -1,18 +1,16 @@
 {{!-- Used in: data-table/data-table-content-body --}}
 {{yield (hash
-    columns=@dataTable.parsedFields
     fields=@dataTable.fields
     firstColumn=this.firstColumn
     otherColumns=this.otherColumns
     item=@item
     linkedRoute=@linkedRoute
-    customFields=@customfields
+    fields=@fields
     DataCell=(component
       "data-table/data-cell"
-      columns=@dataTable.parsedFields
       fields=@dataTable.fields
       firstColumn=this.firstColumn
       otherColumns=this.otherColumns
       item=@item
-      customFields=@customFields
+      fields=@fields
       linkedRoute=@linkedRoute))}}

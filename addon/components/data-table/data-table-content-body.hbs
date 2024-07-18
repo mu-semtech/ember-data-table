@@ -13,7 +13,7 @@
     linkedRoutes=@linkedRoutes
     rowLink=@rowLink
     noDataMessage=@noDataMessage
-    customFields=@customFields
+    fields=@fields
     Row=(component "data-table/row"
       dataTable=@dataTable
       enableLineNumbers=@enableLineNumbers
@@ -23,5 +23,5 @@
       hasClickRowAction=(and (or @onClickRow @rowLink) true)
       onClickRow=this.onClickRow
       linkedRoutes=@linkedRoutes
-      customFields=@customFields
+      fields=@fields
       toggleSelected=this.updateSelection))}}

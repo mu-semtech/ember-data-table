@@ -1,20 +1,13 @@
 import Component from '@glimmer/component';
 
 export default class DefaultDataTableContentBodyComponent extends Component {
-  get allFields() {
-    return this.args.dataTable.parsedFields; // TODO: pass directly?
-  }
-
   get firstColumn() {
-    const parsedFields = this.args.dataTable.parsedFields;
-    if (parsedFields.length > 0) return parsedFields[0];
-    else return null;
+    return this.args.fields?.[0] || null;
   }
 
   get otherColumns() {
-    const parsedFields = this.args.dataTable.parsedFields;
-    if (parsedFields.length > 0) {
-      let [, ...fields] = parsedFields;
+    if (this.args.fields?.length) {
+      let [, ...fields] = this.args.fields;
       return fields;
     } else {
       return [];
