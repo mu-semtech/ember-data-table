@@ -21,6 +21,8 @@
   @rowLink={{@rowLink}}
   @customHeaders={{@customHeaders}}
   @customFields={{@customFields}}
+  @sortableFields={{@sortableFields}}
+  @attributeToSortParams={{@attributeToSortParams}}
   as |dt|>
   {{!-- START: search --}}
   <div class="raw-data-table">
@@ -119,8 +121,8 @@
                           {{else}}
                             {{#if dataHeader.isSortable}}
                               <th class={{concat "sortable" (if dataHeader.isSorted " sorted" "")}}>
-                                <span role="button" {{on "click" dataHeader.inverseSorting}}>
-                                  {{#if dataHeader.order}}[{{dataHeader.order}}]{{/if}}
+                                <span role="button" {{on "click" dataHeader.toggleSort}}>
+                                  {{#if dataHeader.isSorted}}[{{dataHeader.sortDirection}}]{{/if}}
                                   {{dataHeader.label}}
                                 </span>
                               </th>

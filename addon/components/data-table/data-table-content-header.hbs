@@ -2,19 +2,18 @@
 {{yield (hash
     enableSelection=@enableSelection
     enableLineNumbers=@enableLineNumbers
-    fields=@fields
-    currentSorting=@dataTable.sort
+    sort=@sort
     updateSort=@updateSort
-    customHeaders=@customHeaders
     hasLinks=@hasLinks
+    customHeaders=@customHeaders
+    fields=@fields
     dataHeadersInfo=(hash
       fields=@fields
-      currentSorting=@dataTable.sort
       customHeaders=@customHeaders
+      sort=@sort
       updateSort=@updateSort)
     ThSortable=(component
       "data-table/th-sortable"
       fields=@fields
-      currentSorting=@dataTable.sort
-      customHeaders=@customHeaders
+      sort=@sort
       updateSort=@updateSort))}}

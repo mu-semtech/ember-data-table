@@ -115,20 +115,33 @@ export default class DataTable extends Component {
     }
   }
 
+  attributeToSortParams(attribute) {
+    if( this.args.attributeToSortParams ) {
+      return this.args.attributeToSortParams(attribute);
+    } else {
+      const attr = attribute.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+      return { asc: attr, desc: `-${attr}` };
+    }
+  }
+
   get fields() {
     return this
       .fieldsWithMeta
-      .map( ({ attribute, label, isSortable, hasCustomHeader, isCustom }) => ({
+      .map( ({ attribute, label, isSortable, hasCustomHeader, isCustom, sortParameters }) => ({
         attribute,
         label,
-        isSortable: isSortable
-          || !this.sortableFields
-          || this.sortableFields.includes(attribute),
+        // custom format says it's sortable: sort params known
+        // say it should be sortable: use attribute to sort param
+        // field included in sortable fields: use attribute to sort param
+        sortParameters: sortParameters
+          || ( ( isSortable || this.sortableFields?.includes(attribute) )
+               && this.attributeToSortParams(attribute) ),
+        get isSortable() { return Object.keys( this.sortParameters || {} ).length > 1; },
         hasCustomHeader: hasCustomHeader
           || this.customHeaders.includes(attribute),
         isCustom: isCustom
           || this.customFields.includes(attribute)
-      }) );
+      }));
   }
 
   get customHeaders() {

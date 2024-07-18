@@ -2,39 +2,28 @@ import { action } from '@ember/object';
 import Component from '@glimmer/component';
 
 export default class ThSortableComponent extends Component {
-  // TODO: this is a json-api translation and it should be configurable on the data-table
-  get dasherizedField() {
-    return this.args.field.attribute.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+  get sortParameters() {
+    return this.args.field.sortParameters;
   }
 
-  /**
-      Inverses the sorting parameter
-      E.g. inverseSorting('title') returns '-title'
-           inverseSorting('-title') returns 'title'
-  */
-  _inverseSorting(sorting) {
-    if (sorting.substring(0, 1) === '-') {
-      return sorting.substring(1);
-    } else {
-      return '-' + sorting;
-    }
+  get sortDirection() {
+    for ( const key in this.sortParameters )
+      if( this.args.sort == this.sortParameters[key] )
+        return key;
+
+    return '';
+  }
+
+  get isAscending() {
+    return this.sortDirection === "asc";
+  }
+
+  get isDescending() {
+    return this.sortDirection === "desc";
   }
 
   get isSorted() {
-    return (
-      this.args.currentSorting === this.dasherizedField ||
-      this.args.currentSorting === this._inverseSorting(this.dasherizedField)
-    );
-  }
-
-  get order() {
-    if (this.args.currentSorting === this.dasherizedField) {
-      return 'asc';
-    } else if (this.args.currentSorting === `-${this.dasherizedField}`) {
-      return 'desc';
-    } else {
-      return '';
-    }
+    return this.sortDirection !== '';
   }
 
   get renderCustomBlock() {
@@ -55,22 +44,27 @@ export default class ThSortableComponent extends Component {
     return this.args.fields.find(({hasCustomHeader}) => hasCustomHeader) || false;
   }
 
+  get availableSortOptions() {
+    const options = [];
+    Object
+      .keys( this.sortParameters )
+      .sort() // for asc and desc, asc first then desc, the rest also sorted for now
+      .map( (key) => options.push(key) );
+    options.push(''); // no sorting
+    return options;
+  }
+
+  get nextSort() {
+    // wrapping loop over availableSortOptions
+    const opts = this.availableSortOptions;
+    return opts[(opts.indexOf(this.sortDirection) + 1) % opts.length];
+  }
+
   /**
-       Sets the current sorting parameter.
-       Note: the current sorting parameter may contain another field than the given field.
-       In case the given field is currently sorted ascending, change to descending.
-       In case the given field is currently sorted descending, clean the sorting.
-       Else, set the sorting to ascending on the given field.
-    */
+   * Wraps around possible sorting directions.
+   */
   @action
-  inverseSorting() {
-    if (this.order === 'asc') {
-      this.args.updateSort(this._inverseSorting(this.args.currentSorting));
-    } else if (this.order === 'desc') {
-      this.args.updateSort('');
-    } else {
-      // if currentSorting is not set to this field
-      this.args.updateSort(this.dasherizedField);
-    }
+  toggleSort() {
+    this.args.updateSort(this.sortParameters[this.nextSort]);
   }
 }
