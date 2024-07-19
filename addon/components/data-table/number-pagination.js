@@ -115,6 +115,14 @@ export default class NumberPaginationComponent extends Component {
     return this.humanPage == this.lastPage;
   }
 
+  get hasPreviousPage() {
+    return this.humanPage > this.firstPage;
+  }
+
+  get hasNextPage() {
+    return this.humanPage < this.lastPage;
+  }
+
   get hasMultiplePages() {
     return this.lastPage > this.firstPage;
   }
@@ -141,16 +149,66 @@ export default class NumberPaginationComponent extends Component {
       return this.startItem - 1 + this.args.itemsOnCurrentPage;
   }
 
+  get numberOfPages() {
+    return this.lastPage - this.firstPage + 1;
+  }
+
   /**
    * Supplies an array with all available pages.
    */
   get pageOptions() {
-    const nbOfPages = 1 + this.lastPage - this.firstPage;
-
     return Array.from(
-      new Array(nbOfPages),
+      new Array(this.numberOfPages),
       (_val, index) => this.firstPage + index
     );
+  }
+
+  /**
+   * Page selectors to show
+   * Examples:  (~x~ indicates current page, more indicates ellipsis)
+   * [~1~, 2, 3, more, 8, 9, 10]
+   * [1, 2, 3, more, 8, 9, ~10~]
+   * [1, more, 5, 6, ~7~, 8, 9, 10]
+   * [1, more, 3, 4, ~5~, 6, 7, more, 10]
+   * [1, more, 7, 8, ~9~, 10]
+   */
+  get summarizedPageOptions() {
+    const more = 'more';
+
+    if (this.numberOfPages > 0) {
+      if (this.isFirstPage || this.isLastPage) {
+        const x = this.firstPage;
+        const leftWindow = [x, x + 1, x + 2].filter((i) => i <= this.lastPage);
+        const y = this.lastPage;
+        const rightWindow = [y - 2, y - 1, y].filter((i) => i >= this.firstPage);
+        const pages = [...new Set([...leftWindow, ...rightWindow])].sort((a, b) => a - b);
+        if (pages.length == 6 && pages[2] < pages[3] - 1) {
+          return [...leftWindow, more, ...rightWindow];
+        } else {
+          return pages;
+        }
+      } else {
+        const x = this.humanPage;
+        const currentPageWindow = [x - 2, x - 1, x, x + 1, x + 2].filter(
+          (i) => i >= this.firstPage && i <= this.lastPage
+        );
+        let prepend = [];
+        let append = [];
+        if (currentPageWindow.length) {
+          const first = currentPageWindow[0];
+          if (first > this.firstPage) {
+            prepend = first == this.firstPage + 1 ? [this.firstPage] : [this.firstPage, more];
+          }
+          const last = currentPageWindow[currentPageWindow.length - 1];
+          if (last < this.lastPage) {
+            append = last == this.lastPage - 1 ? [this.lastPage] : [more, this.lastPage];
+          }
+        }
+        return [...prepend, ...currentPageWindow, ...append];
+      }
+    } else {
+      return [this.firstPage];
+    }
   }
 
   get total() {
