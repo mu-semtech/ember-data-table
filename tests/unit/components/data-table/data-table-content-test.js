@@ -6,7 +6,7 @@ function convertDefinition(string) {
 }
 
 module('Unit | Component | data-table-content', function() {
-  test('it strips underscores', (assert) => {
+  test('it strips underscores', function(assert) {
     const checks = [["one", "one"],
     ["one_two", "one two"],
     ["one_two_three", "one two three"],

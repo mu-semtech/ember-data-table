@@ -1,4 +1,4 @@
-{{!-- Used in: data-table/data-table-content-body --}}
+{{!-- Used in: data-table/row --}}
 {{yield (hash
     fields=@dataTable.fields
     firstColumn=this.firstColumn
@@ -9,7 +9,7 @@
     rowLinkModel=@wrapper.rowLinkModel
     fields=@fields
     DataCell=(component
-      "data-table/data-cell"
+    "data-table/data-cell"
       firstColumn=this.firstColumn
       otherColumns=this.otherColumns
       wrapper=@wrapper

@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 
-export default class DefaultDataTableContentBodyComponent extends Component {
+export default class DataTableDataCellsComponent extends Component {
   get firstColumn() {
     return this.args.fields?.[0] || null;
   }
