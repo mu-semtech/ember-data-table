@@ -55,25 +55,16 @@ export default class DataTable extends Component {
     return this.args.enableSizes === undefined ? true : this.args.enableSizes;
   }
 
-  get sort() {
-    return this.args.sort;
-  }
-
   get page() {
-    return this.args.page;
+    return this.args.page || 0;
   }
 
-  _size = undefined;
   get size() {
-    if (this._size === undefined && this.args.size)
+    if ( this.args.size ) {
       return this.args.size;
-    else if (this._size)
-      return this._size;
-    else
+    } else {
       return 5;
-  }
-  set size(newSize) {
-    this._size = newSize;
+    }
   }
 
   get sizeOptions() {
@@ -81,7 +72,7 @@ export default class DataTable extends Component {
       return null;
     } else {
       const sizeOptions = this.args.sizes || [5, 10, 25, 50, 100];
-      if (!sizeOptions.includes(this.size)) {
+      if (!sizeOptions.includes(this.size) && this.size) {
         sizeOptions.push(this.size);
       }
       sizeOptions.sort((a, b) => a - b);

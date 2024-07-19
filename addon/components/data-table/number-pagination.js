@@ -91,8 +91,7 @@ export default class NumberPaginationComponent extends Component {
   }
 
   get lastPage() {
-    const backendLastPageNumber = Math.floor(this.total / this.args.size);
-    return backendToHuman(backendLastPageNumber, this.backendPageOffset);
+    return Math.ceil( (0.0 + this.total) / this.args.size);
   }
 
   get previousPage() {
