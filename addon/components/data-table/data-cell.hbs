@@ -2,12 +2,13 @@
 {{yield (hash
     firstColumn=@firstColumn
     otherColumns=@otherColumns
-    item=@item
+    item=@wrapper.item
+    rowLink=@wrapper.rowLink
+    rowLinkModel=@wrapper.rowLinkModel
     label=@column.label
     fields=@fields
-    linkedRoute=@linkedRoute
     isCustom=this.isCustom
     hasCustom=this.hasCustom
     attribute=@column.attribute
     renderCustomBlock=this.renderCustomBlock
-    value=(get @item @column.attribute))}}
+    value=(get @wrapper.item @column.attribute))}}

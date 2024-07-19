@@ -18,7 +18,9 @@
   @updateSort={{@updateSort}}
   @onClickRow={{@onClickRow}}
   @links={{@links}}
+  @linksModelProperty={{@linksModelProperty}}
   @rowLink={{@rowLink}}
+  @rowLinkModelProperty={{@rowLinkModelProperty}}
   @customHeaders={{@customHeaders}}
   @customFields={{@customFields}}
   @sortableFields={{@sortableFields}}
@@ -176,7 +178,7 @@
                               {{#if row.enableLineNumbers}}
                                 <td>{{row.lineNumber}}</td>
                               {{/if}}
-                              <row.DataCells @item={{wrapper.item}} as |dataCells|>
+                              <row.DataCells @wrapper={{wrapper}} as |dataCells|>
                                 {{#if (has-block "data-cells")}}
                                   {{yield dataCells to="data-cells"}}
                                 {{else}}
@@ -189,9 +191,9 @@
                                         {{yield cell to="data-cell"}}
                                       {{else}}
                                         {{!-- TODO: This should be based on the type of the field --}}
-                                        {{#if cell.linkedRoute}}
+                                        {{#if cell.rowLink}}
                                           <td>
-                                            <LinkTo @route={{cell.linkedRoute}} @model={{cell.item}} style="display: inline-block; width: 100%; height: 100%; margin: 0; padding: 0;" >
+                                            <LinkTo @route={{cell.rowLink}} @model={{cell.rowLinkModel}} style="display: inline-block; width: 100%; height: 100%; margin: 0; padding: 0;" >
                                               {{cell.value}}
                                             </LinkTo>
                                           </td>
@@ -210,9 +212,9 @@
                                         {{yield cell to="data-cell"}}
                                       {{else}}
                                         {{!-- TODO: This should be based on the type of the field --}}
-                                        {{#if cell.linkedRoute}}
+                                        {{#if cell.rowLink}}
                                           <td>
-                                            <LinkTo @route={{cell.linkedRoute}} @model={{cell.item}} style="display: inline-block; width: 100%; height: 100%; margin: 0; padding: 0;" >
+                                            <LinkTo @route={{cell.rowLink}} @model={{cell.rowLinkModel}} style="display: inline-block; width: 100%; height: 100%; margin: 0; padding: 0;" >
                                               {{cell.value}}
                                             </LinkTo>
                                           </td>
@@ -230,7 +232,7 @@
                                 {{#if row.linkedRoutes}}
                                   <td>
                                     {{#each row.linkedRoutes as |linkedRoute|}}
-                                      <LinkTo @route={{linkedRoute.route}} @model={{row.item}}>
+                                      <LinkTo @route={{linkedRoute.route}} @model={{linkedRoute.model}}>
                                         {{or linkedRoute.label linkedRoute.route}}
                                       </LinkTo>
                                     {{/each}}

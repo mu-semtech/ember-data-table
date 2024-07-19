@@ -105,6 +105,18 @@ export default class DataTable extends Component {
     return this.args.autoSearch === undefined ? true : this.args.autoSearch;
   }
 
+  get linksModelProperty() {
+    return this.args.linksModelProperty === undefined
+      ? 'id'
+      : this.args.linksModelProperty;
+  }
+
+  get rowLinkModelProperty() {
+    return this.args.rowLinkModelProperty === undefined
+      ? 'id'
+      : this.args.rowLinkModelProperty;
+  }
+
   get fieldsWithMeta() {
     const fields = this.args.fields;
 

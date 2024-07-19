@@ -23,6 +23,10 @@ export default class DataTableContentComponent extends Component {
    * [ { route: "products.show", label: "Show product", icon: "show-icon" } ]
    */
   get linkedRoutes() {
-    return toComponentSpecifications(this.args.links || "", [{ raw: "route" }, "label", "icon"]);
+    return toComponentSpecifications(this.args.links || "", [{ raw: "route" }, "label", "icon"])
+      .map( (spec) => {
+        spec.linksModelProperty = this.args.linksModelProperty;
+        return spec;
+      } );
   }
 }

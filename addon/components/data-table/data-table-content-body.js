@@ -1,9 +1,10 @@
+import { get } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import Component from '@glimmer/component';
 
 export default class DataTableContentBodyComponent extends Component {
-  @service router
+  @service router;
 
   get offset() {
     var offset = 1; //to avoid having 0. row
@@ -18,9 +19,20 @@ export default class DataTableContentBodyComponent extends Component {
   get wrappedItems() {
     const selection = this.args.dataTable.selection || []; // TODO: should the dataTable ensure this is an array?
     const content = this.args.content;
-    return content.map(function (item) {
-      return { item: item, isSelected: selection.includes(item) };
+    return content.map((item) => {
+      return {
+        item: item,
+        isSelected: selection.includes(item),
+        rowLink: this.args.rowLink,
+        rowLinkModel: this.rowLinkModel(item)
+      };
     });
+  }
+
+  rowLinkModel(row) {
+    return this.args.rowLinkModelProperty
+      ? get(row, this.args.rowLinkModelProperty)
+      : row;
   }
 
   @action
@@ -37,10 +49,11 @@ export default class DataTableContentBodyComponent extends Component {
   }
 
   @action
-  onClickRow() {
-    if (this.args.onClickRow)
+  onClickRow(row) {
+    if ( this.args.onClickRow ) {
       this.args.onClickRow(...arguments);
-    else if ( this.args.rowLink )
-      this.router.transitionTo( this.args.rowLink, arguments[0] );
+    } else if ( this.args.rowLink ) {
+      this.router.transitionTo( this.args.rowLink, this.rowLinkModel(row) );
+    }
   }
 }

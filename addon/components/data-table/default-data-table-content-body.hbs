@@ -3,14 +3,14 @@
     fields=@dataTable.fields
     firstColumn=this.firstColumn
     otherColumns=this.otherColumns
-    item=@item
-    linkedRoute=@linkedRoute
+    wrapper=@wrapper
+    item=@wrapper.item
+    rowLink=@wrapper.rowLink
+    rowLinkModel=@wrapper.rowLinkModel
     fields=@fields
     DataCell=(component
       "data-table/data-cell"
-      fields=@dataTable.fields
       firstColumn=this.firstColumn
       otherColumns=this.otherColumns
-      item=@item
-      fields=@fields
-      linkedRoute=@linkedRoute))}}
+      wrapper=@wrapper
+      fields=@fields))}}
