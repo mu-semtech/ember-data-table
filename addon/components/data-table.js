@@ -43,17 +43,8 @@ export default class DataTable extends Component {
       : this.args.searchDebounceTime;
   }
 
-  @tracked
-  _enableSelection = undefined;
-
   get enableSelection() {
-    return this._enableSelection === undefined
-      ? this.args.hasMenu
-      : this._enableSelection;
-  }
-
-  set enableSelection(value) {
-    this._enableSelection = value;
+    return this.args.enableSelection;
   }
 
   get selectionIsEmpty() {
@@ -74,9 +65,12 @@ export default class DataTable extends Component {
 
   _size = undefined;
   get size() {
-    if (this._size === undefined && this.args.size) return this.args.size;
-    else if (this._size) return this._size;
-    else return 5;
+    if (this._size === undefined && this.args.size)
+      return this.args.size;
+    else if (this._size)
+      return this._size;
+    else
+      return 5;
   }
   set size(newSize) {
     this._size = newSize;
@@ -94,8 +88,6 @@ export default class DataTable extends Component {
       return sizeOptions;
     }
   }
-
-  @tracked hasMenu = false; // old comment: set from inner component, migth fail with nested if
 
   get enableSearch() {
     return this.args.filter !== undefined;
@@ -218,12 +210,15 @@ export default class DataTable extends Component {
     }
   }
 
+  @action
   addItemToSelection(item) {
-    this.selection = [item, ...this.selection];
+    this.selection = [...new Set([item, ...this.selection])];
   }
+  @action
   removeItemFromSelection(item) {
     this.selection = this.selection.filter((x) => x !== item);
   }
+  @action
   clearSelection() {
     this.selection = [];
   }

@@ -1,4 +1,5 @@
 {{!-- Used in: data-table/data-table-menu --}}
-{{#if @dataTable.selectionIsEmpty}}
-  {{yield}}
-{{/if}}
+{{yield (hash
+    dataTable=@dataTable
+    selectionIsEmpty=@dataTable.selectionIsEmpty)
+}}

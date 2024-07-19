@@ -1,7 +1,7 @@
 {{!-- Used in: data-table.hbs --}}
 {{#let
-     (component "data-table/data-table-menu-general" data-table=@dataTable)
-     (component "data-table/data-table-menu-selected" data-table=@dataTable)
+     (component "data-table/data-table-menu-general" dataTable=@dataTable)
+     (component "data-table/data-table-menu-selected" dataTable=@dataTable)
      as |general selected|}}
-  {{yield general selected}}
+  {{yield general selected @dataTable.enableSelection}}
 {{/let}}

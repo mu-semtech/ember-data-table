@@ -9,7 +9,7 @@
     Content=(component "data-table/data-table-content"
        content=@content
        noDataMessage=this.noDataMessage
-       enableSelection=this.enableSelection
+       enableSelection=@enableSelection
        enableLineNumbers=@enableLineNumbers
        onClickRow=@onClickRow
        sort=@sort
@@ -32,6 +32,7 @@
        updateSize=this.updatePageSize
        backendPageOffset=@backendPageOffset)
     Menu=(component "data-table/data-table-menu"
+       enableSelection=@enableSelection
        dataTable=this)
     content=@content
     enableSearch=this.enableSearch

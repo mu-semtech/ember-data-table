@@ -1,3 +1,4 @@
+import { cached } from '@glimmer/tracking';
 import { get } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
@@ -16,6 +17,7 @@ export default class DataTableContentBodyComponent extends Component {
     return offset;
   }
 
+  @cached
   get wrappedItems() {
     const selection = this.args.dataTable.selection || []; // TODO: should the dataTable ensure this is an array?
     const content = this.args.content;
@@ -37,15 +39,10 @@ export default class DataTableContentBodyComponent extends Component {
 
   @action
   updateSelection(selectedWrapper, event) {
-    selectedWrapper.isSelected = event.target.checked;
-
-    this.wrappedItems.forEach((wrapper) => {
-      if (wrapper.isSelected) {
-        this.args.dataTable.addItemToSelection(wrapper.item); // TODO: pass on addItemToSelection directly?
-      } else {
-        this.args.dataTable.removeItemFromSelection(wrapper.item); // TODO: pass on removeItemFromSelection directly?
-      }
-    });
+    if( event.target.checked )
+      this.args.dataTable.addItemToSelection(selectedWrapper.item);
+    else
+      this.args.dataTable.removeItemFromSelection(selectedWrapper.item);
   }
 
   @action
