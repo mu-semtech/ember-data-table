@@ -2,7 +2,7 @@
 {{yield (hash
     startItem=this.startItem
     endItem=this.endItem
-    total=@total
+    total=this.total
     hasTotal=this.hasTotal
     pageSize=@size
     pageNumber=this.humanPage
@@ -10,10 +10,15 @@
     sizeOptions=@sizeOptions
     firstPage=this.firstPage
     lastPage=this.lastPage
+    nextPage=this.nextPage
+    previousPage=this.previousPage
     updatePage=this.updatePage
+    humanPage=this.humanPage
+    updateHumanPage=this.updateHumanPage
     selectSizeOption=this.selectSizeOption
     setSizeOption=this.setSizeOption
     hasMultiplePages=this.hasMultiplePages
     isFirstPage=this.isFirstPage
     isLastPage=this.isLastPage
-    links=@links)}}
+    meta=@meta
+    backendPageOffset=this.backendPageOffset)}}

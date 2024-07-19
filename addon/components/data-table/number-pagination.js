@@ -1,7 +1,6 @@
 import { action } from '@ember/object';
 import Component from '@glimmer/component';
 
-const defaultBackendPageOffset = 0;
 const humanPageOffset = 1; // humans assume the first page has number 1
 
 /**
@@ -50,16 +49,7 @@ export default class NumberPaginationComponent extends Component {
   get currentBackendPage() {
     return this.args.page
       ? parseInt(this.args.page)
-      : defaultBackendPageOffset;
-  }
-
-  /**
-   * The current page is as the user would view the page, what we supply
-   * as functions and parameters outside of this component is based on
-   * what the API supplies.
-   */
-  set currentPage(newPage) {
-    this.args.updatePage(humanToBackend(newPage, this.backendPageOffset));
+      : this.backendPageOffset;
   }
 
   /**
@@ -68,11 +58,32 @@ export default class NumberPaginationComponent extends Component {
    * hope.
    */
   get backendPageOffset() {
-    return this.args.links?.first?.number || defaultBackendPageOffset;
+    if( this.args.backendPageOffset !== undefined ) {
+      // users may supply this
+      return this.args.backendPageOffset;
+    } else if( this.args.meta?.links?.first?.number !== undefined ) {
+      // or we could derive from the backend
+      return this.args.meta.links.first.number;
+    } else {
+      // and else it's just 0
+      return 0;
+    }
   }
 
+  /**
+   * The human page is as the user would view the page, what we supply
+   * as functions and parameters outside of this component is based on
+   * what the API supplies.
+   */
   get humanPage() {
-    return backendToHuman(this.args.page || defaultBackendPageOffset, this.backendPageOffset);
+    return backendToHuman(this.args.page || this.backendPageOffset, this.backendPageOffset);
+  }
+  set humanPage(number) {
+    this.updatePage(humanToBackend(number || 0, this.backendPageOffset));
+  }
+  @action
+  updateHumanPage(number) {
+    this.humanPage = number;
   }
 
   get firstPage() {
@@ -80,8 +91,20 @@ export default class NumberPaginationComponent extends Component {
   }
 
   get lastPage() {
-    const backendLastPageNumber = this.args.links?.last?.number || defaultBackendPageOffset;
+    const backendLastPageNumber = Math.floor(this.total / this.args.size);
     return backendToHuman(backendLastPageNumber, this.backendPageOffset);
+  }
+
+  get previousPage() {
+    return this.isFirstPage
+      ? undefined
+      : this.humanPage - 1;
+  }
+
+  get nextPage() {
+    return this.isLastPage
+      ? undefined
+      : this.humanPage + 1;
   }
 
   get isFirstPage() {
@@ -122,7 +145,7 @@ export default class NumberPaginationComponent extends Component {
    * Supplies an array with all available pages.
    */
   get pageOptions() {
-    const nbOfPages = this.lastPage - this.firstPage;
+    const nbOfPages = 1 + this.lastPage - this.firstPage;
 
     return Array.from(
       new Array(nbOfPages),
@@ -130,13 +153,22 @@ export default class NumberPaginationComponent extends Component {
     );
   }
 
+  get total() {
+    if( this.args.total !== undefined )
+      return this.args.total;
+    else if( this.args.meta?.count !== undefined )
+      return this.args.meta.count;
+    else
+      return undefined;
+  }
+
   get hasTotal() {
     return this.total || this.total === 0;
   }
 
   @action
-  updatePage(link) {
-    this.args.updatePage(link?.number || this.backendPageOffset);
+  updatePage(number) {
+    this.args.updatePage(number || this.backendPageOffset);
   }
 
   @action

@@ -26,10 +26,11 @@
        size=@size
        itemsOnCurrentPage=@content.length
        sizeOptions=this.sizeOptions
-       total=@content.meta.count
-       links=@content.meta.pagination
+       total=@total
+       meta=@content.meta
        updatePage=this.updatePage
-       updateSize=this.updatePageSize)
+       updateSize=this.updatePageSize
+       backendPageOffset=@backendPageOffset)
     Menu=(component "data-table/data-table-menu"
        dataTable=this)
     content=@content

@@ -5,8 +5,10 @@
   @autoSearch={{@autoSearch}}
   @page={{@page}}
   @size={{@size}}
+  @total={{@total}}
   @sort={{@sort}}
   @filter={{@filter}}
+  @meta={{@meta}}
   @hasMenu={{@hasMenu}}
   @selection={{@selection}}
   @noDataMessage={{@noDataMessage}}
@@ -283,11 +285,11 @@
           </div>
           {{#if pagination.hasMultiplePages}}
             <div class="data-table-pagination-right">
-              <button disabled={{pagination.isFirstPage}} type="button" {{on "click" (fn pagination.updatePage pagination.links.first)}}>First</button>
-              <button disabled={{pagination.isFirstPage}} type="button" {{on "click" (fn pagination.updatePage pagination.links.prev)}}>Previous</button>
+              <button disabled={{pagination.isFirstPage}} type="button" {{on "click" (fn (mut pagination.humanPage) pagination.firstPage)}}>First</button>
+              <button disabled={{pagination.isFirstPage}} type="button" {{on "click" (fn (mut pagination.humanPage) pagination.previousPage)}}>Previous</button>
 
-              <button disabled={{pagination.isLastPage}} type="button" {{on "click" (fn pagination.updatePage pagination.links.next)}}>Next</button>
-              <button disabled={{pagination.isLastPage}} type="button" {{on "click" (fn pagination.updatePage pagination.links.last)}}>Last</button>
+              <button disabled={{pagination.isLastPage}} type="button" {{on "click" (fn (mut pagination.humanPage) pagination.nextPage)}}>Next</button>
+              <button disabled={{pagination.isLastPage}} type="button" {{on "click" (fn (mut pagination.humanPage) pagination.lastPage)}}>Last</button>
             </div>
           {{/if}}
         </div>
