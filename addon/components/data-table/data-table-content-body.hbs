@@ -5,7 +5,7 @@
     offset=this.offset
     wrappedItems=this.wrappedItems
     enableLineNumbers=@enableLineNumbers
-    hasClickRowAction=(and (@onClickRow @rowLink) true)
+    hasClickRowAction=(and (or @onClickRow @rowLink) true)
     onClickRow=@onClickRow
     toggleSelected=this.updateSelection
     selection=@dataTable.selection

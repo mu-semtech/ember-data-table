@@ -266,10 +266,13 @@ How to show different things in Ember Data Table
   default the `id` property is used but another attribute may be
   supplied if desired (such as `uuid` when using mu-search).  An empty
   string will provide the full object.
-- `@attributeToSortParams` :: Which attributes may be sorted on.  This
-  defaults to all attributes.  You may choose to provide only some
-  attributes.  Setting this to the empty string disables sorting on all
-  fields.
+- `@attributeToSortParams` :: Function which translates an attribute to
+  its sort parameters.  The sort parameters is currently a hash which
+  contains a key (default `'asc'` and `'desc'` to indicate sorting up
+  and down) and the corresponding sort key which should be sent out of
+  Ember Data Table (and used in the sort hash to the backend).  More
+  options than `'asc'` and `'desc'` can be provided if the backend
+  understands different sorting strategies.
 - `@onClickRow` :: Action to be triggered when the row is clicked.  This
   is an alternative for the row link but it triggers an action rather
   than following a route.
@@ -287,3 +290,286 @@ How to show different things in Ember Data Table
 
 Various named blocks are offered, check your Ember Data Table design implementation to see which part needs to be overridden.  A list is provided here for reference.
 
+- `search` :: Overrides the full search component.  Receives a search hash with properties:
+  - `filter` :: User's filter
+  - `placeholder` :: Placeholder for the text search
+  - `autoSearch` :: Value for autoSearch as supplied by the user
+    (subject to change)
+  - `submitForm` :: Action which can be used to submit the search form
+    and trigger search update
+  - `handleAutoInput` :: Action which can handle auto input by
+    debouncing and updating the search string
+  - `handleDirectInput` :: Action which handles the event where a user
+    types, gets value from `event.target.value`.
+
+- `menu` :: Overrides the full menu rendering.  Receives three positional arguments:
+  - `General` :: Component with information about the General menu which
+    is rendered when nothing is selected.  The block given to General
+    receives an argument which should be passed to `:general-menu`.
+  - `Selected` :: Component with information on handling selected items.
+    The block given to Selected receives `selected` which should be
+    passed to `:selection-menu`.
+
+- `general-menu` :: Implements the menu with actions which is shown when
+  no items are selected.  Receives a hash with two items:
+  - `dataTable` :: The main DataTable object on which actions can be
+    called.
+  - `selectionIsEmpty` :: Whether items are currently selected or not.
+
+- `selection-menu` :: This menu is rendered only when items have been
+  selected.  It is the main wrapper which contains
+  `:selection-menu-actions` (which you'd likely want to override
+  instead) as well as some visual information on the selected items.  It
+  receives a hash with four elements:
+  - `selectionIsEmpty` :: Whether the selection is currently empty.
+  - `selectionCount` :: The amount of items which are selected at this point.
+  - `clearSelection` :: An action to clear the whole selection.
+  - `selection` :: Copy of the selected items which can be passed to other functions.
+  - `dataTable` :: The DataTable object.
+
+- `selection-menu-actions` :: Contains the actions which can be applied
+  to a selection.  This is likely custom for each use of the Ember Data
+  Table (versus the template).  Receives the same argument as
+  `:selection-menu`.
+
+- `content` :: This block is the full table but without search, actions
+  or pagination.  It must render the table tag and everything in it.  It
+  receives a hash with three elements.
+  - `Header` :: The Header logical component which contains information
+    to render the header row.  Supplying a block to Header will yield
+    with the content for the `:header` named block.
+  - `Body` :: The Body logical component which contains information to
+    render each of the body rows.  Supplying a block to Body will yield
+    with the content for the `:body` named block.
+  - `dataTable` :: The DataTable object.
+
+- `full-header` :: This block should render the `<thead>` with the header row
+  inside of it.  Receives a hash with the following items:
+    - `enableSelection` :: Whether or not selection is enabled.
+    - `enableLineNumbers` :: Whether or not line numbers are enabled.
+    - `sort` :: Sort parameter.
+    - `updateSort` :: Function to update sorting.
+    - `hasLinks` :: Whether custom links are provided for this table (as
+      per the `@links` argument to DataTable).
+    - `customHeaders` :: Headers which should be rendered in a custom way
+      as an array or strings.
+    - `fields` :: A complex fields object containing the information about
+      each column to be rendered:
+      - `attribute` :: the attribute to be rendered
+      - `label` :: the label of the header
+      - `isSortable` :: whether this column is sortable or not
+      - `sortParameters` :: hash which indicates in which ways this field
+        can be sorted (ascending, descending, something else).  See
+        `@attributeToSortParams`.
+      - `hasCustomHeader` :: whether this column has a custom header or
+        not (meaning we should render it through the `:data-header`
+        named block)
+      - `isCustom` :: whether the field rendering should be custom or not
+        (meaning data cells should be rendered through `:data-cell`).
+    - `dataHeadersInfo` :: information for the data headers.  Supplied to
+      `:data-headers` named block.
+    - `ThSortable` :: Contextual component.  When calling this component
+      `@field` must be supplied (to generate info for a given field when
+      looping over `header.fields`) and `@hasCustomBlock` which should
+      indicate whether a `:data-header` is given.  Supplying a block to
+      ThSortable will yield with the content for the `:data-header`
+      named block.  The aforementioned content also has a
+      `renderCustomBlock` which can be used to detect whether a custom
+      block should be rendered for this block or not.
+- `data-headers` :: This is inside the `<tr>` of the `<thead>` and
+  should render all headers for the attributes.  Thus ignoring the
+  headers for selection, numbers and actions.  It receives a hash
+  containing the following elements:
+  - `fields` :: The fields to be rendered (see `fields` above for all
+    the attributes).
+  - `customHeaders` :: Headers which should be rendered in a custom way
+    as an array or strings.
+  - `sort` :: Sort parameter.
+  - `updateSort` :: Function to update sorting.
+- `data-header` :: Renders a custom header which should handle sorting
+  etc.  Receives a hash with the following elements:
+  - `label` :: Label of the header.
+  - `attribute` :: Attribute which will be rendered in this column.
+  - `isSortable` :: Whether this column is sortable or not.
+  - `isSorted` :: Whether sorting is applied to this header or not.
+  - `toggleSort` :: Action which switches to the next sorting method
+    (eg: from `'asc'` to `'desc'` or from `'desc'` to nothing).
+  - `nextSort` :: Next way of sorting.  This is obvious for
+    `["asc","desc",""]` but users may have provided multiple sorting
+    methods through `@attributeToSortParams`.
+  - `isAscending` :: Are we sorting ascending now?
+  - `isDescending` :: Are we sorting descending now?
+  - `sortDirection` :: What is the key on which we are sorting now (eg: `"desc"`)
+  - `renderCustomBlock` :: Should a custom block be rendered for this data header?
+  - `isCustom` :: Is the header explicitly marked to render custom?
+  - `hasCustomHeaders` :: Are there any custom headers to be rendered?
+
+- `actions-header` :: Header which will contain all actions.  Receives no arguments.
+
+- `body` :: Renders the full body of the table, including the `<tbody>`
+  tag.  Receives a hash containing:
+  - `isLoading` :: Is the data being loaded at this point?  Probably
+    need to render `:body-loading` named block then.
+  - `content` :: The actual content of this Data Table.
+  - `offset` :: The index of the first element in this data table.
+  - `wrappedItems` :: Rows of the data table in a way through which they
+    can be selected.
+  - `enableLineNumbers` :: Whether line numbers are enabled or not.
+  - `hasClickRowAction` :: Wheter something needs to happen when the row
+    is clicked.  Either because there is an `@onClickRow` or because
+    there is a `@rowLink`.
+  - `onClickRow` :: Action to be called when user clicked on a row, if
+    supplied by user of this Data Table.
+  - `toggleSelected` :: Action which allows to toggle the selection
+    state of the current row.  Should receive the an element from
+    `wrappedItems` as first element and the event that caused it (will
+    check `event.target.fetched`) as second argument.
+  - `selection` :: Currently selected items.
+  - `enableSelection` :: Whether selection of items is enabled.
+  - `linkedRoutes` :: Array of objects describing each of the routes
+    which should be linked as custom links per row.  Each item is a hash
+    with the following elements:
+    - `route` :: The route to which we should link.
+    - `label` :: The human-readable label for the route if supplied.
+    - `icon` :: The icon which should be rendered for the link, if supplied.
+    - `linksModelProperty` :: The property of the model which should be
+      supplied to the route (eg: `id` for the id or `""` if the whole
+      object should be supplied).
+  - `rowLink` :: The route which should be used when users click on the
+    row itself.
+  - `rowLinkModelProperty` :: The property of the model which sholud be
+    supplied to the `rowLink` route (eg: `id` for the id or `""` if
+    the whole object should be supplied).
+  - `noDataMessage` :: String message which the user asked to render
+    when no data was supplied.
+  - `fields` :: Array of objects describing each of the fields to be
+    rendered.  See `fields` higher up.
+  - `Row` :: Contextual component handling the logic of an individual
+    row.  This has te be called for each row in the visible table and it
+    should receive `@wrapper` for the element of `wrappedItems` we are
+    rendering here, as well as the `@index` for the index we are looping
+    over here.  The `@index` is a local index for this rendering
+    regardless of the page, so you can use `{{#each body.wrappedItems as
+    |wrapper index|}}<body.Row @wrapper={{wrapper}}
+    @index={{index}}>...</body.Row>{{/each}}`.
+- `body-loading` :: Renders a custom body loading message supplied in
+  this invocation of Ember Data Table.
+- `row` :: Renders an individual row, including the `<tr>` tag.  This is
+  the row with both the data elements as well as with the meta elements
+  such as selection of items and links.  Receives a hash with the
+  following elements:
+  - `wrapper` :: An object containing the item and the selection status.
+  - `item` :: Actual item to be rendered in this row.
+  - `enableLineNumbers` :: See above.
+  - `lineNumber` :: See above.
+  - `enableSelection` :: See above.
+  - `selected` :: Whether this row is selected or not.
+  - `isSelected` :: Whether this item is selected or not (same as
+    selected).
+  - `toggleSelected` :: See above.
+  - `hasClickRowAction` :: See above.
+  - `onClickRow` :: See above.
+  - `linkedRoutes` :: A copy of `linkedRoutes` as mentioned above but
+    adding the `model` key which contains the specific model to supply
+    to the linked route for this row (eg: the `id`, `uuid` or the full
+    `item`)
+  - `fields` :: See above.
+  - `DataCells` :: Contextual component which provides information for
+    rendering the data cells of a row.  Supplying a block to DataCells
+    will yield a block which is used forrendering the `:dataCells` named
+    block.
+- `data-cells` :: Renders all the cells containing real data in a row.
+  This includes selection of the row and links.  Receives a hash with
+  the following elements:
+  - `fields` :: See above.
+  - `firstColumn` :: The field of the first column to be rendered.  Good
+    for designs where the first column should receive different styling.
+  - `otherColumns` :: The fields of all columns but the first one to be
+    rendered.  Good for designs where the first column should receive
+    different styling.
+  - `wrapper` :: See above.
+  - `item` :: See above.
+  - `rowLink` :: See above.
+  - `rowLinkModel` :: Model to supply to the route specified by `rowLink` for this specific row. # =@wrapper.rowLinkModel
+  - `fields` :: See above.
+  - `DataCell` :: Contextual component which provides information for
+    rendering an individual cell.  Should receive `@column` with the
+    field to render and `@hasCustomBlock` with `{{has-block
+    "data-cell"}}` so we know whether a custom block was provided for
+    the `data-cell` named slot.
+- `data-cell` :: Renders a custom data cell regardless of whether it's
+  first or any other.  Receives a hash with the following elements:
+  - `firstColumn` :: See above.
+  - `otherColumns` :: See above.
+  - `item` :: See above.
+  - `rowLink` :: See above.
+  - `rowLinkModel` :: See above.
+  - `label` :: See above.
+  - `fields` :: See above.
+  - `isCustom` :: Is the cell explicitly marked to render custom?
+  - `hasCustomFields` :: Whether there are custom fields to be
+    rendered.
+  - `attribute` :: The attribute which will be rendered.
+  - `renderCustomBlock` :: Whether a custom block should be rendered
+    for this field.  This is the named slot `:data-cell`.
+  - `value` :: The value which should be rendered.
+- `first-data-cell` :: In designs which care about the first data cell
+  versus the others, this will render a custom design for the first data
+  column of the table.  Receives the same arguments as `data-cell`.
+- `rest-data-cell` :: In designs which care about the first data cell
+  versus the others, this will render a custom design for the other data
+  columns of the table.  Receives the same arguments as `data-cell`.
+- `actions` :: Renders the links next to each row specified through
+  `@links`.  Receives the same arguments as `row`.
+- `no-data-message` :: Rendered when no data was available in the data
+  cell.  When no styling is needed, `@noDataMessage` can be used
+  instead.
+- `pagination` :: Renders everything needed to handle pagination.
+  Receives a hash with the following elements:
+  - `startItem` :: Number of the first item rendered on this page.
+  - `endItem` :: Number of the last item rendered on this page.
+  - `total` :: Total amount of items on all pages of this table.
+  - `hasTotal` :: Whether the total amount of items is known.
+  - `pageSize` :: Amount of items per page (though the last page may have fewer items).
+  - `pageNumber` :: The page number as seen by a human (first page is 1
+    regardless of the backend using 0 for the first page or not).
+  - `numberOfPages` :: Total number of pages avaialeble.
+  - `pageOptions` :: Array containing a number for each page available
+    in the data table in human form (can be used for rendering buttons).
+  - `summarizedPageOptions` :: A smart way of showing pages.  Yields a list of page numbers with:
+    - the leftmost being the first page number,
+    - followed by the string 'more' if empty spots follow,
+    - followed by up to three pages less than the current page,
+    - followed by the current page number,
+    - followed by up to three pages after the current page number,
+    - followed by 'more' if empty spots follow,
+    - followed by the last page number.
+  - `sizeOptions` :: The different sizes (as an array) for pages of this Data Table.
+  - `firstPage` :: The first page number in this Data Table.
+  - `lastPage` :: The last page number in this Data Table.
+  - `nextPage` :: The next page number in this view, `undefined` if this
+    is the last page.
+  - `previousPage` :: The previous page number in this view, `undefined`
+    if this is the first page.
+  - `updatePage` :: Function which takes a backend page number and
+    updates it (this is the raw function supplied to `DataTable`.
+  - `humanPage` :: Thu current page in human form.
+  - `updateHumanPage` :: Updates the human page number (this will call
+    `updatePage` after mapping the human page number through the backend
+    page number offset).
+  - `selectSizeOption` :: Selects a new size option, takes `event` as
+    input and gets the new value from `event.target.value`.
+  - `setSizeOption` :: Selects a new size, takes the `size` as either
+    string or as number and calls the `@updateSize` function supplied to
+    Data Table.
+  - `hasMultiplePages` :: Whether this Data Table has multiple pages or
+    not.
+  - `isFirstPage` :: Whether we are now rendering the first page or
+    not.
+  - `isLastPage` :: Whether we are rendering the last page or not.
+  - `hasPreviousPage` :: Whether there is a previous page or not.
+  - `hasNextPage` :: Whether there is a next page or not.
+  - `meta` :: If meta is available, it will be stored here. This may
+    contain page links.
+  - `backendPageOffset` :: The current backend page offset (either
+    calculated or guessed).

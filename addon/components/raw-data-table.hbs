@@ -67,11 +67,12 @@
     {{!-- START: menu --}}
     <dt.Menu as |General Selected enableSelection|>
       {{#if (has-block "menu")}}
-        {{yield (hash General Selected) to="menu"}}
+        {{yield (hash General Selected enableSelection) to="menu"}}
       {{else}}
         <div class="data-table-menu">
           {{!-- either we have a general block or we have to have a menu --}}
           <General as |general|>
+            {{!-- TODO: shouldn't this be rendered when the result is empty too? Update docs! --}}
             {{#if general.selectionIsEmpty}}
               {{yield general to="general-menu"}}
             {{/if}}
@@ -181,7 +182,7 @@
                               {{#if row.enableLineNumbers}}
                                 <td>{{row.lineNumber}}</td>
                               {{/if}}
-                              <row.DataCells @wrapper={{wrapper}} as |dataCells|>
+                              <row.DataCells as |dataCells|>
                                 {{#if (has-block "data-cells")}}
                                   {{yield dataCells to="data-cells"}}
                                 {{else}}

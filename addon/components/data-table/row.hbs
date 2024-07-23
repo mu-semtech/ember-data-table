@@ -5,15 +5,16 @@
     enableLineNumbers=@enableLineNumbers
     lineNumber=(add @index @offset)
     enableSelection=@enableSelection
-    selected=(includes @wrapper.item @selection)
     hasClickRowAction=@hasClickRowAction
     onClickRow=(fn @onClickRow @wrapper.item)
-    toggleSelected=(fn @toggleSelected @wrapper)
     isSelected=(includes @wrapper.item @selection)
+    selected=(includes @wrapper.item @selection) {{!-- TODO: do we want both selected and isSelected? --}}
+    toggleSelected=(fn @toggleSelected @wrapper)
     linkedRoutes=this.linkedRoutes
     fields=@fields
     DataCells=(component
       "data-table/data-cells"
       fields=@fields
+      wrapper=@wrapper
       linkedRoutes=this.linkedRoutes
       dataTable=@dataTable))}}
