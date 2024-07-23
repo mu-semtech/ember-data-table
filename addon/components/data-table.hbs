@@ -1,3 +1,5 @@
+{{!-- TODO: supply both meta and @content.meta or supply @content.meta only when @meta is not supplied to be in line with readme --}}
+
 {{yield
   (hash
     Search=(component "data-table/text-search"
@@ -27,7 +29,7 @@
        itemsOnCurrentPage=@content.length
        sizeOptions=this.sizeOptions
        total=@total
-       meta=@content.meta ;; TODO: supply both meta and @content.meta or supply @content.meta only when @meta is not supplied to be in line with readme
+       meta=@content.meta
        updatePage=this.updatePage
        updateSize=this.updatePageSize
        backendPageOffset=@backendPageOffset)
