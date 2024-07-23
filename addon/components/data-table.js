@@ -7,11 +7,25 @@ import { toComponentSpecifications, splitDefinitions } from "../utils/string-spe
 export default class DataTable extends Component {
   @tracked _selection = undefined;
 
+  get filter() {
+    return this.args.filter !== undefined
+      ? this.args.filter
+      : this.args.view?.filter;
+  }
+
+  get sort() {
+    return this.args.sort !== undefined
+      ? this.args.sort
+      : this.args.view?.sort;
+  }
+
   get selection() {
     if (this._selection === undefined && this.args.selection === undefined)
       return [];
-    else if (this._selection !== undefined) return this._selection;
-    else return this.args.selection;
+    else if (this._selection !== undefined)
+      return this._selection;
+    else
+      return this.args.selection;
   }
 
   set selection(newSelection) {
@@ -25,7 +39,9 @@ export default class DataTable extends Component {
   }
 
   get isLoading() {
-    return this.args.isLoading;
+    return this.args.isLoading !== undefined
+      ? this.args.isLoading
+      : this.args.view?.isLoading;
   }
 
   /**
@@ -56,15 +72,19 @@ export default class DataTable extends Component {
   }
 
   get page() {
-    return this.args.page || 0;
+    const page = this.args.page !== undefined
+          ? this.args.page
+          : this.args.view?.page;
+    return page || 0;
   }
 
   get size() {
-    if ( this.args.size ) {
+    if ( this.args.size )
       return this.args.size;
-    } else {
+    else if ( this.args.view?.size )
+      return this.args.view.size;
+    else
       return 5;
-    }
   }
 
   get sizeOptions() {
@@ -81,7 +101,7 @@ export default class DataTable extends Component {
   }
 
   get enableSearch() {
-    return this.args.filter !== undefined;
+    return this.filter !== undefined;
   }
 
   get autoSearch() {
@@ -164,40 +184,54 @@ export default class DataTable extends Component {
 
   @action
   updatePageSize(size) {
-    if( !this.args.updatePageSize ) {
+    const updater = this.args.updatePageSize !== undefined
+          ? this.args.updatePageSize
+          : this.args.view?.updatePageSize;
+
+    if( !updater ) {
       console.error(`Could not update page size to ${size} because @updatePageSize was not supplied to data table`);
     } else {
       this.updatePage(0);
-      this.args.updatePageSize(size);
+      updater(size);
     }
   }
 
   @action
   updateFilter(filter) {
-    if( !this.args.updateFilter ) {
+    const updater = this.args.updateFilter || this.args.view?.updateFilter;
+
+    if( !updater ) {
       console.error(`Could not update filter to '${filter}' because @updateFilter was not supplied to data table`);
     } else {
       this.updatePage(0);
-      this.args.updateFilter(filter);
+      updater(filter);
     }
   }
 
   @action
   updateSort(sort) {
-    if( !this.args.updateSort ) {
+    const updater = this.args.updateSort !== undefined
+          ? this.args.updateSort
+          : this.args.view?.updateSort;
+
+    if( !updater ) {
       console.error(`Could not update sorting to '${sort}' because @updateSort was not supplied to data table`);
     } else {
       this.updatePage(0);
-      this.args.updateSort(sort);
+      updater(sort);
     }
   }
 
   @action
   updatePage(page) {
-    if( !this.args.updatePage ) {
+    const updater = this.args.updatePage !== undefined
+          ? this.args.updatePage
+          : this.args.view?.updatePage;
+
+    if( !updater ) {
       console.error(`Could not update page to ${page} because @updatePage was not supplied to data table`);
     } else {
-      this.args.updatePage(page);
+      updater(page);
     }
   }
 

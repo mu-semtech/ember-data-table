@@ -3,7 +3,7 @@
 {{yield
   (hash
     Search=(component "data-table/text-search"
-       filter=@filter
+       filter=this.filter
        placeholder=this.searchPlaceholder
        autoSearch=this.autoSearch
        updateFilter=this.updateFilter
