@@ -27,7 +27,7 @@
        itemsOnCurrentPage=@content.length
        sizeOptions=this.sizeOptions
        total=@total
-       meta=@content.meta
+       meta=@content.meta ;; TODO: supply both meta and @content.meta or supply @content.meta only when @meta is not supplied to be in line with readme
        updatePage=this.updatePage
        updateSize=this.updatePageSize
        backendPageOffset=@backendPageOffset)

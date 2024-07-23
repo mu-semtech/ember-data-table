@@ -2,243 +2,288 @@
 [![Build Status](https://travis-ci.org/mu-semtech/ember-data-table.svg?branch=master)](https://travis-ci.org/mu-semtech/ember-data-table)
 [![npm version](https://badge.fury.io/js/ember-data-table.svg)](https://badge.fury.io/js/ember-data-table)
 
-Data table for Ember based on a JSONAPI compliant backend.
+Data table for EmberJS
 
-Have a look at [ember-paper-data-table](https://github.com/mu-semtech/emper-paper-data-table) to get a data table styled with [ember-paper](https://github.com/miguelcobain/ember-paper).
+## Tutorials
 
-## Installation
-If you're using Ember > v3.8
+### Add basic Ember Data Table
+
+It is advised to adapt Ember Data Table to your specific design setup or use a variant implemented for your setup.  To check if things are working, you can add the `RawDataTable` to your application.
+
+Let's generate a route for products first:
+
 ```bash
-ember install ember-data-table
+ember g route products/index
 ```
 
-For Ember < v3.8, use version 1.x of the addon
+We will assume a model exists with `label` and `price` which we could generate using:
+
 ```bash
-ember install ember-data-table@1.2.2
+ember g model product label:string price:number
 ```
 
-## Getting started
-Include the `DataTableRouteMixin` in the route which model you want to show in the data table. Configure the model name.
+Next we ensure content is fetched from the backend using standard model hooks and query parameters are set up.  Extending from the provided Route and Controller is the shortest form.
+
+For the route stored in `/app/routes/products/index.js` write:
 
 ```javascript
-import Ember from 'ember';
-import DataTableRouteMixin from 'ember-data-table/mixins/route';
+import DataTableRoute from 'ember-data-table/route';
 
-export default Ember.Route.extend(DataTableRouteMixin, {
-  modelName: 'blogpost'
-});
+export default class ProductsIndexRoute extends DataTableRoute {
+  modelName = 'product';
+}
 ```
 
-Next, include the data table in your template:
+For the controller stored in `/app/controllers/product/index.js` write:
 
-```htmlbars
-{{data-table
-  content=model
-  fields="firstName lastName age created modified"
-  isLoading=isLoadingModel
-  filter=filter
-  sort=sort
-  page=page
-  size=size
-}}
+```javascript
+import DataTableController from 'ember-data-table/countroller';
+
+export default class ProductsIndexController extends DataTableController {}
 ```
 
-Note: the filtering, sorting and pagination isn't done at the frontend. By including the `DataTableRouteMixin` in the route each change to the `filter`, `sort`, `page` and `size` params will result in a new request to the backend. The `DataTableRouteMixin` also sets an isLoadingModel flag while the route's model is being loaded.
+These steps would be the same for any Ember Data Table flavour, the following visulizes `RawDataTable`:
 
-Have a look at [Customizing the data table](https://github.com/erikap/ember-data-table#customizing-the-data-table) to learn how you can customize the data table's header and body.
-
-## Data table component
-
-### Specification
-
-The following parameters can be passed to the data-table component:
-
-| Parameter | Required | Default | Description |
-|-----------|----------|---------|-------------|
-| content | x | | a list of resources to be displayed in the table |
-| fields | | | names of the model fields to show as columns (seperated by whitespace) |
-| isLoading | | false | shows a spinner instead of the table content if true |
-| filter | | | current value of the text search |
-| sort | | | field by which the data is currently sorted |
-| page | | | number of the page that is currently displayed |
-| size | | | number of items shown on one page |
-| enableSizes | | true | flag to enable page size options dropdown |
-| sizes | | [5, 10, 25, 50, 100] | array of page size options (numbers) |
-| link | | | name of the route the first column will link to. The selected row will be passed as a parameter. |
-| onClickRow | | | action sent when a row is clicked. Takes the clicked item as a parameter. |
-| autoSearch | | true | whether filter value is updated automatically while typing (with a debounce) or user must click a search button explicitly to set the filter value.
-| noDataMessage | | No data | message to be shown when there is no content |
-| lineNumbers | | false | display a line number per table row (default: false). Must be true or false. |
-| searchDebounceTime | | 2000 | debounce time of the search action of the data table. Must be integer. |
-
-By default the data table will make each column sortable. The search text box is only shown if the `filter` parameter is bound. Pagination is only shown if the pagination metadata is set on the model (see the [Ember Data Table Serializer mixin](https://github.com/mu-semtech/ember-data-table#serializer)).
-
-### Customizing the data table
-The way the data is shown in the table can be customized by defining a `content` block instead of a `fields` parameter.
-
-```htmlbars
-{{#data-table content=model filter=filter sort=sort page=page size=size onClickRow=(action "clickRow") as |t|}}
-  {{#t.content as |c|}}
-    {{#c.header}}
-      {{th-sortable field='firstName' currentSorting=sort label='First name'}}
-      {{th-sortable field='lastName' currentSorting=sort label='Last name'}}
-      <th>Age</th>
-      {{th-sortable field='created' currentSorting=sort label='Created'}}
-      <th>Modified</th>
-    {{/c.header}}
-    {{#c.body as |row|}}
-      <td>{{row.firstName}}</td>
-      <td>{{row.lastName}}</td>
-      <td>{{row.age}}</td>
-      <td>{{moment-format row.created}}</td>
-      <td>{{moment-format row.modified}}</td>
-    {{/c.body}}
-  {{/t.content}}
-{{/data-table}}
+```hbs
+<RawDataTable
+  @content={{model}}
+  @fields="label price"
+  @isLoading={{this.isLoadingModel}}
+  @filter={{this.filter}}
+  @sort={{this.sort}}
+  @page={{this.page}}
+  @size={{this.size}}
+  @total={{this.total}}
+  @updateFilter={{fn (mut this.filter)}}
+  @updateSort={{fn (mut this.sort)}}
+  @updatePage={{fn (mut this.page)}}
+  @updatePageSize={{fn (mut this.size)}} />
 ```
-Have a look at the [helper components](https://github.com/mu-semtech/ember-data-table#helper-components).
 
-### Adding actions to the data table
-The user can add actions on top of the data table by providing a `menu` block.
-```htmlbars
-{{#data-table content=model filter=filter sort=sort page=page size=size isLoading=isLoadingModel as |t|}}
-  {{#t.menu as |menu|}}
-    {{#menu.general}}
-      {{#paper-button onClick=(action "export") accent=true noInk=true}}Export{{/paper-button}}
-      {{#paper-button onClick=(action "print") accent=true noInk=true}}Print{{/paper-button}}          
-    {{/menu.general}}
-    {{#menu.selected as |selection datatable|}}
-      {{#paper-button onClick=(action "delete" selection table) accent=true noInk=true}}Delete{{/paper-button}}
-    {{/menu.selected}}
-  {{/t.menu}}
-  {{#t.content as |c|}}
+Visiting `http://localhost:4200/products` will now show the Raw Data Table.
+
+## How-to guides
+
+### Implementing a new style
+
+It is advised to adapt Ember Data Table to your application or design framework.  Multiple examples exist.  The best approach to build a new style is to copy the file from `ember-data-table/addon/components/raw-data-table.hbs` and adapt it to your needs from top to bottom.
+
+The file is quite daunting, yet much can be left as is.  Only the HTML parts of the file need to be overwritten to suit your needs.  Liberally add wrapping tags and classes and use custom input components for your design framework (eg: a custom input component for searching).  Feel free to move things around within the same nesting (eg: moving pagination to the top).
+
+### Overwriting the rendering of fields
+
+Columns of Ember Data Table can receive custom rendering.  Say we are rendering products and we want to  render the Unit Price through a custom component and whether the product is available too.
+
+Assume the initial Ember Data Table looks like:
+
+```hbs
+  <Ui::Table
+    @content={{@model}}
+    @fields="label available price"
+    ... # data down actions up passing from route & controller
+  >
+  </Ui::Table>
+```
+
+Add the `@customFields` property to indicate which fields should receive custom rendering, and use the `:data-cell` slot to implement the rendering aspect:
+
+```hbs
+  <RawDataTable
+    @content={{@model}}
+    @fields="label available price"
+    @customFields="available price"
+    ... # data down actions up passing from route & controller
+  >
+    <:data-cell as |cell|>
+      {{#if (eq cell.attribute "price")}}
+        <td>
+          <Product::UnitPrice @value={{cell.value}} />
+        </td>
+      {{else if (eq cell.attribute "available")}}
+        <td>
+          {{#if cell.value}}Available{{else}}Out of stock{{/if}}
+        </td>
+      {{/if}}
+    </:data-cell>
+  </RawDataTable>
+```
+
+In this case `label` is rendered as usual, but the `price` and `available` are rendered through a custom form.  Note that the order of the columns is still the order of `@fields`.
+
+### Overwrite the header labels
+
+Column headers can be supplied by adding extra properties to the fields attribute split by a colon.  A single `_` will be replaced by a space and two underscores get replaced by a single underscore
+
+```
+  <RawDataTable
+    @content={{@model}}
+    @fields="label:Name available price:Current_price"
     ...
-  {{/t.content}}
-{{/data-table}}
-```
-The menu block consists of a `general` and a `selected` block. The `menu.general` is shown by default. The `menu.selected` is shown when one or more rows in the data table are selected.
-
-When applying an action on a selection, the currently selected rows can be provided to the action by the `selection` parameter. The user must reset the selection by calling `clearSelection()` on the data table.
-E.g.
-```javascript
-actions:
-  myAction(selection, datatable) {
-    console.log("Hi, you reached my action for selection: " + JSON.stringify(selection));
-    datatable.clearSelection();
-  }    
+  />
 ```
 
-## Helper components
-The following components may be helpful when customizing the data table:
-* [Sortable header](https://github.com/mu-semtech/ember-data-table#sortable-header)
+## Discussions
 
-### Sortable header
-The `th-sortable` component makes a column in the data table sortable. It displays a table header `<th>` element including an ascending/descending sorting icon in case the table is currently sorted by the given column.
+### Why one big template file
 
-```htmlbars
-{{th-sortable field='firstName' currentSorting=sort label='First name'}}
+With the advent of named slots users can overwrite things deeply nested inside Ember Data Table when using a single template.
+
+Multiple components are used to offer certain logical processing relevant in intermediate steps (eg: `DataTable::Row`) to split up logic.  This keeps some of the logic contained.
+
+The template file itself contains a repeating pattern to check if a block was given and use that, or render the default implementation for your design framework.  Eg. the `:menu` named slot is defined as follows in raw-data-table.hbs:
+
+```hbs
+    <dt.Menu as |General Selected enableSelection|>
+      {{#if (has-block "menu")}}
+        {{yield (hash General Selected) to="menu"}}
+      {{else}}
+        ...
+      {{/if}}
+    </dt.Menu>
 ```
 
-The following parameters are passed to the `th-sortable` component:
+The logic is contained in the `dt.Menu` component offered from above.  We first check if the `:menu` named block is given and dispatch processing to that block if it is.  Otherwise we provide our implementation.
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| field | x | name of the model field in the column |
-| label | x | label to be shown in the column's table header |
-| currentSorting | x | current sorting (field and order) of the data according to [the JSONAPI specification](http://jsonapi.org/format/#fetching-sorting) |
+The downside of this approach is that we have a large handlebars file in our codebase, but with good reason.  We create a dirty dustbin here so the applications using the component can stay clean.  We hope Ember Data Table design implementations get used in many applications so the heavy template outweigs the clean usage.
 
-Note: the data table will update the `currentSorting` variable, but the user needs to handle the reloading of the data. The [Ember Data Table Route mixin](https://github.com/mu-semtech/ember-data-table#route) may be of use.
+The default implementation will almost always be the rendered item, but we provide the end-user with escape hatches on every level to overwrite exactly the piece they need.  This makes it much more obvious what diverges from the default where we use Ember Data Table.  It makes maintenance and upgrades easier and allows apps to best express the intended diversion.
 
-## Mixins
-The following mixins may be helpful to use with the data table:
-* [Serializer mixin](https://github.com/mu-semtech/ember-data-table#serializer)
-* [Route mixin](https://github.com/mu-semtech/ember-data-table#route)
-* [Default Query Params mixin](https://github.com/mu-semtech/ember-data-table#default-query-params)
+## Reference
 
-### Serializer
-Upon installation, the `DataTableSerializerMixin` is automatically included in your application serializer to add parsing of the filter, sortig and pagination meta data from the links in the [JSONAPI](http://jsonapi.org) responses. The data is stored in [Ember's model metadata](https://guides.emberjs.com/v2.9.0/models/handling-metadata/).
+### Arguments to Ember Data Table
 
-To include the `DataTableSerializerMixin` in your application, add the mixin to your application serializer:
-```javascript
-import DS from 'ember-data';
-import DataTableSerializerMixin from 'ember-data-table/mixins/serializer';
+These arguments are expected to be supported by specific design implementations too.
 
-export default DS.JSONAPISerializer.extend(DataTableSerializerMixin, {
+#### Common information from route and controller
 
-});
-```
+The passing of data from route and controller, and moving data back up.
 
-E.g.
-```javascript
-meta: {
-  count: 42
-},
-links: {
-  previous: '/posts?page[number]=1&page[size]=10'
-  next: '/posts?page[number]=3&page[size]=10'
-}
-```
-will be parsed to
-```javascript
-meta: {
-  count: 42,
-  pagination: {
-    previous: { number: 1, size: 10 },
-    next: { number: 3, size: 10 }
-  }
-}
-```
+- `@content` :: Data to be rendered.  In case this has a `meta`
+  property, this is used as default to derive amount of results and
+  backend pagination offset.
+- `@page` and `@updatePage` :: Indicates the current page number and the
+  function called to update the current page.
+- `@size` and `@updatePageSize` :: Indicates the current page size and
+  the function called to update the current page size.
+- `@sort` and `@updateSort` :: Returns current sorting for data table
+  and a function to update the sorting.
+- `@filter` and `@updateFilter` :: Supplies the user filter string and
+  the function to call for updating that string.
+- `@total` :: The total amount of results across all pages.  If not set,
+  `@meta.count` or `@content.meta.count` is tried.
+- `@isLoading` :: Truethy if the Data Table is currently loading data.
 
-### Route
-The route providing data for the `data-table` component often looks similar. The model hook needs to query a list of resources of a specific model from the server. This list needs to be reloaded when the sorting, page or page size changes. The `DataTableRouteMixin` provides a default implementation of this behaviour. Just include the mixin in your route and specify the model to be queried as `modelName`.
+- `@meta` :: Meta may be provided in `@content.meta` or it may be
+  provided in a separate property.  If supplied, it may be used to
+  determine the backend pagination offset from
+  `@meta.links.first.number` (generally `0` but sometimes `1`) and
+  amount of results as alternative to `@total` from `@meta.count`.
 
-```javascript
-import Ember from 'ember';
-import DataTableRouteMixin from 'ember-data-table/mixins/route';
 
-export default Ember.Route.extend(DataTableRouteMixin, {
-  modelName: 'post'
-});
-```
+#### Ember Data Table visualization configuration
 
-The `DataTableRouteMixin` specifies the `filter`, `page`, `sort` and `size` variables as `queryParams` of the route with the `refreshModel` flag set to `true`. As such the data is reloaded when one of the variables changes. A user can add custom options to be passed in the query to the server by defining a `mergeQueryOptions(parms)` function in the route. The function must return an object with the options to be merged.
+How to show different things in Ember Data Table
 
-```javascript
-import Ember from 'ember';
-import DataTableRouteMixin from 'ember-data-table/mixins/route';
+- `@fields` :: List of fields to render with extra options.  The fields are split by spaces.  Splitting a field with a colon (`:`) makes the first element be the attribute and the second be the label.  Use an `_` to render a space in the label. Eg: `@fields="label:Name priceInEuros:Euro_price"`.
+- `@sortableFields` :: List of fields by which the user may sort.
+  Fields should use the attribute names of `@fields` and are split by
+  spaces.  By default all fields are sortable.  Set to an empty list to
+  disable sorting.
+- `@noDataMessage` :: Custom message to show when no data is available.
+  The `:no-data-message` block can be used as an elternative to provide
+  styling.
+- `@enableLineNumbers` :: Set to truethy to show line numbers in the
+  table.
+- `@links` :: Each row may contain a number of links.  Different links
+  are split by a space in the configuration.  Each link consists of one
+  to three parts split by a colon.  The first part is the route, the
+  second is the label, the third is an icon to use instead of the label
+  if supported (screen readers should see the label still).  Eg:
+  `@links="products.edit:edit:pencil products.show:open:file-earmark-richtext"`.  
+  Note that only the route is required in which case the label is
+  derived and no icon is shown.  The link by default receives the `id`
+  of the item but this is configurable using the `@linksModelProperty`
+  attribute (see below).
+- `@customHeaders` :: List of attributes for which a custom header will
+  be rendered through the `:data-header` named block.  Each of the
+  attributes mentioned here will not render the default header but will
+  instead dispatch to the named block.  Check which attribute is being
+  rendered in the named block to render the right label.  Verify in the
+  implementation you override which actions are set on the columns how
+  to support sorting if needed.
+  
+  ```hbs
+  <RawDataTable
+    ...
+    @customHeaders="label priceInEuros"
+    ...>
+    <:data-header as |header|>
+      {{#if (eq header.attribute "label")}}
+        <th><b>Here is my label</b></th>
+      {{else if (eq header.attribute "priceInEuros")}}
+        <th><i>Here is my price!</i></th>
+      {{/if}}
+    </data-header>
+  </RawDataTable>
+  ```
 
-export default Ember.Route.extend(DataTableRouteMixin, {
-  modelName: 'post',
-  mergeQueryOptions(params) {
-    return { included: 'author' };
-  }
-});
-```
+- `@customFields` :: List of attributes for which the fields will
+  receive a custom rendering.  This will render the individual cell
+  values based on the `:data-cell` custom block.  You may use the
+  attribute name to verify which attribute the custom block is rendering
+  for.
 
-Note: if the `mergeQueryOptions` returns a filter option on a specific field (e.g. `title`), the nested key needs to be provided as a string. Otherwise the `filter` param across all fields will be overwritten breaking the general search.
+  ```hbs
+  <RawDataTable
+    ...
+    @customFields="label priceInEuros"
+    ...>
+    <:data-cell as |cell|>
+      {{#if (eq cell.attribute "label")}}
+        <td><Marquee>{{cell.value}}</Marquee></td>
+      {{else if (eq cell.attribute "priceInEuros")}}
+        <td>€{{cell.value}},-</td>
+      {{/if}}
+    </:data-cell>
+  </RawDataTable>
+  ```
 
-E.g.
-```javascript
-mergeQueryOptions(params) {
-    return {
-        included: 'author',
-        'filter[title]': params.title
-    };
-}
-```
+#### Ember Data Table functional configuration
 
-The `DataTableRouteMixin` also sets the `isLoadingModel` flag on the controller while the route's model is being loaded. Passing this flag to the data table's `isLoading` property will show a spinner while data is loaded.
+- `@autoSearch` :: If truthy, search is automatically triggered
+  without explicitly pressing search.  If a number is provided, this is
+  the time in milliseconds before sending the request.  If no number is
+  supplied a default is used.
+- `@hasMenu` :: If not truthy, the component will show the supplide
+  menu.  This allows controlling whether the menu should be shown
+  dynamically.  The menu may contain actions which act on the current
+  selection.
+- `@enableSelection` :: Whether items should be selectable.  Items are
+  selectable across pages and may be acted on using the
+  `:selection-menu-actions` or `:selection-menu` named blocks.
+- `@linksModelProperty` :: When a link is clicked the row must supply
+  information to the link to indicate which item was clicked.  By
+  default the `id` property is used but another attribute may be
+  supplied if desired (such as `uuid` when using mu-search).  An empty
+  string will provide the full object.
+- `@attributeToSortParams` :: Which attributes may be sorted on.  This
+  defaults to all attributes.  You may choose to provide only some
+  attributes.  Setting this to the empty string disables sorting on all
+  fields.
+- `@onClickRow` :: Action to be triggered when the row is clicked.  This
+  is an alternative for the row link but it triggers an action rather
+  than following a route.
+- `@rowLink` :: Link to be used when users click on the full row.  This
+  is an easier click target for users than an icon on the side.  Ideally
+  the that target is provided too.  `@onClickRow` may be provided to
+  call a function instead but this is less accessible.
+- `@rowLinkModelProperty` :: When `@rowLink` is used, the `id` property
+  of the model rendered in the row will be supplied to the link.  The
+  property may be overriden by this property.  Set to `uuid` when using
+  mu-search for instance, or set to empty string to supply the full
+  model.
 
-### Default Query Params
-The `DefaultQueryParams` mixin provides sensible defaults for the `page` (default: 0), `size` (default: 25) and `filter` (default: '') query parameters. The mixin can be mixed in a controller that uses the `page` and `filter` query params.
+#### Overriding Ember Data Table parts using named blocks
 
-```javascript
-import Ember from 'ember';
-import DefaultQueryParamsMixin from 'ember-data-table/mixins/default-query-params';
+Various named blocks are offered, check your Ember Data Table design implementation to see which part needs to be overridden.  A list is provided here for reference.
 
-export default Ember.Controller.extend(DefaultQueryParamsMixin, {
-  ...
-});
-```
-
-Note: if you want the search text field to be enabled on a data table, the filter parameter may not be `undefined`. Therefore you must initialize it on an empty query string (as done by the `DefaultQueryParams` mixin).
