@@ -1,7 +1,7 @@
 import { tracked } from '@glimmer/tracking';
 import Controller from '@ember/controller';
 
-export default class ProductsController extends Controller {
+export default class DataTableController extends Controller {
   queryParams = ['size', 'page', 'filter', 'sort'];
 
   @tracked size = 10;
