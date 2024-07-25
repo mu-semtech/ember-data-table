@@ -3,6 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 import { typeOf } from '@ember/utils';
 import { toComponentSpecifications, splitDefinitions } from "../utils/string-specification-helpers";
+import attributeToSortParams from "../utils/attribute-to-sort-params";
 
 export default class DataTable extends Component {
   @tracked _selection = undefined;
@@ -134,8 +135,7 @@ export default class DataTable extends Component {
     if( this.args.attributeToSortParams ) {
       return this.args.attributeToSortParams(attribute);
     } else {
-      const attr = attribute.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-      return { asc: attr, desc: `-${attr}` };
+      return attributeToSortParams(attribute);
     }
   }
 
