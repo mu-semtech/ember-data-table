@@ -145,13 +145,12 @@ export default class DataTable extends Component {
       .map( ({ attribute, label, isSortable, hasCustomHeader, isCustom, sortParameters }) => ({
         attribute,
         label,
-        // custom format says it's sortable: sort params known
-        // say it should be sortable: use attribute to sort param
-        // field included in sortable fields: use attribute to sort param
-        sortParameters: sortParameters
-          || ( ( isSortable || this.sortableFields?.includes(attribute) )
-               && this.attributeToSortParams(attribute) ),
-        get isSortable() { return Object.keys( this.sortParameters || {} ).length > 1; },
+        sortParameters: sortParameters // custom format says it's sortable
+          || ( ( isSortable // custom format says it's sortable
+                || this.sortableFields === null // default: all fields are sortable
+                || this.sortableFields?.includes(attribute) ) // @sortableFields
+              && this.attributeToSortParams(attribute) ),
+        get isSortable() { return Object.keys( this.sortParameters || {} ).length >= 1; },
         hasCustomHeader: hasCustomHeader
           || this.customHeaders.includes(attribute),
         isCustom: isCustom
@@ -170,9 +169,9 @@ export default class DataTable extends Component {
   get sortableFields() {
     const sortableFields = this.args.sortableFields;
     if (sortableFields || sortableFields === "")
-      // default: all fields are sortable
       return splitDefinitions(sortableFields);
     else
+      // default: all fields are sortable
       return null;
   }
 
