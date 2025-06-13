@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "types": [
+      "@glint/environment-ember-loose",
+      "ember-source/types"
+    ],
+    "noEmit": true
+  },
+  "include": [
+    "**/*.js",
+    "**/*.gjs"
+  ],
+  "glint": {
+    "environment": [
+      "ember-loose",
+      "ember-template-imports"
+    ]
+  },
+}

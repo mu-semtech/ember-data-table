@@ -1,0 +1,106 @@
+{
+  "name": "ember-data-table",
+  "version": "2.0.1",
+  "description": "Data tables for Ember following Google Design specs",
+  "keywords": [
+    "ember-addon",
+    "mu-semtech"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mu-semtech/ember-data-table"
+  },
+  "license": "MIT",
+  "author": "Erika Pauwels",
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
+  },
+  "dependencies": {
+    "@embroider/addon-shim": "^1.8.7",
+    "decorator-transforms": "^2.2.2",
+    "ember-concurrency": "^4.0.4",
+    "ember-truth-helpers": "^4.0.3",
+    "lodash.upperfirst": "^4.3.1"
+  },
+  "engines": {
+    "node": ">= 22"
+  },
+  "ember": {
+    "edition": "octane"
+  },
+  "ember-addon": {
+    "main": "addon-main.js",
+    "type": "addon",
+    "version": 2,
+    "app-js": {
+      "./components/data-table.js": "./dist/_app_/components/data-table.js",
+      "./components/data-table/content-body.js": "./dist/_app_/components/data-table/content-body.js",
+      "./components/data-table/content-header.js": "./dist/_app_/components/data-table/content-header.js",
+      "./components/data-table/content.js": "./dist/_app_/components/data-table/content.js",
+      "./components/data-table/data-cell.js": "./dist/_app_/components/data-table/data-cell.js",
+      "./components/data-table/data-cells.js": "./dist/_app_/components/data-table/data-cells.js",
+      "./components/data-table/menu-general.js": "./dist/_app_/components/data-table/menu-general.js",
+      "./components/data-table/menu-selected.js": "./dist/_app_/components/data-table/menu-selected.js",
+      "./components/data-table/menu.js": "./dist/_app_/components/data-table/menu.js",
+      "./components/data-table/number-pagination.js": "./dist/_app_/components/data-table/number-pagination.js",
+      "./components/data-table/row.js": "./dist/_app_/components/data-table/row.js",
+      "./components/data-table/text-search.js": "./dist/_app_/components/data-table/text-search.js",
+      "./components/data-table/th-sortable.js": "./dist/_app_/components/data-table/th-sortable.js",
+      "./components/raw-data-table.js": "./dist/_app_/components/raw-data-table.js",
+      "./helpers/includes-by.js": "./dist/_app_/helpers/includes-by.js"
+    },
+    "app-styles": {
+      "./styles/ember-data-table.scss": "./dist/styles/ember-data-table.scss"
+    }
+  },
+  "volta": {
+    "extends": "../package.json"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.27.1",
+    "@babel/plugin-proposal-decorators": "^7.27.1",
+    "@babel/plugin-transform-class-properties": "^7.27.1",
+    "@babel/plugin-transform-class-static-block": "^7.27.1",
+    "@embroider/addon-dev": "^8.0.1",
+    "@nullvoxpopuli/eslint-configs": "^5.1.2",
+    "@rollup/plugin-babel": "^6.0.4",
+    "ember-template-lint": "^6.0.0",
+    "eslint": "^9.28.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-ember": "^12.2.1",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-qunit": "^8.1.2",
+    "prettier": "^3.3.3",
+    "rollup": "^4.41.0",
+    "rollup-plugin-scss": "^4.0.1",
+    "stylelint": "^16.20.0",
+    "stylelint-config-standard": "^38.0.0",
+    "stylelint-prettier": "^5.0.3",
+    "@glint/core": "^1.5.2",
+    "@glint/environment-ember-loose": "^1.5.2",
+    "@glint/environment-ember-template-imports": "^1.5.2",
+    "@glint/template": "^1.5.2"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./*": "./dist/*.js",
+    "./addon-main.js": "./addon-main.js"
+  },
+  "files": [
+    "addon-main.js",
+    "dist"
+  ],
+  "scripts": {
+    "build": "rollup --config",
+    "lint": "concurrently 'npm:lint:*(!fix)' --names 'lint:'",
+    "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:'",
+    "lint:css": "stylelint \"**/*.css\" --allow-empty-input",
+    "lint:css:fix": "concurrently \"npm:lint:css -- --fix\"",
+    "lint:js": "eslint . --cache",
+    "lint:js:fix": "eslint . --fix",
+    "prepack": "rollup --config",
+    "start": "rollup --config --watch --environment development"
+  }
+}
