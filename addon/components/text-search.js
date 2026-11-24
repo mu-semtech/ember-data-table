@@ -1,6 +1,6 @@
 import { isEqual } from '@ember/utils';
 import { cancel, debounce } from '@ember/runloop';
-import { observer } from '@ember/object';
+import { action, observer } from '@ember/object';
 import { oneWay } from '@ember/object/computed';
 import Component from '@ember/component';
 import layout from '../templates/components/text-search';
@@ -28,6 +28,12 @@ export default Component.extend({
     ) {
       this.set('value', this.filter);
     }
+  }),
+  changeInternalValue: action(function (event) {
+    this.set('internalValue', event.target.value);
+  }),
+  applyFilter: action(function () {
+    this.set('filter', this.internalValue);
   }),
   _setFilter() {
     if (!this.isDestroying && !this.isDestroyed) {

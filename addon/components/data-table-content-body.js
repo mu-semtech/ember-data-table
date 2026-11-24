@@ -1,4 +1,4 @@
-import { set } from '@ember/object';
+import { action, set } from '@ember/object';
 import { computed } from '@ember/object';
 import Component from '@ember/component';
 import layout from '../templates/components/data-table-content-body';
@@ -32,16 +32,14 @@ export default Component.extend({
       });
     }
   ),
-  actions: {
-    updateSelection(selectedWrapper, event) {
-      set(selectedWrapper, 'isSelected', event.target.checked);
-      this.wrappedItems.forEach((wrapper) => {
-        if (wrapper.isSelected) {
-          this.get('data-table').addItemToSelection(wrapper.item);
-        } else {
-          this.get('data-table').removeItemFromSelection(wrapper.item);
-        }
-      });
-    },
-  },
+  updateSelection: action(function (selectedWrapper, event) {
+    set(selectedWrapper, 'isSelected', event.target.checked);
+    this.wrappedItems.forEach((wrapper) => {
+      if (wrapper.isSelected) {
+        this.get('data-table').addItemToSelection(wrapper.item);
+      } else {
+        this.get('data-table').removeItemFromSelection(wrapper.item);
+      }
+    });
+  }),
 });

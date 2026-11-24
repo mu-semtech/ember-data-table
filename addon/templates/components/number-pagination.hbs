@@ -4,7 +4,7 @@
     {{#if this.total}} of {{this.total}}{{/if}}
     {{#if this.sizeOptions}}
       |
-      <select onchange={{action (mut this.size) value="target.value"}}>
+      <select {{on "change" this.changeSize}}>
         {{#each this.sizeOptions as |sizeOption|}}
           <option value={{sizeOption}} selected={{eq this.size sizeOption}}>{{sizeOption}}</option>
         {{/each}}
@@ -13,15 +13,15 @@
   </div>
   {{#if this.hasMultiplePages}}
     <div class="data-table-pagination-right">
-      <button disabled={{this.isFirstPage}} type="button" {{action "changePage" this.links.first}}>First</button>
-      <button disabled={{this.isFirstPage}} type="button" {{action "changePage" this.links.prev}}>Previous</button>
-      <select onchange={{action (mut this.currentPage) value="target.value"}}>
+      <button disabled={{this.isFirstPage}} type="button" {{on "click" (fn this.changePage this.links.first)}}>First</button>
+      <button disabled={{this.isFirstPage}} type="button" {{on "click" (fn this.changePage this.links.prev)}}>Previous</button>
+      <select {{on "change" this.changeCurrentPage}}>
         {{#each this.pageOptions as |sizeOption|}}
           <option value={{sizeOption}} selected={{eq this.currentPage sizeOption}}>{{sizeOption}}</option>
         {{/each}}
       </select>
-      <button disabled={{this.isLastPage}} type="button" {{action "changePage" this.links.next}}>Next</button>
-      <button disabled={{this.isLastPage}} type="button" {{action "changePage" this.links.last}}>Last</button>
+      <button disabled={{this.isLastPage}} type="button" {{on "click" (fn this.changePage this.links.next)}}>Next</button>
+      <button disabled={{this.isLastPage}} type="button" {{on "click" (fn this.changePage this.links.last)}}>Last</button>
     </div>
   {{/if}}
 </div>

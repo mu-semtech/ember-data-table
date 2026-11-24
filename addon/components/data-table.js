@@ -1,13 +1,14 @@
 import { typeOf } from '@ember/utils';
 import { computed, observer } from '@ember/object';
 import { bool, equal, oneWay } from '@ember/object/computed';
+import { A } from '@ember/array';
 import Component from '@ember/component';
 import layout from '../templates/components/data-table';
 
 export default Component.extend({
   init() {
     this._super(...arguments);
-    if (this.selection === undefined) this.set('selection', []);
+    if (this.selection === undefined) this.set('selection', A());
   },
   layout,
   noDataMessage: 'No data',

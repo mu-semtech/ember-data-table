@@ -30,14 +30,14 @@
 
     <h2>Complex table</h2>
     <blockquote>Customized table including an action menu on top</blockquote>
-    <DataTable @content={{this.model}} @sort={{this.sort}} @page={{this.page}} @size={{this.size}} @filter={{this.filter}} @autoSearch={{false}} @onClickRow={{action "clickRow"}} as |t|>
+    <DataTable @content={{this.model}} @sort={{this.sort}} @page={{this.page}} @size={{this.size}} @filter={{this.filter}} @autoSearch={{false}} @onClickRow={{this.clickRow}} as |t|>
       <t.menu as |menu|>
         <menu.general>
-          <button type="button" {{action "menuTest"}}>Export</button>
+          <button type="button" {{on "click" this.menuTest}}>Export</button>
           <button type="button">Print</button>
         </menu.general>
         <menu.selected as |selection table|>
-          <button type="button" {{action "selectionTest" selection table}}>Export</button>
+          <button type="button" {{on "click" (fn this.selectionTest selection table)}}>Export</button>
         </menu.selected>
       </t.menu>
       <t.content as |c|>
@@ -56,7 +56,7 @@
           <td>{{row.age}}</td>
           <td>{{row.created}}</td>
           <td>{{row.modified}}</td>
-          <td><button type="button" {{action "test" row}}>Info</button></td>
+          <td><button type="button" {{on "click" (fn this.test row)}}>Info</button></td>
         </c.body>
       </t.content>
     </DataTable>
