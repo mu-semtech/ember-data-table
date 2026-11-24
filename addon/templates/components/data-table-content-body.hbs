@@ -6,7 +6,7 @@
       <tr role="button" class="{{if (includes wrapper.item this.data-table.selection) "selected"}} {{if this.onClickRow "clickable"}}" {{on "click" (fn (optional this.onClickRow) wrapper.item)}}>
         {{#if this.enableSelection}}
           <td class="center">
-            <Input @type="checkbox" @checked={{wrapper.isSelected}} {{on "click" (action "updateSelection" wrapper)}} />
+            <Input @type="checkbox" @checked={{wrapper.isSelected}} {{on "click" (fn this.updateSelection wrapper)}} />
           </td>
         {{/if}}
         {{#if this.enableLineNumbers}}

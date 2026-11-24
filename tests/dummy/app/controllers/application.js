@@ -1,4 +1,4 @@
-import EmberObject from '@ember/object';
+import EmberObject, { action } from '@ember/object';
 import ArrayProxy from '@ember/array/proxy';
 import Controller from '@ember/controller';
 import DefaultQueryParams from 'ember-data-table/mixins/default-query-params';
@@ -50,29 +50,27 @@ var ApplicationController = Controller.extend(DefaultQueryParams, {
   page: 2,
   size: 5,
   sort: 'first-name',
-  actions: {
-    test(row) {
-      console.info(
-        'Hi, you reached the test action for row: ' + JSON.stringify(row)
-      );
-    },
-    menuTest() {
-      console.info('Hi, you reached the general menu test action');
-    },
-    selectionTest(selection, datatable) {
-      datatable.clearSelection();
-      console.info(
-        'Hi, you reached the selection test action for selection: ' +
-          JSON.stringify(selection)
-      );
-      selection.forEach(function (item) {
-        item.set('age', item.get('age') + 1);
-      });
-    },
-    clickRow(row) {
-      console.info('Custom row click action on item ' + JSON.stringify(row));
-    },
-  },
+  test: action(function (row) {
+    console.info(
+      'Hi, you reached the test action for row: ' + JSON.stringify(row)
+    );
+  }),
+  menuTest: action(function () {
+    console.info('Hi, you reached the general menu test action');
+  }),
+  selectionTest: action(function (selection, datatable) {
+    datatable.clearSelection();
+    console.info(
+      'Hi, you reached the selection test action for selection: ' +
+        JSON.stringify(selection)
+    );
+    selection.forEach(function (item) {
+      item.set('age', item.get('age') + 1);
+    });
+  }),
+  clickRow: action(function (row) {
+    console.info('Custom row click action on item ' + JSON.stringify(row));
+  }),
 });
 
 export default ApplicationController;

@@ -1,4 +1,4 @@
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { gt } from '@ember/object/computed';
 import Component from '@ember/component';
 import layout from '../templates/components/number-pagination';
@@ -42,9 +42,13 @@ export default Component.extend({
       (val, index) => this.firstPage + index
     );
   }),
-  actions: {
-    changePage(link) {
-      this.set('page', link['number'] || 0);
-    },
-  },
+  changeSize: action(function (event) {
+    this.set('size', event.target.value);
+  }),
+  changeCurrentPage: action(function (event) {
+    this.set('currentPage', event.target.value);
+  }),
+  changePage: action(function (link) {
+    this.set('page', link['number'] || 0);
+  }),
 });
